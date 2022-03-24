@@ -1,7 +1,7 @@
 const config: any = {
   MAINNET: {
     NETWORK_STRING: "homestead",
-    ETHERSCAN_API_KEY: process.env.ETHERSCAN_API_KEY,
+    ETHERSCAN_API_KEY: "FA8C2W6EIZBWN1QTTU5ZHBTV3FQUAZR35E",
     ETHERSCAN_URL: "https://api.etherscan.io",
     CDAI: {
       address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
@@ -20,7 +20,7 @@ const config: any = {
   },
   RINKEBY: {
     NETWORK_STRING: "rinkeby",
-    ETHERSCAN_API_KEY: process.env.ETHERSCAN_API_KEY,
+    ETHERSCAN_API_KEY: "FA8C2W6EIZBWN1QTTU5ZHBTV3FQUAZR35E",
     ETHERSCAN_URL: "https://api-rinkeby.etherscan.io",
     CDAI: {
       address: "0x6D7F0754FFeb405d23C51CE938289d4835bE3b14",
