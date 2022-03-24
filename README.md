@@ -1,6 +1,6 @@
 # Breadchain Crowdstaking
 
-This is the frontend for interacting with the Breadchain Crowdstaking contract.
+Frontend for interacting with the Breadchain Crowdstaking contract
 
 ## Running Locally
 
@@ -24,6 +24,8 @@ or build for production
 ```sh
 $ yarn build
 ```
+
+You'll also need a `.env` file (copy `.env.example`) with an etherscan api key
 
 ## Test In Browser
 
