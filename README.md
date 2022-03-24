@@ -25,8 +25,6 @@ or build for production
 $ yarn build
 ```
 
-You'll also need a `.env` file (copy `.env.example`) with an etherscan api key
-
 ## Test In Browser
 
 To mint BREAD on the rinkeby testnet you'll need some test ETH for gas as well as some DAI
