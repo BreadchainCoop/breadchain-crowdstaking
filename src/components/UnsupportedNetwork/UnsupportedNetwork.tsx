@@ -15,7 +15,9 @@ const UnsupportedNetwork: React.FC = () => {
   const handleSwitchToEthereum = async () => {
     // const { appState, dispatch } = useAppState();
     try {
-      dispatch(openModal(EModalType.CHANGE_NETWORK));
+      dispatch(
+        openModal({ type: EModalType.CHANGE_NETWORK, title: "Switch Network" })
+      );
       const { ethereum } = window as any;
       await ethereum.request({
         method: "wallet_switchEthereumChain",
