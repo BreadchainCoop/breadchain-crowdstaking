@@ -1,6 +1,6 @@
 # Breadchain Crowdstaking
 
-redux toolkit pattern, immer
+This is the frontend for interacting with the Breadchain Crowdstaking contract.
 
 ## Running Locally
 
