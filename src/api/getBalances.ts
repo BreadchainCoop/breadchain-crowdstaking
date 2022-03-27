@@ -28,8 +28,6 @@ export const getBalances = async (
     return null;
   }
 
-  console.log(network);
-
   const { NETWORK_STRING, ETHERSCAN_API_KEY } = config[network];
 
   const provider = new ethers.providers.EtherscanProvider(
@@ -42,16 +40,16 @@ export const getBalances = async (
   const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
   const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
 
-  const [breadDec, daiDec, BREADBal, DAIBal, ETHBal] = await Promise.all([
-    BREADcontract.decimals(),
-    DAIcontract.decimals(),
+  const [BREADBal, DAIBal, ETHBal] = await Promise.all([
     BREADcontract.balanceOf(account),
     DAIcontract.balanceOf(account),
     provider.getBalance(account),
   ]);
 
-  const BREADBalance = ethers.utils.formatUnits(BREADBal, breadDec).toString();
-  const DAIBalance = ethers.utils.formatUnits(DAIBal, daiDec).toString();
+  const BREADBalance = ethers.utils
+    .formatUnits(BREADBal, BREAD.decimals)
+    .toString();
+  const DAIBalance = ethers.utils.formatUnits(DAIBal, DAI.decimals).toString();
   const ETHBalance = ethers.utils.formatEther(ETHBal);
 
   return {
