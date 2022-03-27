@@ -40,7 +40,7 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, wallet, network, toast } = appState;
+  const { modal, wallet, network, toast, font } = appState;
 
   /**
    * App Init
@@ -48,7 +48,7 @@ const App: React.FC = () => {
   React.useEffect(() => {
     (async () => {
       document.fonts.ready.then(() => {
-        dispatch(setIsLoaded(true));
+        if (!font.isLoaded) dispatch(setIsLoaded(true));
       });
 
       // getXr().then((data) => {
