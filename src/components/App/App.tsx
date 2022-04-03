@@ -66,7 +66,12 @@ const App: React.FC = () => {
 
       // setEthereum(ethereum);
       if (ethereum.isConnected && !ethereum.isConnected()) {
-        console.log("ethereum / MetaMask not connected!!!");
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message: "ethereum / MetaMask not connected!!!",
+          })
+        );
       }
 
       const network = await getNetwork();

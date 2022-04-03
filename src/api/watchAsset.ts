@@ -1,9 +1,12 @@
 import config from "../config";
+import { unlockModal } from "../features/modal/modalSlice";
+import { ENetwork } from "../features/network/networkSlice";
+import store from "../store";
 
-export const watchAsset = async (network: string, tokenKey: string) => {
+export const watchAsset = async (network: ENetwork, tokenKey: string) => {
   const ethereum = (window as any).ethereum;
   const { address, symbol, decimals } = config[network][tokenKey];
-  const wasAdded = await ethereum.request({
+  ethereum.request({
     method: "wallet_watchAsset",
     params: {
       type: "ERC20", // Initially only supports ERC20, but eventually more!
@@ -14,5 +17,4 @@ export const watchAsset = async (network: string, tokenKey: string) => {
       },
     },
   });
-  console.log(wasAdded);
 };
