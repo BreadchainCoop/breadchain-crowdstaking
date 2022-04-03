@@ -147,9 +147,6 @@ const SwapUI: React.FC = () => {
     }
   }, [wallet]);
 
-  console.log(wallet.tokens.ETH.balance);
-  console.log(parseFloat(wallet.tokens.ETH.balance));
-
   return (
     <>
       <TokenDisplay>
@@ -175,6 +172,7 @@ const SwapUI: React.FC = () => {
                 handleInputChange={handleInputChange}
               />
               <Icon type={swapState.from.name} />
+              <span className="ml-4 w-20 pt-0.5">{swapState.from.name}</span>
             </TokenDisplay.Content>
           </>
         ) : (
@@ -200,6 +198,7 @@ const SwapUI: React.FC = () => {
                 {swapState.to.value ? swapState.to.value : "00.00"}
               </span>
               <Icon type={swapState.to.name} />
+              <span className="ml-4 w-20 pt-0.5">{swapState.to.name}</span>
             </TokenDisplay.Content>
           </>
         )}
