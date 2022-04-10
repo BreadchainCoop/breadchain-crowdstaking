@@ -24,13 +24,6 @@ export const getAllowance = async (ownerAddress: string, network: ENetwork) => {
 
   const res = await DAIcontract.allowance(ownerAddress, BREAD.address);
 
-  /**
-   * !!!
-   *
-   * should we be using ethers.utils.formatUnits(BALANCE, DECIMALS)?
-   * can decimals be hardcoded or pulled from ABI to save API calls?
-   *
-   * */
   const allowance = ethers.utils.formatUnits(res);
   return { value: parseInt(allowance) };
 };
