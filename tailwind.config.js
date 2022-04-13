@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         breadgray: {
-          100: "#151515",
-          200: "#121212",
+          100: "#222222",
+          200: "#181818",
         },
         breadpink: {
           100: "#C463CA",
