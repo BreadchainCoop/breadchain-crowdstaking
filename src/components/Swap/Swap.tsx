@@ -1,27 +1,14 @@
 import React from "react";
 
-// import Container from "./Container";
 import TokenDisplay from "./TokenDisplay";
 import Input from "./Input";
 import Icon from "./Icon";
 import SwapReverse from "./SwapReverse";
 import SwapButton from "./SwapButton";
-import {
-  EBalanceStatus,
-  IWalletState,
-  setBREADBalance,
-  setDAIBalance,
-  setETHBalance,
-} from "../../features/wallet/walletSlice";
+import { EBalanceStatus } from "../../features/wallet/walletSlice";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { swap } from "../../api/swap";
-// import {
-//   ETransactionStatus,
-//   setPending,
-// } from "../../features/transaction/transactionSlice";
-// import { closeModal, openModal } from "../../features/modal/modalSlice";
-// import { ENetwork } from "../../features/network/networkSlice";
 import Transaction from "./Transaction";
 import { getBalances } from "../../features/wallet/walletSlice";
 import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
