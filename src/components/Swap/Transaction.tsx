@@ -11,8 +11,8 @@ const Transaction: React.FC = () => {
   } = useAppSelector((state) => state);
 
   const endpoint =
-    network.network === ENetwork.MAINNET
-      ? `https://etherscan.io/`
+    network.network === ENetwork.POLYGON
+      ? "https://polygonscan.com"
       : `https://rinkeby.etherscan.io/`;
 
   return (

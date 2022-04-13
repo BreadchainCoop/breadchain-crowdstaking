@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
-import BreadMainnet from "../BreadMainnet.json";
+// import BreadMainnet from "../BreadMainnet.json";
+import BreadPolygon from "../BreadPolygon.json";
 import BreadRinkeby from "../BreadRinkeby.json";
 import config from "../config";
 import store from "../store";
@@ -20,6 +21,7 @@ export const swap = async (
   network: string,
   from: { name: string; value: string },
   dispatch: typeof store.dispatch,
+  receiverAddress: string,
   resetSwapState: () => void
 ) => {
   const { name, value } = from;
@@ -40,7 +42,7 @@ export const swap = async (
 
   const BREADcontract = new ethers.Contract(
     BREAD.address,
-    network === ENetwork.MAINNET ? BreadMainnet.abi : BreadRinkeby.abi,
+    network === ENetwork.POLYGON ? BreadPolygon.abi : BreadRinkeby.abi,
     signer
   );
 
@@ -52,13 +54,13 @@ export const swap = async (
       dispatch(
         openModal({ type: EModalType.MINTING, title: `Minting ${value} BREAD` })
       );
-      txn = await BREADcontract.mint(amountWith18Decimals);
+      txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
     }
     if (name === "BREAD") {
       dispatch(
         openModal({ type: EModalType.BURNING, title: `Burning ${value} BREAD` })
       );
-      txn = await BREADcontract.burn(amountWith18Decimals);
+      txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
     }
   } catch (err) {
     console.log("swap mint/burn() catch block");

@@ -124,7 +124,15 @@ const SwapUI: React.FC = () => {
 
   const handleSubmit = async () => {
     if (network.network && wallet.address) {
-      await swap(network.network, swapState.from, dispatch, resetSwapState);
+      console.log(network.network && wallet.address);
+
+      await swap(
+        network.network,
+        swapState.from,
+        dispatch,
+        wallet.address,
+        resetSwapState
+      );
       dispatch(getBalances({}));
     }
   };
@@ -161,7 +169,7 @@ const SwapUI: React.FC = () => {
                 from.status === EBalanceStatus.LOADING ? (
                   <Elipsis />
                 ) : (
-                  formatter.format(parseInt(from.balance))
+                  formatter.format(parseFloat(from.balance))
                 )}
               </TokenDisplay.BalanceButton>
             </TokenDisplay.Header>
@@ -189,7 +197,7 @@ const SwapUI: React.FC = () => {
                 {wallet.tokens && to.status === EBalanceStatus.LOADING ? (
                   <Elipsis />
                 ) : (
-                  formatter.format(parseInt(to.balance))
+                  formatter.format(parseFloat(to.balance))
                 )}
               </TokenDisplay.Balance>
             </TokenDisplay.Header>
@@ -204,13 +212,13 @@ const SwapUI: React.FC = () => {
         )}
       </TokenDisplay>
       <div className="w-full px-4 pt-8 pb-12 text-xs">
-        Eth Balance:
+        Matic Balance:
         {wallet.tokens &&
-        wallet.tokens.ETH.status === EBalanceStatus.LOADING ? (
+        wallet.tokens.MATIC.status === EBalanceStatus.LOADING ? (
           <Elipsis />
         ) : (
           <span className="ml-4">
-            {parseFloat(wallet.tokens.ETH.balance).toFixed(4)}
+            {parseFloat(wallet.tokens.MATIC.balance).toFixed(4)}
           </span>
         )}
       </div>

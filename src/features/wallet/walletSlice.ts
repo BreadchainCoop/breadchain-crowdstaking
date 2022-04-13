@@ -26,7 +26,7 @@ export type TTokens = {
     status: EBalanceStatus;
     balance: string;
   };
-  ETH: {
+  MATIC: {
     status: EBalanceStatus;
     balance: string;
   };
@@ -47,7 +47,7 @@ type TBalanceData = {
     name: string;
     balance: string;
   };
-  ETH: {
+  MATIC: {
     name: string;
     balance: string;
   };
@@ -81,9 +81,9 @@ export const getBalances = createAsyncThunk<
       name: "DAI",
       balance: tokens.DAI.balance,
     },
-    ETH: {
-      name: "ETH",
-      balance: tokens.ETH.balance,
+    MATIC: {
+      name: "MATIC",
+      balance: tokens.MATIC.balance,
     },
   };
 });
@@ -100,7 +100,7 @@ const initialState: IWalletState = {
       status: EBalanceStatus.INIT,
       balance: "",
     },
-    ETH: {
+    MATIC: {
       status: EBalanceStatus.INIT,
       balance: "",
     },
@@ -123,8 +123,8 @@ const walletSlice = createSlice({
       state.tokens.DAI.status = EBalanceStatus.LOADED;
     },
     setETHBalance(state, action: PayloadAction<string>) {
-      state.tokens.ETH.balance = action.payload;
-      state.tokens.ETH.status = EBalanceStatus.LOADED;
+      state.tokens.MATIC.balance = action.payload;
+      state.tokens.MATIC.status = EBalanceStatus.LOADED;
     },
     clearBalances(state) {
       state.tokens = {
@@ -136,7 +136,7 @@ const walletSlice = createSlice({
           status: EBalanceStatus.INIT,
           balance: "",
         },
-        ETH: {
+        MATIC: {
           status: EBalanceStatus.INIT,
           balance: "",
         },
@@ -147,15 +147,15 @@ const walletSlice = createSlice({
     builder.addCase(getBalances.pending, (state, action) => {
       state.tokens.BREAD.status = EBalanceStatus.LOADING;
       state.tokens.DAI.status = EBalanceStatus.LOADING;
-      state.tokens.ETH.status = EBalanceStatus.LOADING;
+      state.tokens.MATIC.status = EBalanceStatus.LOADING;
     });
     builder.addCase(getBalances.fulfilled, (state, action) => {
       state.tokens.BREAD.status = EBalanceStatus.LOADED;
       state.tokens.DAI.status = EBalanceStatus.LOADED;
-      state.tokens.ETH.status = EBalanceStatus.LOADED;
+      state.tokens.MATIC.status = EBalanceStatus.LOADED;
       state.tokens.BREAD.balance = action.payload.BREAD.balance;
       state.tokens.DAI.balance = action.payload.DAI.balance;
-      state.tokens.ETH.balance = action.payload.ETH.balance;
+      state.tokens.MATIC.balance = action.payload.MATIC.balance;
     });
     builder.addCase(getBalances.rejected, (state, action) => {
       console.log("getBalances rejected: ", action);

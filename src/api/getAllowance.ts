@@ -10,11 +10,13 @@ export const getAllowance = async (ownerAddress: string, network: ENetwork) => {
     return null;
   }
 
-  const { NETWORK_STRING, ETHERSCAN_API_KEY } = config[network];
+  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
+  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
 
-  const provider = new ethers.providers.EtherscanProvider(
-    NETWORK_STRING,
-    ETHERSCAN_API_KEY
+  const provider = new ethers.providers.JsonRpcProvider(
+    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
+    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
   );
 
   const { BREAD, DAI } = config[network];

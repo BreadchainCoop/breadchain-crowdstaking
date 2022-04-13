@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
+import BREADabi from "../BreadPolygon.json";
 import config from "../config";
 
 export const getBalances = async (
@@ -17,7 +18,7 @@ export const getBalances = async (
       name: string;
       balance: string;
     };
-    ETH: {
+    MATIC: {
       name: string;
       balance: string;
     };
@@ -28,19 +29,27 @@ export const getBalances = async (
     return null;
   }
 
-  const { NETWORK_STRING, ETHERSCAN_API_KEY } = config[network];
+  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
+  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
 
-  const provider = new ethers.providers.EtherscanProvider(
-    NETWORK_STRING,
-    ETHERSCAN_API_KEY
+  const provider = new ethers.providers.JsonRpcProvider(
+    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
+    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
   );
+  // ALCHEMY_URL
+  // ALCHEMY_API_KEY
 
   const { DAI, BREAD } = config[network];
 
-  const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
+  const BREADcontract = new ethers.Contract(
+    BREAD.address,
+    BREADabi.abi,
+    provider
+  );
   const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
 
-  const [BREADBal, DAIBal, ETHBal] = await Promise.all([
+  const [BREADBal, DAIBal, MATICBal] = await Promise.all([
     BREADcontract.balanceOf(account),
     DAIcontract.balanceOf(account),
     provider.getBalance(account),
@@ -50,16 +59,21 @@ export const getBalances = async (
     .formatUnits(BREADBal, BREAD.decimals)
     .toString();
   const DAIBalance = ethers.utils.formatUnits(DAIBal, DAI.decimals).toString();
-  const ETHBalance = ethers.utils.formatEther(ETHBal);
+  const MATICBalance = ethers.utils.formatEther(MATICBal);
 
   return {
     tokens: {
       BREAD: {
         name: "BREAD",
+        // balance: "0",
         balance: BREADBalance,
       },
       DAI: { name: "DAI", balance: DAIBalance },
-      ETH: { name: "ETH", balance: ETHBalance },
+      MATIC: {
+        name: "MATIC",
+        // balance: "0",
+        balance: MATICBalance,
+      },
     },
   };
 };

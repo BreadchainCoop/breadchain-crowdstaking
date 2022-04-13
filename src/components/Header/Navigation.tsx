@@ -29,7 +29,7 @@ export const Network: React.FC<TProps> = (props) => {
         {network
           ? (() => {
               if (network === ENetwork.RINKEBY) return "Rinkeby Testnet";
-              if (network === ENetwork.MAINNET) return "Ethereum";
+              if (network === ENetwork.POLYGON) return "Polygon";
               if (network === ENetwork.UNSUPPORTED) return "Unsupported Chain";
               else {
                 return "Invalid network state!";

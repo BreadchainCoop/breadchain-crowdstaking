@@ -130,6 +130,8 @@ const App: React.FC = () => {
   }, [wallet.address]);
   console.log(toast);
 
+  console.log("\n\n: network: ", network.network);
+
   return (
     <AppContainer>
       {/* <Modal

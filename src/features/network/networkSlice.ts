@@ -8,6 +8,7 @@ export enum ENetworkConnectionState {
 
 export enum ENetwork {
   MAINNET = "MAINNET",
+  POLYGON = "POLYGON",
   RINKEBY = "RINKEBY",
   UNSUPPORTED = "UNSUPPORTED",
 }

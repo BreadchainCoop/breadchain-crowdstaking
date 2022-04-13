@@ -33,11 +33,18 @@ export const getChainId = async () => {
 
 export const getNetwork = async (chainId = null) => {
   const id = chainId ? chainId : await getChainId();
+  console.log(id);
+  console.log(id);
+  console.log(id);
+  console.log(id);
+
   switch (id) {
     case 1:
       return ENetwork.MAINNET;
     case 4:
       return ENetwork.RINKEBY;
+    case 137:
+      return ENetwork.POLYGON;
     default:
       return ENetwork.UNSUPPORTED;
   }
