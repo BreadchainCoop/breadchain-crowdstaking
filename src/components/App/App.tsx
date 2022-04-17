@@ -187,7 +187,7 @@ const App: React.FC = () => {
 
         {/* {wallet.address && <Transactions />} */}
       </Main.Main>
-      <Footer>bloop</Footer>
+      <Footer>🦄</Footer>
     </AppContainer>
   );
 };

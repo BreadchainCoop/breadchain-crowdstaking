@@ -23,7 +23,7 @@ const UnsupportedNetwork: React.FC = () => {
         method: "wallet_switchEthereumChain",
         params: [
           {
-            chainId: "0x1",
+            chainId: "0x89",
           },
         ],
       });
@@ -42,9 +42,11 @@ const UnsupportedNetwork: React.FC = () => {
           You are not connected to a supported chain!
         </TextTransition>
       </span>
-      <Button onClick={handleSwitchToEthereum}>
-        <TextTransition>Switch to Ethereum</TextTransition>
-      </Button>
+      <span className="flex justify-center">
+        <Button onClick={handleSwitchToEthereum}>
+          <TextTransition>Connect to Polygon</TextTransition>
+        </Button>
+      </span>
     </div>
   );
 };
