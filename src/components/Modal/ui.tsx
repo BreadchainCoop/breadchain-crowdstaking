@@ -5,15 +5,15 @@ export const Container: React.FC = (props) => (
 );
 
 export const Inner: React.FC = (props) => (
-  <section className="bg-neutral-900 bg-opacity-100 p-16 pt-14 rounded relative">
+  <section className="bg-neutral-900 bg-opacity-100 p-4 md:p-16 pt-14 rounded relative">
     {props.children}
   </section>
 );
 
 export const Heading: React.FC = (props) => (
-  <h2 className="text-2xl">{props.children}</h2>
+  <h2 className="text-center md:text-left text-2xl">{props.children}</h2>
 );
 
 export const Message: React.FC = (props) => (
-  <p className="text-sm mt-12">{props.children}</p>
+  <p className="text-center md:text-left text-sm mt-12">{props.children}</p>
 );

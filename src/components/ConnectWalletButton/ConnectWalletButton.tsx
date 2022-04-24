@@ -47,23 +47,25 @@ const ConnectWalletButton: React.FC = (props) => {
   };
 
   return (
-    <button className={className} onClick={handleConnectWallet}>
-      <TextTransition>
-        {(() => {
-          switch (wallet.connected) {
-            case EWalletConnectionState.NOT_CONNECTED:
-              return "Connect Wallet";
-            case EWalletConnectionState.CONNECTING:
-              return "Connecting";
-            case EWalletConnectionState.CONNECTED:
-              if (!wallet) throw new Error("no wallet present in wallet!");
-              return `address: ${wallet.address}`;
-            default:
-              throw new Error("wallet.connected not valid!");
-          }
-        })()}
-      </TextTransition>
-    </button>
+    <div className="mt-12">
+      <button className={className} onClick={handleConnectWallet}>
+        <TextTransition>
+          {(() => {
+            switch (wallet.connected) {
+              case EWalletConnectionState.NOT_CONNECTED:
+                return "Connect Wallet";
+              case EWalletConnectionState.CONNECTING:
+                return "Connecting";
+              case EWalletConnectionState.CONNECTED:
+                if (!wallet) throw new Error("no wallet present in wallet!");
+                return `address: ${wallet.address}`;
+              default:
+                throw new Error("wallet.connected not valid!");
+            }
+          })()}
+        </TextTransition>
+      </button>
+    </div>
   );
 };
 

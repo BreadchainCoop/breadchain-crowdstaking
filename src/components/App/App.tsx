@@ -35,6 +35,7 @@ import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { getBalances } from "../../features/wallet/walletSlice";
 import { EModalStatus, EModalType } from "../../features/modal/modalSlice";
 import TextTransition from "../../transitions/TextTransition";
+import MobileNavigation from "../MobileNavigation/MobileNavigation";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -134,6 +135,7 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
+      {/* <MobileNavigation /> */}
       {/* <Modal
         modal={{
           type: EModalType.MINTING,
@@ -149,22 +151,37 @@ const App: React.FC = () => {
         <Logo>
           <TextTransition>logo</TextTransition>
         </Logo>
-        <Title.Title>
+        <Title.HeaderTitle>
           <Title.H1>
             <TextTransition>BREADCHAIN</TextTransition>
           </Title.H1>
           <Title.H2>
             <TextTransition>Crowdstaking</TextTransition>
           </Title.H2>
-        </Title.Title>
+        </Title.HeaderTitle>
         <Navigation.Nav>
           {network.network && <Navigation.Network network={network.network} />}
           {wallet.address && (
             <WalletDisplay>{formatAddress(wallet.address)}</WalletDisplay>
           )}
         </Navigation.Nav>
+        <div className="flex justify-end md:hidden">
+          <button className="text-neutral-400 p-1 h-10 w-10 fill">
+            <svg className="fill-current" viewBox="0 0 24 24">
+              <path d="M3 18h18v-2H3v2Zm0-5h18v-2H3v2Zm0-7v2h18V6H3Z" />
+            </svg>
+          </button>
+        </div>
       </Header>
       <Main.Main>
+        <Title.MainTitle>
+          <Title.H1>
+            <TextTransition>BREADCHAIN</TextTransition>
+          </Title.H1>
+          <Title.H2>
+            <TextTransition>Crowdstaking</TextTransition>
+          </Title.H2>
+        </Title.MainTitle>
         {(() => {
           if (network.network === ENetwork.UNSUPPORTED)
             return (

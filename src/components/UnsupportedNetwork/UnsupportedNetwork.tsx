@@ -37,7 +37,7 @@ const UnsupportedNetwork: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <span className="mb-12">
+      <span className="mb-12 text-xs sm:text-base text-center">
         <TextTransition>
           You are not connected to a supported chain!
         </TextTransition>
