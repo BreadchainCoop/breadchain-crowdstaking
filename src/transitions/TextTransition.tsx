@@ -18,7 +18,7 @@ const TextTransition: React.FC = (props) => {
   }, [font.isLoaded]);
 
   return (
-    <span className="opacity-0" ref={ref}>
+    <span className={font.isLoaded ? "" : "opacity-0"} ref={ref}>
       {props.children}
     </span>
   );
