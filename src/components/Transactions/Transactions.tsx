@@ -1,4 +1,5 @@
 import React from "react";
+import getYieldAccrued from "../../api/getYieldAccrued";
 import config from "../../config";
 import { ENetwork } from "../../features/network/networkSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -17,20 +18,25 @@ const Transactions: React.FC = () => {
   const { transactions } = state;
 
   React.useEffect(() => {
-    if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+    console.log("TRANSACTIONS: ", network);
+
     const { ETHERSCAN_API_KEY, ETHERSCAN_URL } = config[network.network];
 
-    console.log(ETHERSCAN_URL);
-    console.log("address", wallet.address);
+    // console.log(ETHERSCAN_URL);
+    // console.log("address", wallet.address);
 
-    const url = `${ETHERSCAN_URL}/api?module=account&action=txlist&address=${wallet.address}&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
+    // const url = `${ETHERSCAN_URL}/api?module=account&action=txlist&address=${wallet.address}&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
 
-    setTimeout(() => {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          setState({ ...state, transactions: [...data.result] });
-        });
+    setTimeout(async () => {
+      if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+      const yieldAccrued = await getYieldAccrued(network.network);
+      console.log("yieldAccrued: ", yieldAccrued);
+
+      // fetch(url)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     setState({ ...state, transactions: [...data.result] });
+      //   });
     }, 2000);
 
     //   fetch(`${ETHERSCAN_URL}/api

@@ -1,4 +1,5 @@
 import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
 
 import AppContainer from "./ui/AppContainer";
 import Header from "../Header";
@@ -19,7 +20,9 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setWalletAddress } from "../../features/wallet/walletSlice";
 import {
   ENetwork,
+  ENetworkConnectionState,
   setNetwork,
+  setWalletConnected,
   setXr,
 } from "../../features/network/networkSlice";
 import { getXr } from "../../api/getXr";
@@ -36,6 +39,13 @@ import { getBalances } from "../../features/wallet/walletSlice";
 import { EModalStatus, EModalType } from "../../features/modal/modalSlice";
 import TextTransition from "../../transitions/TextTransition";
 import MobileNavigation from "../MobileNavigation/MobileNavigation";
+import Transactions from "../Transactions";
+import { Info } from "../Info";
+import MintAndBurn from "../MintAndBurn/MintAndBurn";
+
+import ReactMarkdown from "react-markdown";
+
+import markdown from "../../info";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -82,6 +92,7 @@ const App: React.FC = () => {
       }
 
       dispatch(setNetwork(network));
+      dispatch(setWalletConnected(ENetworkConnectionState.CONNECTED));
 
       // binds handlers for metamask events eg account change / network change
       ethInit(appState, dispatch);
@@ -174,37 +185,20 @@ const App: React.FC = () => {
         </div>
       </Header>
       <Main.Main>
-        <Title.MainTitle>
-          <Title.H1>
-            <TextTransition>BREADCHAIN</TextTransition>
-          </Title.H1>
-          <Title.H2>
-            <TextTransition>Crowdstaking</TextTransition>
-          </Title.H2>
-        </Title.MainTitle>
-        {(() => {
-          if (network.network === ENetwork.UNSUPPORTED)
-            return (
-              <Main.Inner>
-                <UnsupportedNetwork />
-              </Main.Inner>
-            );
-          if (wallet.address)
-            return (
-              <Main.Inner>
-                <Swap />
-              </Main.Inner>
-            );
-          return (
-            <Main.Inner>
-              <ConnectWallet />
-            </Main.Inner>
-          );
-        })()}
-
-        {/* {wallet.address && <Transactions />} */}
+        <Routes>
+          <Route path="/" element={<MintAndBurn />} />
+          <Route path="/info" element={<Info />} />
+        </Routes>
       </Main.Main>
-      <Footer>🦄</Footer>
+      <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert max-w-4xl m-auto px-2 py-16 md:px-6">
+        <ReactMarkdown>{markdown}</ReactMarkdown>
+      </section>
+      <Footer>
+        <span>Maybe some links down here?</span>
+        <Link to="/info" className="opacity-0 hover:opacity-100 px-4 py-2">
+          info
+        </Link>
+      </Footer>
     </AppContainer>
   );
 };
