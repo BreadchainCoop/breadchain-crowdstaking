@@ -20,7 +20,7 @@ const Transactions: React.FC = () => {
   React.useEffect(() => {
     console.log("TRANSACTIONS: ", network);
 
-    const { ETHERSCAN_API_KEY, ETHERSCAN_URL } = config[network.network];
+    // const { ETHERSCAN_API_KEY, ETHERSCAN_URL } = config[network.network];
 
     // console.log(ETHERSCAN_URL);
     // console.log("address", wallet.address);
