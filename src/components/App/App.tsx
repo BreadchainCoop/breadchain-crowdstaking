@@ -190,7 +190,7 @@ const App: React.FC = () => {
           <Route path="/info" element={<Info />} />
         </Routes>
       </Main.Main>
-      <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert max-w-4xl m-auto px-2 py-16 md:px-6">
+      <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert max-w-4xl m-auto px-2 py-16 sm:px-4 md:px-6">
         <ReactMarkdown>{markdown}</ReactMarkdown>
       </section>
       <Footer>
