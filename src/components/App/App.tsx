@@ -73,6 +73,8 @@ const App: React.FC = () => {
 
       // setEthereum(ethereum);
       if (ethereum.isConnected && !ethereum.isConnected()) {
+        // this condition is met on MM mobile when initially loading the page for some reason
+        return;
         dispatch(
           setToast({
             type: EToastType.ERROR,
@@ -90,7 +92,7 @@ const App: React.FC = () => {
       dispatch(setNetwork(network));
       dispatch(setWalletConnected(ENetworkConnectionState.CONNECTED));
 
-      // binds handlers for metamask events eg account change / network change
+      // bind handlers for metamask events eg account change / network change
       ethInit(appState, dispatch);
 
       // If there is an address stored we can check how recently wallet was connected
@@ -136,9 +138,6 @@ const App: React.FC = () => {
       if (allowance.value === 0) dispatch(setNotApproved());
     })();
   }, [wallet.address]);
-  console.log(toast);
-
-  console.log("\n\n: network: ", network.network);
 
   return (
     <AppContainer>
