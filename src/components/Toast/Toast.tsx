@@ -11,8 +11,8 @@ type TProps = {
 
 const ToastContainer: React.FC = (props) => {
   return (
-    <div className="fixed bottom-0 p-8 w-full">
-      <div className="py-8 px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
+    <div className="p-4 w-full">
+      <div className="px-6 py-8 md:px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
         {props.children}
       </div>
     </div>
