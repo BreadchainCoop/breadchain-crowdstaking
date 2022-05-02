@@ -68,18 +68,10 @@ const App: React.FC = () => {
         return;
       }
 
-      console.log(Object.keys(ethereum));
-      console.log(ethereum);
-
-      // setEthereum(ethereum);
       if (ethereum.isConnected && !ethereum.isConnected()) {
         // this condition is met on MM mobile when initially loading the page for some reason
-        return;
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "ethereum / MetaMask not connected!!!",
-          })
+        console.log(
+          "ethereum / MetaMask not connected condition met (App.tsx)"
         );
       }
 
