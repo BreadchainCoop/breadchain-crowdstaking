@@ -6,7 +6,7 @@ import TextTransition from "../../transitions/TextTransition";
 
 export const Nav: React.FC = (props) => {
   return (
-    <nav className="flex flex-col md:items-end justify-center grow md:grow-0 mr-8 md:mr-0">
+    <nav className="flex flex-col md:items-end justify-center grow md:grow-0">
       {props.children}
     </nav>
   );
