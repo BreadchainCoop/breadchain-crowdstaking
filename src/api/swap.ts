@@ -62,9 +62,14 @@ export const swap = async (
       );
       txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
     }
-  } catch (err) {
-    console.log("swap mint/burn() catch block");
+  } catch (err: any) {
     console.log(err);
+    dispatch(
+      setToast({
+        type: EToastType.ERROR,
+        message: `${err.message} - ${err.data.message}`,
+      })
+    );
     dispatch(closeModal());
     return;
   }

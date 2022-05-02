@@ -34,7 +34,7 @@ const Transaction: React.FC = () => {
             <Elipsis />
           </>
         )}
-        {status === ETransactionStatus.COMPLETE && "transaction complete"}
+        {status === ETransactionStatus.COMPLETE && "transaction complete!"}
       </div>
     </div>
   );

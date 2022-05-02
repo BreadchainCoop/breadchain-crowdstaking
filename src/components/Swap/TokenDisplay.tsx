@@ -14,7 +14,7 @@ type TBalanceProps = {
 
 const BalanceButton: React.FC<TBalanceProps> = (props) => {
   return (
-    <button className="text-sm p-3" {...props}>
+    <button className="text-xs sm:text-sm p-3" {...props}>
       {props.children}
     </button>
   );
@@ -22,7 +22,7 @@ const BalanceButton: React.FC<TBalanceProps> = (props) => {
 
 const Balance: React.FC = (props) => {
   return (
-    <span className="text-sm p-3 inline-block" {...props}>
+    <span className="text-xs sm:text-sm p-3 inline-block" {...props}>
       {props.children}
     </span>
   );
@@ -35,7 +35,7 @@ const TokenDisplay: React.FC & {
   BalanceButton: typeof BalanceButton;
 } = (props) => {
   return (
-    <div className="bg-breadgray-100 w-full p-4 pb-8 pr-6 text-gray-300">
+    <div className="bg-breadgray-100 w-full p-2 sm:p-4 pb-4 sm:pb-8 pr-6 text-gray-300">
       {props.children}
     </div>
   );

@@ -67,7 +67,7 @@ const Toast: React.FC<TProps> = (props) => {
   switch (props.type) {
     case EToastType.ERROR:
       return (
-        <div ref={ref}>
+        <div ref={ref} className="fixed bottom-0 w-full">
           <ToastContainer>
             <CloseButton onClick={handleCloseToast} />
             <h1 className="text-red-500 text-xl">Error</h1>
