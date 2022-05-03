@@ -40,8 +40,9 @@ import { EModalStatus, EModalType } from "../../features/modal/modalSlice";
 import TextTransition from "../../transitions/TextTransition";
 import MobileNavigation from "../MobileNavigation/MobileNavigation";
 import Transactions from "../Transactions";
-import { Info } from "../Info";
+import { Pantry } from "../Pantry";
 import MintAndBurn from "../MintAndBurn/MintAndBurn";
+import Info from "../../routes/Info";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -107,30 +108,6 @@ const App: React.FC = () => {
     })();
   }, []);
 
-  React.useEffect(() => {
-    (async () => {
-      if (!wallet.address || !network.network) return;
-      // have address now get balances
-      dispatch(getBalances({}));
-
-      dispatch(setApprovalLoading());
-      const allowance = await getAllowance(wallet.address, network.network);
-
-      if (!allowance) {
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "Failed to get allowance!",
-          })
-        );
-        return;
-      }
-
-      if (allowance.value > 0) dispatch(setApproved());
-      if (allowance.value === 0) dispatch(setNotApproved());
-    })();
-  }, [wallet.address]);
-
   return (
     <AppContainer>
       {/* <MobileNavigation /> */}
@@ -175,13 +152,16 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MintAndBurn />} />
           <Route path="/info" element={<Info />} />
+          <Route path="/pantry" element={<Pantry />} />
         </Routes>
       </Main.Main>
 
       <Footer>
-        <span>Maybe some links down here?</span>
         <Link to="/info" className="opacity-0 hover:opacity-100 px-4 py-2">
           info
+        </Link>
+        <Link to="/pantry" className="opacity-0 hover:opacity-100 px-4 py-2">
+          pantry
         </Link>
       </Footer>
     </AppContainer>

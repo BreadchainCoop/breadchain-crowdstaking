@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export enum EModalType {
   CONNECT_WALLET,
   CHANGE_NETWORK,
+  CHANGING_NETWORK,
   APPROVAL,
   MINTING,
   BURNING,

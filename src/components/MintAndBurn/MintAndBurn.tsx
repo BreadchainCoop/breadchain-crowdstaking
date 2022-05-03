@@ -1,16 +1,49 @@
 import React from "react";
+import { getAllowance } from "../../api";
+import {
+  EApprovalStatus,
+  setApprovalLoading,
+  setApproved,
+  setNotApproved,
+} from "../../features/approval/approvalSlice";
 import { ENetwork } from "../../features/network/networkSlice";
-import { useAppSelector } from "../../store/hooks";
+import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { getBalances } from "../../features/wallet/walletSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import TextTransition from "../../transitions/TextTransition";
 import * as Main from "../App/ui/Main";
-import BreadchainInfo from "../BreadchainInfo/BreadchainInfo";
 import ConnectWalletButton from "../ConnectWalletButton";
 import * as Title from "../Header/Title";
 import Swap from "../Swap";
 import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
 export const MintAndBurn: React.FC = () => {
-  const { network, wallet } = useAppSelector((state) => state);
+  const { network, wallet, approval } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    (async () => {
+      if (!wallet.address || !network.network) return;
+      // have address now get balances
+      dispatch(getBalances({}));
+
+      if (approval.status !== null) return;
+      dispatch(setApprovalLoading());
+      const allowance = await getAllowance(wallet.address, network.network);
+
+      if (!allowance) {
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message: "Failed to get allowance!",
+          })
+        );
+        return;
+      }
+
+      if (allowance.value > 0) dispatch(setApproved());
+      if (allowance.value === 0) dispatch(setNotApproved());
+    })();
+  }, [wallet.address]);
   return (
     <>
       <Title.MainTitle>
@@ -28,7 +61,6 @@ export const MintAndBurn: React.FC = () => {
               <Main.Inner>
                 <UnsupportedNetwork />
               </Main.Inner>
-              <BreadchainInfo />
             </>
           );
         if (wallet.address)
@@ -37,7 +69,6 @@ export const MintAndBurn: React.FC = () => {
               <Main.Inner>
                 <Swap />
               </Main.Inner>
-              <BreadchainInfo />
             </>
           );
         return (
@@ -45,12 +76,9 @@ export const MintAndBurn: React.FC = () => {
             <Main.Inner>
               <ConnectWalletButton />
             </Main.Inner>
-            <BreadchainInfo />
           </>
         );
       })()}
-
-      {/* {wallet.address && <Transactions />} */}
     </>
   );
 };

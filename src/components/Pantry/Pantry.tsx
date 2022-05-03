@@ -5,7 +5,7 @@ import getYieldAccrued from "../../api/getYieldAccrued";
 import { ENetwork } from "../../features/network/networkSlice";
 import { useAppSelector } from "../../store/hooks";
 
-export const Info: React.FC = () => {
+export const Pantry: React.FC = () => {
   const [breadSupply, setBreadSupply] = React.useState<string | null>(null);
   const [yieldAccrued, setYieldAccrued] = React.useState<string | null>(null);
 
@@ -15,6 +15,7 @@ export const Info: React.FC = () => {
     console.log("info use effect....");
 
     if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+
     getYieldAccrued(network.network).then((res) => {
       if (!res) {
         console.log("Failed to get accrued yield!");
@@ -36,7 +37,7 @@ export const Info: React.FC = () => {
 
       console.log(res?.balance);
     });
-  }, []);
+  }, [network]);
 
   console.log("info render: ", yieldAccrued);
 
@@ -48,4 +49,4 @@ export const Info: React.FC = () => {
   );
 };
 
-export default Info;
+export default Pantry;

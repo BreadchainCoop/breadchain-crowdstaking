@@ -27,7 +27,12 @@ const UnsupportedNetwork: React.FC = () => {
           },
         ],
       });
-      dispatch(closeModal());
+      dispatch(
+        openModal({
+          type: EModalType.CHANGING_NETWORK,
+          title: "Switching Network...",
+        })
+      );
     } catch (err) {
       // !!! handle in ui?
       console.error("failed switching to ethereum chain!");

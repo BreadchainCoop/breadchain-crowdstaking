@@ -14,7 +14,10 @@ type TBalanceProps = {
 
 const BalanceButton: React.FC<TBalanceProps> = (props) => {
   return (
-    <button className="text-xs sm:text-sm p-3" {...props}>
+    <button
+      className="text-xs sm:text-sm p-3 hover:underline hover:text-white"
+      {...props}
+    >
       {props.children}
     </button>
   );

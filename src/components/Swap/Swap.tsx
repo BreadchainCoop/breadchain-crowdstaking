@@ -155,6 +155,8 @@ const SwapUI: React.FC = () => {
                 wallet.tokens &&
                 from.status === EBalanceStatus.LOADING ? (
                   <Elipsis />
+                ) : wallet.tokens && from.status === EBalanceStatus.REJECTED ? (
+                  ""
                 ) : (
                   formatter.format(parseFloat(from.balance))
                 )}
@@ -183,6 +185,8 @@ const SwapUI: React.FC = () => {
                 Balance:{" "}
                 {wallet.tokens && to.status === EBalanceStatus.LOADING ? (
                   <Elipsis />
+                ) : wallet.tokens && to.status === EBalanceStatus.REJECTED ? (
+                  ""
                 ) : (
                   formatter.format(parseFloat(to.balance))
                 )}
@@ -203,6 +207,8 @@ const SwapUI: React.FC = () => {
         {wallet.tokens &&
         wallet.tokens.MATIC.status === EBalanceStatus.LOADING ? (
           <Elipsis />
+        ) : wallet.tokens.MATIC.status === EBalanceStatus.REJECTED ? (
+          ""
         ) : (
           <span className="ml-4">
             {parseFloat(wallet.tokens.MATIC.balance).toFixed(4)}

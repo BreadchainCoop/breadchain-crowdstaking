@@ -116,6 +116,15 @@ const ShowModal: React.FC<TProps> = (props) => {
           </Modal.Inner>
         </Modal.Container>
       );
+    case EModalType.CHANGING_NETWORK:
+      return (
+        <Modal.Container>
+          <Modal.Inner>
+            <Modal.Heading>Changing Network...</Modal.Heading>
+            <Modal.Message>please wait a moment!</Modal.Message>
+          </Modal.Inner>
+        </Modal.Container>
+      );
     default:
       return (
         <Modal.Container>
