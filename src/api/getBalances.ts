@@ -30,8 +30,6 @@ export const getBalances = async (
   }
 
   const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
-  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
-  console.log({ ALCHEMY_URL, ALCHEMY_API_KEY });
 
   const provider = new ethers.providers.JsonRpcProvider(
     `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
