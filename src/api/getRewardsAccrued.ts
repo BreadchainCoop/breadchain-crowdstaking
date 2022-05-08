@@ -27,6 +27,8 @@ export const getRewardsAccrued = async (
 
   const { BREAD } = config[network];
 
+  console.log(BREAD);
+
   const BREADcontract = new ethers.Contract(
     BREAD.address,
     BREADabi.abi,
@@ -37,7 +39,7 @@ export const getRewardsAccrued = async (
   let rewardsAccrued = await BREADcontract.rewardsAccrued();
   console.log("rewardsAccrued raw value: ", rewardsAccrued);
 
-  const rewardsAccruedFormatted = ethers.utils.formatUnits(rewardsAccrued);
+  // const rewardsAccruedFormatted = ethers.utils.formatUnits(rewardsAccrued);
 
   // const BREADBalance = ethers.utils
   //   .formatUnits(BREADBal, BREAD.decimals)
@@ -46,7 +48,8 @@ export const getRewardsAccrued = async (
   // const MATICBalance = ethers.utils.formatEther(MATICBal);
 
   return {
-    rewardsAccrued: rewardsAccruedFormatted,
+    // rewardsAccrued: rewardsAccruedFormatted,
+    rewardsAccrued,
   };
 };
 

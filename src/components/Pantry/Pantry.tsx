@@ -28,7 +28,6 @@ export const Pantry: React.FC = () => {
         console.error("failed to get bread supply!");
         return;
       }
-      console.error(res.totalSupply);
       setBreadSupply(res.totalSupply);
     });
     getYieldAccrued(network.network).then((res) => {
@@ -39,14 +38,14 @@ export const Pantry: React.FC = () => {
       console.log("yieldAccrued: ", res.yieldAccrued);
       if (res.yieldAccrued) setYieldAccrued(res.yieldAccrued);
     });
-    getRewardsAccrued(network.network).then((res) => {
-      if (!res) {
-        console.error("Failed to get accrued yield!");
-        return;
-      }
-      console.log("yieldAccrued: ", res.rewardsAccrued);
-      if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
-    });
+    // getRewardsAccrued(network.network).then((res) => {
+    //   if (!res) {
+    //     console.error("Failed to get accrued yield!");
+    //     return;
+    //   }
+    //   console.log("yieldAccrued: ", res.rewardsAccrued);
+    //   if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
+    // });
     getMultisigBalance(network.network).then((res) => {
       if (!res) {
         console.error("Failed to get multisig balance!");
@@ -58,24 +57,25 @@ export const Pantry: React.FC = () => {
 
   const handleClaimYield = () => {
     if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
-    claimYield(network.network).then((res) => {
+    claimYield(network.network).then(async (tx) => {
       if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
-      setRewardsAccrued(null);
-      getRewardsAccrued(network.network).then((res) => {
+      setYieldAccrued("claiming yield...");
+      await tx.wait();
+      getYieldAccrued(network.network).then((res) => {
         if (!res) {
           console.error("Failed to get accrued yield!");
           return;
         }
-        console.log("yieldAccrued: ", res.rewardsAccrued);
-        if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
-      });
-      getMultisigBalance(network.network).then((res) => {
-        setMultisigBalance(null);
-        if (!res) {
-          console.error("Failed to get multisig balance!");
-          return;
-        }
-        if (res.balance) setMultisigBalance(res.balance);
+        console.log("yieldAccrued: ", res.yieldAccrued);
+        if (res.yieldAccrued) setYieldAccrued(res.yieldAccrued);
+        getMultisigBalance(network.network).then((res) => {
+          setMultisigBalance(null);
+          if (!res) {
+            console.error("Failed to get multisig balance!");
+            return;
+          }
+          if (res.balance) setMultisigBalance(res.balance);
+        });
       });
     });
   };
@@ -85,9 +85,11 @@ export const Pantry: React.FC = () => {
       <span>BREAD in circulation: </span> <span>{breadSupply}</span>
       <span>Multisig DAI Balance: </span> <span>{multisigBalance}</span>
       <span>Yield Accrued: </span> <span>{yieldAccrued}</span>
-      <span>Rewards Accrued: </span> <span>{rewardsAccrued}</span>
+      {/* <span>Rewards Accrued: </span> <span>{rewardsAccrued}</span> */}
       <span>
-        <Button onClick={handleClaimYield}>Claim Yield</Button>
+        <Button onClick={handleClaimYield}>
+          {yieldAccrued === "claiming yield..." ? "claiming..." : "Claim Yield"}
+        </Button>
       </span>
     </section>
   );
