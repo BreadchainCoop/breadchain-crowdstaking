@@ -4,17 +4,14 @@ import { Routes, Route, Link } from "react-router-dom";
 import AppContainer from "./ui/AppContainer";
 import Header from "../Header";
 import * as Main from "./ui/Main";
-import Swap from "../Swap";
 import Footer from "../Footer";
 import Modal from "../Modal";
 import Logo from "../Header/Logo";
 import * as Title from "../Header/Title";
 import * as Navigation from "../Header/Navigation";
-import ConnectWallet from "../ConnectWalletButton/ConnectWalletButton";
 import WalletDisplay from "../WalletDisplay";
-import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
-import { getAllowance, getNetwork, ethInit } from "../../api";
+import { getNetwork, ethInit } from "../../api";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setWalletAddress } from "../../features/wallet/walletSlice";
@@ -23,23 +20,12 @@ import {
   ENetworkConnectionState,
   setNetwork,
   setWalletConnected,
-  setXr,
 } from "../../features/network/networkSlice";
-import { getXr } from "../../api/getXr";
 import { formatAddress } from "../../util/formatWalletAddress";
 import { setIsLoaded } from "../../features/font/fontSlice";
-import {
-  setApprovalLoading,
-  setApproved,
-  setNotApproved,
-} from "../../features/approval/approvalSlice";
+
 import Toast from "../Toast/Toast";
-import { EToastType, setToast } from "../../features/toast/toastSlice";
-import { getBalances } from "../../features/wallet/walletSlice";
-import { EModalStatus, EModalType } from "../../features/modal/modalSlice";
 import TextTransition from "../../transitions/TextTransition";
-import MobileNavigation from "../MobileNavigation/MobileNavigation";
-import Transactions from "../Transactions";
 import { Pantry } from "../Pantry";
 import MintAndBurn from "../MintAndBurn/MintAndBurn";
 import Info from "../../routes/Info";
@@ -65,20 +51,18 @@ const App: React.FC = () => {
 
       const ethereum = (window as any).ethereum;
       if (!ethereum) {
-        console.log("metamask or similar not installed!!");
+        // !!! handle this error
         return;
       }
 
       if (ethereum.isConnected && !ethereum.isConnected()) {
         // this condition is met on MM mobile when initially loading the page for some reason
-        console.log(
-          "ethereum / MetaMask not connected condition met (App.tsx)"
-        );
+        // !!! handle this error
       }
 
       const network = await getNetwork();
       if (!network) {
-        console.error("No chain ID could be determined!");
+        // !!! handle this error
         return;
       }
 
@@ -110,14 +94,6 @@ const App: React.FC = () => {
 
   return (
     <AppContainer>
-      {/* <MobileNavigation /> */}
-      {/* <Modal
-        modal={{
-          type: EModalType.MINTING,
-          status: EModalStatus.UNLOCKED,
-          title: "Minting 100.435 BREAD",
-        }}
-      /> */}
       {modal.type !== null && <Modal modal={modal} />}
       {toast.type !== null && toast.message !== null && (
         <Toast type={toast.type} message={toast.message} />

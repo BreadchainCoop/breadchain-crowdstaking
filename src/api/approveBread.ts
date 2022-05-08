@@ -22,6 +22,7 @@ export const approveBREAD = async (
   if (!ethereum) return;
 
   if (network === ENetwork.UNSUPPORTED) {
+    // ??? should this be shown to a user?
     console.error("Can't get balances on an unsupported network");
     return null;
   }
@@ -48,8 +49,7 @@ export const approveBREAD = async (
   try {
     txn = await DAIcontract.approve(BREAD.address, ethers.constants.MaxUint256);
   } catch (err) {
-    console.log("approve() catch block");
-    console.log(err);
+    // !!! handle this error
     dispatch(closeModal());
     return;
   }
@@ -59,6 +59,6 @@ export const approveBREAD = async (
     await txn.wait();
     dispatch(setApproved());
   } catch (err) {
-    console.log(err);
+    // !!! handle this error
   }
 };

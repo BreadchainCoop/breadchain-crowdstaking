@@ -33,15 +33,13 @@ const ConnectWalletButton: React.FC = (props) => {
     try {
       const account = await getAccount();
       dispatch(setWalletAddress(account));
-      // store wallet address on connect so we can check for it on app init.
       localStorage.setItem(
         "storedAccount",
         JSON.stringify({ timestamp: Date.now(), account })
       );
       dispatch(closeModal());
     } catch (err) {
-      console.log("connectWallet / getAccount() catch block");
-      console.log(err);
+      // !!! handle this error
       dispatch(closeModal());
     }
   };

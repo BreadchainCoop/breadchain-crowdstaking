@@ -18,7 +18,6 @@ const ShowModal: React.FC<TProps> = (props) => {
   const { modal } = props;
   const dispatch = useAppDispatch();
   const handleCloseModal = () => {
-    console.log("boomf");
     dispatch(closeModal());
   };
   switch (modal.type) {

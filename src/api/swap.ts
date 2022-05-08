@@ -25,7 +25,6 @@ export const swap = async (
   resetSwapState: () => void
 ) => {
   const { name, value } = from;
-  console.log(value);
 
   const { ethereum } = window as any;
   if (!ethereum) return;
@@ -63,7 +62,7 @@ export const swap = async (
       txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
     }
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     dispatch(
       setToast({
         type: EToastType.ERROR,
@@ -80,7 +79,7 @@ export const swap = async (
   try {
     await txn.wait();
   } catch (err: any) {
-    console.log(err);
+    console.error(err);
     dispatch(
       setToast({
         type: EToastType.ERROR,

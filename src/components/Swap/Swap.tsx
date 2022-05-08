@@ -111,8 +111,6 @@ const SwapUI: React.FC = () => {
 
   const handleSubmit = async () => {
     if (network.network && wallet.address) {
-      console.log(network.network && wallet.address);
-
       await swap(
         network.network,
         swapState.from,

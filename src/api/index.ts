@@ -26,7 +26,6 @@ export const getChainId = async () => {
   const { ethereum } = window as any;
   const provider = new ethers.providers.Web3Provider(ethereum);
   const network = await provider.getNetwork();
-  console.log(network);
 
   return network.chainId;
 };
