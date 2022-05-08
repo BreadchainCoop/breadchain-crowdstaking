@@ -3,6 +3,7 @@ import React from "react";
 type TProps = {
   // variant?: EButtonVariant;
   onClick: (event: React.MouseEvent) => void;
+  disabled: boolean;
 };
 
 const Button: React.FC<TProps> = (props) => {

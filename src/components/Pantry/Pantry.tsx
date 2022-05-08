@@ -89,8 +89,11 @@ export const Pantry: React.FC = () => {
       <span>Yield Accrued: </span> <span>{yieldAccrued}</span>
       {/* <span>Rewards Accrued: </span> <span>{rewardsAccrued}</span> */}
       <span>
-        <Button onClick={handleClaimYield}>
-          {yieldAccrued === "claiming yield..." ? "claiming..." : "Claim Yield"}
+        <Button
+          disabled={yieldAccrued === "claiming yield..."}
+          onClick={handleClaimYield}
+        >
+          Claim Yield
         </Button>
       </span>
     </section>
