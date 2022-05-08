@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
 
-import ADAIabi from "../ADAIPolygon.json";
+import ADAIabi from "../EIP20.json";
 import config from "../config";
 
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
