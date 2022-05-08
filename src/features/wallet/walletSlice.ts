@@ -159,7 +159,6 @@ const walletSlice = createSlice({
       state.tokens.MATIC.balance = action.payload.MATIC.balance;
     });
     builder.addCase(getBalances.rejected, (state, action) => {
-      console.log("getBalances rejected: ", action);
       state.tokens.BREAD.status = EBalanceStatus.REJECTED;
       state.tokens.DAI.status = EBalanceStatus.REJECTED;
       state.tokens.MATIC.status = EBalanceStatus.REJECTED;

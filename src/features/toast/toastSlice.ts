@@ -15,7 +15,7 @@ const initialState: IToast = {
 };
 
 const ToastSlice = createSlice({
-  name: "Modal",
+  name: "Toast",
   initialState,
   reducers: {
     setToast(state, action: PayloadAction<IToast>) {
