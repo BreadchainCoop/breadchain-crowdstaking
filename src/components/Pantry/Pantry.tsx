@@ -1,10 +1,12 @@
 import React from "react";
+import claimYield from "../../api/claimYield";
 import getBreadSupply from "../../api/getBreadSupply";
 import getMultisigBalance from "../../api/getMultisigBalance";
 import getRewardsAccrued from "../../api/getRewardsAccrued";
 import getYieldAccrued from "../../api/getYieldAccrued";
 import { ENetwork } from "../../features/network/networkSlice";
 import { useAppSelector } from "../../store/hooks";
+import Button from "../Button";
 
 export const Pantry: React.FC = () => {
   const [breadSupply, setBreadSupply] = React.useState<string | null>(null);
@@ -12,8 +14,11 @@ export const Pantry: React.FC = () => {
   const [rewardsAccrued, setRewardsAccrued] = React.useState<string | null>(
     null
   );
+  const [multisigBalance, setMultisigBalance] = React.useState<string | null>(
+    null
+  );
 
-  const { network } = useAppSelector((state) => state);
+  const { network, wallet } = useAppSelector((state) => state);
 
   React.useEffect(() => {
     if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
@@ -43,14 +48,47 @@ export const Pantry: React.FC = () => {
       if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
     });
     getMultisigBalance(network.network).then((res) => {
-      console.log("multisig balance: ", res);
+      if (!res) {
+        console.error("Failed to get multisig balance!");
+        return;
+      }
+      if (res.balance) setMultisigBalance(res.balance);
     });
   }, [network]);
 
+  const handleClaimYield = () => {
+    if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+    claimYield(network.network).then((res) => {
+      if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+      setRewardsAccrued(null);
+      getRewardsAccrued(network.network).then((res) => {
+        if (!res) {
+          console.error("Failed to get accrued yield!");
+          return;
+        }
+        console.log("yieldAccrued: ", res.rewardsAccrued);
+        if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
+      });
+      getMultisigBalance(network.network).then((res) => {
+        setMultisigBalance(null);
+        if (!res) {
+          console.error("Failed to get multisig balance!");
+          return;
+        }
+        if (res.balance) setMultisigBalance(res.balance);
+      });
+    });
+  };
+
   return (
-    <section className="max-w-4xl m-auto p-8 grid grid-cols-2 gap-8">
+    <section className="max-w-4xl m-auto p-8 py-16 grid grid-cols-2 gap-8">
       <span>BREAD in circulation: </span> <span>{breadSupply}</span>
+      <span>Multisig DAI Balance: </span> <span>{multisigBalance}</span>
       <span>Yield Accrued: </span> <span>{yieldAccrued}</span>
+      <span>Rewards Accrued: </span> <span>{rewardsAccrued}</span>
+      <span>
+        <Button onClick={handleClaimYield}>Claim Yield</Button>
+      </span>
     </section>
   );
 };
