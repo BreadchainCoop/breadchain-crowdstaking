@@ -68,6 +68,8 @@ export const Pantry: React.FC = () => {
         }
         console.log("yieldAccrued: ", res.yieldAccrued);
         if (res.yieldAccrued) setYieldAccrued(res.yieldAccrued);
+        if (!network.network || network.network === ENetwork.UNSUPPORTED)
+          return;
         getMultisigBalance(network.network).then((res) => {
           setMultisigBalance(null);
           if (!res) {
