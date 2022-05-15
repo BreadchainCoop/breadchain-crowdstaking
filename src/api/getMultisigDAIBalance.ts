@@ -6,7 +6,7 @@ import config from "../config";
 
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
 
-export const getMultisigBalance = async (
+export const getMultisigDAIBalance = async (
   // account: string,
   network: ENetwork
 ): Promise<null | {
@@ -46,4 +46,4 @@ export const getMultisigBalance = async (
   };
 };
 
-export default getMultisigBalance;
+export default getMultisigDAIBalance;
