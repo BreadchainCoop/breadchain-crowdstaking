@@ -48,7 +48,7 @@ const UnsupportedNetwork: React.FC = () => {
         </TextTransition>
       </span>
       <span className="flex justify-center">
-        <Button onClick={handleSwitchToEthereum}>
+        <Button onClick={handleSwitchToEthereum} disabled={false}>
           <TextTransition>Connect to Polygon</TextTransition>
         </Button>
       </span>
