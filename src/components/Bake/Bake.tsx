@@ -17,7 +17,7 @@ import * as Title from "../Header/Title";
 import Swap from "../Swap";
 import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
-export const MintAndBurn: React.FC = () => {
+export const Bake: React.FC = () => {
   const { network, wallet, approval } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
@@ -80,4 +80,4 @@ export const MintAndBurn: React.FC = () => {
   );
 };
 
-export default MintAndBurn;
+export default Bake;

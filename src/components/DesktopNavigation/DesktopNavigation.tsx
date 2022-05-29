@@ -28,10 +28,13 @@ const DesktopNavigation: React.FC = () => {
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
       <DesktopNavLink isCurrentPage={location.pathname === "/"} to="/">
-        Swap
+        Bake
       </DesktopNavLink>
-      <DesktopNavLink isCurrentPage={location.pathname === "/info"} to="/info">
-        Info
+      <DesktopNavLink
+        isCurrentPage={location.pathname === "/about"}
+        to="/about"
+      >
+        About
       </DesktopNavLink>
     </nav>
   );

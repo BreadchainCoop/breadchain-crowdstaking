@@ -51,7 +51,7 @@ export const swap = async (
   try {
     if (name === "DAI") {
       dispatch(
-        openModal({ type: EModalType.MINTING, title: `Minting ${value} BREAD` })
+        openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
       );
       txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
     }
@@ -83,7 +83,7 @@ export const swap = async (
     dispatch(
       setToast({
         type: EToastType.ERROR,
-        message: "mint/burn transaction failed",
+        message: "bake/burn transaction failed",
       })
     );
   }

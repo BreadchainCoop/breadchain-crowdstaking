@@ -1,9 +1,9 @@
 import React from "react";
 
-import MintAndBurn from "../components/MintAndBurn/MintAndBurn";
+import Bake from "../components/Bake/Bake";
 
 const Index: React.FC = () => {
-  return <MintAndBurn />;
+  return <Bake />;
 };
 
 export default Index;

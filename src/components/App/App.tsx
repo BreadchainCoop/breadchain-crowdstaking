@@ -27,10 +27,9 @@ import { setIsLoaded } from "../../features/font/fontSlice";
 import Toast from "../Toast/Toast";
 import TextTransition from "../../transitions/TextTransition";
 import { Pantry } from "../Pantry";
-import MintAndBurn from "../MintAndBurn/MintAndBurn";
-import Info from "../../routes/Info";
 import Index from "../../routes/Index";
 import DesktopNavigation from "../DesktopNavigation/DesktopNavigation";
+import About from "../../routes/Info";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -132,7 +131,7 @@ const App: React.FC = () => {
       <Main.Main>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/info" element={<Info />} />
+          <Route path="/about" element={<About />} />
           <Route path="/pantry" element={<Pantry />} />
         </Routes>
       </Main.Main>

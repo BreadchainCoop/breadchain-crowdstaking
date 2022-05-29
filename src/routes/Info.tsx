@@ -2,8 +2,8 @@ import React from "react";
 
 import BreadchainInfo from "../components/BreadchainInfo/BreadchainInfo";
 
-const info: React.FC = () => {
+const About: React.FC = () => {
   return <BreadchainInfo />;
 };
 
-export default info;
+export default About;

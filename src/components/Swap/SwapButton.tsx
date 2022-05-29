@@ -9,7 +9,7 @@ const SwapButton: React.FC<TProps> = ({ onClick, from, disabled }) => {
       className="w-full px-8 py-4 flex justify-center items-center text-breadgray-200 button-gradient uppercase text-xl sm:text-2xl"
       disabled={disabled}
     >
-      {from === "BREAD" ? "Burn Bread" : "Mint Bread"}
+      {from === "BREAD" ? "Burn Bread" : "Bake Bread"}
     </button>
   );
 };
