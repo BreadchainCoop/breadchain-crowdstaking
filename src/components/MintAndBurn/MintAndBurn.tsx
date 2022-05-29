@@ -22,8 +22,13 @@ export const MintAndBurn: React.FC = () => {
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     (async () => {
-      if (!wallet.address || !network.network) return;
-      // have address now get balances
+      if (
+        !wallet.address ||
+        !network.network ||
+        network.network === ENetwork.UNSUPPORTED
+      )
+        return;
+
       dispatch(getBalances({}));
 
       if (approval.status !== null) return;
@@ -46,14 +51,6 @@ export const MintAndBurn: React.FC = () => {
   }, [wallet.address]);
   return (
     <>
-      <Title.MainTitle>
-        <Title.H1>
-          <TextTransition>BREADCHAIN</TextTransition>
-        </Title.H1>
-        <Title.H2>
-          <TextTransition>Crowdstaking</TextTransition>
-        </Title.H2>
-      </Title.MainTitle>
       {(() => {
         if (network && network.network === ENetwork.UNSUPPORTED)
           return (

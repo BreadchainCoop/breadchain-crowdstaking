@@ -4,6 +4,8 @@ import { ENetwork } from "../../features/network/networkSlice";
 import { appendClasses } from "../../transitions/NiceTransition";
 import TextTransition from "../../transitions/TextTransition";
 
+// !!! This isn't a nav... more like wallet display?
+
 export const Nav: React.FC = (props) => {
   return (
     <nav className="flex flex-col md:items-end justify-center grow md:grow-0 mr-6 md:mr-0">
