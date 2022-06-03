@@ -11,13 +11,32 @@ const DesktopNavLink: React.FC<IDesktopNavLinkProps> = (props) => {
     <Link
       className={
         props.isCurrentPage
-          ? "px-4 text-sm text-neutral-200 hover:text-neutral-200"
-          : "px-4 text-sm text-neutral-400 hover:text-neutral-200"
+          ? "px-5 text-sm text-neutral-200 hover:text-neutral-200"
+          : "px-5 text-sm text-neutral-400 hover:text-neutral-200"
       }
       to={props.to}
     >
       {props.children}
     </Link>
+  );
+};
+
+interface IDesktopNavExternalLinkProps {
+  href: string;
+}
+
+const DesktopNavExternalLink: React.FC<IDesktopNavExternalLinkProps> = (
+  props
+) => {
+  return (
+    <a
+      href={props.href}
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+      className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
+    >
+      {props.children}
+    </a>
   );
 };
 
@@ -36,6 +55,9 @@ const DesktopNavigation: React.FC = () => {
       >
         About
       </DesktopNavLink>
+      <DesktopNavExternalLink href="https://breadchain.mirror.xyz/">
+        Blog
+      </DesktopNavExternalLink>
     </nav>
   );
 };
