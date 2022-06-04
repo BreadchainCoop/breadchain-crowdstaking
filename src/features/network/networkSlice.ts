@@ -43,7 +43,7 @@ const NetworkSlice = createSlice({
     setGasPrice(state, action: PayloadAction<string>) {
       state.gasPrice = action.payload;
     },
-    setWalletConnected(state, action: PayloadAction<ENetworkConnectionState>) {
+    setNetworkConnected(state, action: PayloadAction<ENetworkConnectionState>) {
       state.connected = action.payload;
     },
     setXr(state, action: PayloadAction<TXR>) {
@@ -53,5 +53,5 @@ const NetworkSlice = createSlice({
 });
 
 export default NetworkSlice.reducer;
-export const { setNetwork, setGasPrice, setWalletConnected, setXr } =
+export const { setNetwork, setGasPrice, setNetworkConnected, setXr } =
   NetworkSlice.actions;
