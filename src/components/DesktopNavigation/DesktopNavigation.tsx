@@ -42,8 +42,6 @@ const DesktopNavExternalLink: React.FC<IDesktopNavExternalLinkProps> = (
 
 const DesktopNavigation: React.FC = () => {
   const location = useLocation();
-  console.log(location.pathname);
-
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
       <DesktopNavLink isCurrentPage={location.pathname === "/"} to="/">
