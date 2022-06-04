@@ -7,7 +7,6 @@ import * as Main from "./ui/Main";
 import Footer from "../Footer";
 import Modal from "../Modal";
 import Logo from "../Header/Logo";
-import * as Title from "../Header/Title";
 import * as Navigation from "../Header/Navigation";
 import WalletDisplay from "../WalletDisplay";
 
@@ -25,11 +24,12 @@ import { formatAddress } from "../../util/formatWalletAddress";
 import { setIsLoaded } from "../../features/font/fontSlice";
 
 import Toast from "../Toast/Toast";
-import TextTransition from "../../transitions/TextTransition";
 import { Pantry } from "../Pantry";
 import Index from "../../routes/Index";
 import DesktopNavigation from "../DesktopNavigation/DesktopNavigation";
 import About from "../../routes/Info";
+import MobileNavigationToggle from "../Header/MobileNavigationToggle";
+import SiteTitle from "../SiteTitle/SiteTitle";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -100,34 +100,17 @@ const App: React.FC = () => {
         <Toast type={toast.type} message={toast.message} />
       )}
       <Header>
-        <Logo>
-          <TextTransition>logo</TextTransition>
-        </Logo>
-
+        <Logo />
         <DesktopNavigation />
-
         <Navigation.Nav>
           {network.network && <Navigation.Network network={network.network} />}
           {wallet.address && (
             <WalletDisplay>{formatAddress(wallet.address)}</WalletDisplay>
           )}
         </Navigation.Nav>
-        <div className="flex justify-end md:hidden">
-          <button className="text-neutral-600 p-1 h-10 w-10 fill">
-            <svg className="fill-current" viewBox="0 0 24 24">
-              <path d="M3 18h18v-2H3v2Zm0-5h18v-2H3v2Zm0-7v2h18V6H3Z" />
-            </svg>
-          </button>
-        </div>
+        <MobileNavigationToggle />
       </Header>
-      <Title.Title>
-        <Title.H1>
-          <TextTransition>BREADCHAIN</TextTransition>
-        </Title.H1>
-        <Title.H2>
-          <TextTransition>Crowdstaking</TextTransition>
-        </Title.H2>
-      </Title.Title>
+      <SiteTitle />
       <Main.Main>
         <Routes>
           <Route path="/" element={<Index />} />

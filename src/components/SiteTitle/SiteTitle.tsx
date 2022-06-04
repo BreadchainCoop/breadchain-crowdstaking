@@ -1,16 +1,5 @@
 import React from "react";
-
-// export const Title: React.FC = (props) => {
-//   return <div className="py-1 flex flex-col">{props.children}</div>;
-// };
-
-// export const HeaderTitle: React.FC = (props) => {
-//   return (
-//     <div className="hidden py-1 md:flex flex-col text-center grow">
-//       {props.children}
-//     </div>
-//   );
-// };
+import TextTransition from "../../transitions/TextTransition";
 
 export const Title: React.FC = (props) => {
   return (
@@ -29,3 +18,18 @@ export const H1: React.FC = (props) => (
 export const H2: React.FC = (props) => (
   <h2 className="uppercase text-1xl sm:text-2xl">{props.children}</h2>
 );
+
+const SiteTitle: React.FC = () => {
+  return (
+    <Title>
+      <H1>
+        <TextTransition>BREADCHAIN</TextTransition>
+      </H1>
+      <H2>
+        <TextTransition>Crowdstaking</TextTransition>
+      </H2>
+    </Title>
+  );
+};
+
+export default SiteTitle;

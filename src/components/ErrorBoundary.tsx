@@ -1,9 +1,9 @@
 import React from "react";
-import * as Title from "./Header/Title";
 import Footer from "./Footer";
 import AppContainer from "./App/ui/AppContainer";
 import * as Main from "./App/ui/Main";
 import TextTransition from "../transitions/TextTransition";
+import SiteTitle from "./SiteTitle/SiteTitle";
 
 interface IErrorBoundaryProps {
   children: React.ReactNode;
@@ -38,14 +38,7 @@ export default class ErrorBoundary extends React.Component<
         <AppContainer>
           <Main.Main>
             <div className="mt-48 px-16">
-              <Title.Title>
-                <Title.H1>
-                  <TextTransition>BREADCHAIN</TextTransition>
-                </Title.H1>
-                <Title.H2>
-                  <TextTransition>Crowdstaking</TextTransition>
-                </Title.H2>
-              </Title.Title>
+              <SiteTitle />
               <span className="inline-block mt-12">
                 There seems to be a problem but dont worry we're on it.
               </span>
