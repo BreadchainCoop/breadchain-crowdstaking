@@ -10,10 +10,8 @@ import { ENetwork } from "../../features/network/networkSlice";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { getBalances } from "../../features/wallet/walletSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import TextTransition from "../../transitions/TextTransition";
 import * as Main from "../App/ui/Main";
 import ConnectWalletButton from "../ConnectWalletButton";
-import * as Title from "../Header/Title";
 import Swap from "../Swap";
 import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
