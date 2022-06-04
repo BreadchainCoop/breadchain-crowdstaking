@@ -7,7 +7,8 @@ import * as Main from "./ui/Main";
 import Footer from "../Footer";
 import Modal from "../Modal";
 import Logo from "../Header/Logo";
-import * as WalletDisplay from "../Header/WalletDisplay";
+import * as Navigation from "../Header/Navigation";
+import WalletDisplay from "../WalletDisplay";
 
 import { getNetwork, ethInit } from "../../api";
 
@@ -17,7 +18,7 @@ import {
   ENetwork,
   ENetworkConnectionState,
   setNetwork,
-  setNetworkConnected,
+  setWalletConnected,
 } from "../../features/network/networkSlice";
 import { formatAddress } from "../../util/formatWalletAddress";
 import { setIsLoaded } from "../../features/font/fontSlice";
@@ -25,11 +26,10 @@ import { setIsLoaded } from "../../features/font/fontSlice";
 import Toast from "../Toast/Toast";
 import { Pantry } from "../Pantry";
 import Index from "../../routes/Index";
-import DesktopNavigation from "../Navigation/DesktopNavigation";
+import DesktopNavigation from "../DesktopNavigation/DesktopNavigation";
 import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
-import { EToastType, setToast } from "../../features/toast/toastSlice";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,29 +52,23 @@ const App: React.FC = () => {
 
       const ethereum = (window as any).ethereum;
       if (!ethereum) {
-        // !!! handle this with some sort of message for users
-        console.log("!ethereum");
+        // !!! handle this error
         return;
       }
 
       if (ethereum.isConnected && !ethereum.isConnected()) {
-        // !!! when is this condition met? Is this check necessary?
+        // this condition is met on MM mobile when initially loading the page for some reason
+        // !!! handle this error
       }
 
       const network = await getNetwork();
       if (!network) {
         // !!! handle this error
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "Failed to get current network!",
-          })
-        );
         return;
       }
 
       dispatch(setNetwork(network));
-      dispatch(setNetworkConnected(ENetworkConnectionState.CONNECTED));
+      dispatch(setWalletConnected(ENetworkConnectionState.CONNECTED));
 
       // bind handlers for metamask events eg account change / network change
       ethInit(appState, dispatch);
@@ -92,10 +86,10 @@ const App: React.FC = () => {
 
       dispatch(setWalletAddress(account.account));
 
-      // if (network === ENetwork.UNSUPPORTED) {
-      //   ethInit(appState, dispatch);
-      //   return;
-      // }
+      if (network === ENetwork.UNSUPPORTED) {
+        ethInit(appState, dispatch);
+        return;
+      }
     })();
   }, []);
 
@@ -108,16 +102,12 @@ const App: React.FC = () => {
       <Header>
         <Logo />
         <DesktopNavigation />
-        <WalletDisplay.Container>
-          {network.network && (
-            <WalletDisplay.Network network={network.network} />
-          )}
+        <Navigation.Nav>
+          {network.network && <Navigation.Network network={network.network} />}
           {wallet.address && (
-            <WalletDisplay.Address>
-              {formatAddress(wallet.address)}
-            </WalletDisplay.Address>
+            <WalletDisplay>{formatAddress(wallet.address)}</WalletDisplay>
           )}
-        </WalletDisplay.Container>
+        </Navigation.Nav>
         <MobileNavigationToggle />
       </Header>
       <SiteTitle />

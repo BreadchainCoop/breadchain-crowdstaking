@@ -218,6 +218,7 @@ const SwapUI: React.FC = () => {
           </span>
         )}
       </div>
+
       {approval.status !== null && (
         <SwapButton
           onClick={handleSubmit}
@@ -227,11 +228,6 @@ const SwapUI: React.FC = () => {
             parseFloat(swapState.from.value) === 0
           }
         />
-      )}
-      {approval.status === EApprovalStatus.LOADING && (
-        <div className="w-full py-12 text-xs text-neutral-300">
-          Checking contract approval <Elipsis />
-        </div>
       )}
       {swapState.from.name === "DAI" &&
         approval.status === EApprovalStatus.NOT_APPROVED && (
@@ -245,10 +241,15 @@ const SwapUI: React.FC = () => {
             />
           </div>
         )}
+      {approval.status === EApprovalStatus.LOADING && (
+        <div className="w-full py-12 text-xs text-neutral-300">
+          Checking contract approval <Elipsis />
+        </div>
+      )}
       {approval.status === EApprovalStatus.PENDING && (
         <div className="py-12 text-xs text-neutral-300">
           <div className="pb-6 text-xs text-neutral-300">
-            You'll need to approve the BREAD contract to bake BREAD
+            You'll need to approve the BREAD contract to mint BREAD
           </div>
           <ApproveBreadButton
             handleClick={handleApproveBREAD}
