@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum EApprovalStatus {
-  LOADING,
-  NOT_APPROVED,
-  PENDING,
-  APPROVED,
+  LOADING = "LOADING",
+  NOT_APPROVED = "NOT_APPROVED",
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
 }
 
 interface ApprovalState {

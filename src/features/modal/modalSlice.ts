@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum EModalType {
-  CONNECT_WALLET,
-  CHANGE_NETWORK,
-  CHANGING_NETWORK,
-  APPROVAL,
-  MINTING,
-  BURNING,
+  CONNECT_WALLET = "CONNECT_WALLET",
+  CHANGE_NETWORK = "CHANGE_NETWORK",
+  CHANGING_NETWORK = "CHANGING_NETWORK",
+  APPROVAL = "APPROVAL",
+  MINTING = "MINTING",
+  BURNING = "BURNING",
 }
 
 export enum EModalStatus {
-  LOCKED,
-  UNLOCKED,
+  LOCKED = "LOCKED",
+  UNLOCKED = "UNLOCKED",
 }
 
 export interface IModalState {

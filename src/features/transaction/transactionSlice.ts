@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum ETransactionStatus {
-  PENDING,
-  COMPLETE,
+  PENDING = "PENDING",
+  COMPLETE = "COMPLETE",
 }
 
 interface TransactionState {

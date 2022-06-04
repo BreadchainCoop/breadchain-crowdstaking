@@ -11,10 +11,10 @@ export enum EWalletConnectionState {
 }
 
 export enum EBalanceStatus {
-  INIT,
-  LOADING,
-  LOADED,
-  REJECTED,
+  INIT = "INIT",
+  LOADING = "LOADING",
+  LOADED = "LOADED",
+  REJECTED = "REJECTED",
 }
 
 export type TTokens = {

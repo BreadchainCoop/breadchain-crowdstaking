@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum EToastType {
-  ERROR,
+  ERROR = "ERROR",
 }
 
 export interface IToast {
