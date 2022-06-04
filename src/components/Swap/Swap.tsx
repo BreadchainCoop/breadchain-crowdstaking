@@ -78,23 +78,21 @@ const SwapUI: React.FC = () => {
   const handleSwapReverse = () => {
     setSwapState((state) => {
       return {
-        from: { ...state.to, value: "" },
-        to: { ...state.from, value: "" },
+        from: { ...state.to, value: "00.00" },
+        to: { ...state.from, value: "00.00" },
       };
     });
   };
 
   const handleBalanceClick = () => {
-    if (parseFloat(from.balance.replace(/^0+/, "")) < 1) return;
-    const value = formatter.format(parseFloat(from.balance.replace(/^0+/, "")));
     setSwapState({
       from: {
         name: swapState.from.name,
-        value,
+        value: from.balance,
       },
       to: {
         name: swapState.to.name,
-        value,
+        value: from.balance,
       },
     });
   };
@@ -111,14 +109,21 @@ const SwapUI: React.FC = () => {
 
   const handleSubmit = async () => {
     if (network.network && wallet.address) {
-      await swap(
+      swap(
         network.network,
         swapState.from,
         dispatch,
         wallet.address,
         resetSwapState
-      );
-      dispatch(getBalances({}));
+      )
+        .then(() => {
+          dispatch(getBalances({}));
+        })
+        .catch((err) => {
+          // !!! need to catch error here rather than inside swap function
+          // currently this block will never run
+          console.log(err);
+        });
     }
   };
 
@@ -128,11 +133,11 @@ const SwapUI: React.FC = () => {
       setSwapState({
         from: {
           name: "DAI",
-          value: "",
+          value: "00.00",
         },
         to: {
           name: "BREAD",
-          value: "",
+          value: "00.00",
         },
       });
     } else {
@@ -220,7 +225,7 @@ const SwapUI: React.FC = () => {
           from={swapState.from.name}
           disabled={
             approval.status !== EApprovalStatus.APPROVED ||
-            parseInt(from.balance) === 0
+            parseFloat(swapState.from.value) === 0
           }
         />
       )}
