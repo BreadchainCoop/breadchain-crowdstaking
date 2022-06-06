@@ -15,6 +15,7 @@ import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
 import { approveBREAD } from "../../api/approveBread";
 import { EApprovalStatus } from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
+import { sanitizeInputValue } from "./swapUtils";
 
 const formatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
@@ -22,7 +23,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
 });
 
-type TSwapState = {
+interface ISwapState {
   from: {
     name: string;
     value: string;
@@ -31,9 +32,9 @@ type TSwapState = {
     name: string;
     value: string;
   };
-};
+}
 
-const initialSwapState: TSwapState = {
+const initialSwapState: ISwapState = {
   from: {
     name: "DAI",
     value: "",
@@ -51,26 +52,26 @@ const SwapUI: React.FC = () => {
   );
 
   const [swapState, setSwapState] =
-    React.useState<TSwapState>(initialSwapState);
+    React.useState<ISwapState>(initialSwapState);
 
   const from = wallet.tokens[swapState.from.name];
   const to = wallet.tokens[swapState.to.name];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    const newValue = value
-      .split("")
-      .filter((i) => i.match(/^[0-9]*[.,]?[0-9]*$/))
-      .join("");
+
+    const sanitizedValue = sanitizeInputValue(value);
+
+    // const newValue = sanitizedValue !== "" ? sanitizedValue : "00.00";
 
     setSwapState({
       from: {
         name: swapState.from.name,
-        value: newValue.replace(/^0+/, ""),
+        value: sanitizedValue,
       },
       to: {
         name: swapState.to.name,
-        value: newValue.replace(/^0+/, ""),
+        value: sanitizedValue,
       },
     });
   };
@@ -78,8 +79,8 @@ const SwapUI: React.FC = () => {
   const handleSwapReverse = () => {
     setSwapState((state) => {
       return {
-        from: { ...state.to, value: "00.00" },
-        to: { ...state.from, value: "00.00" },
+        from: { ...state.to, value: "" },
+        to: { ...state.from, value: "" },
       };
     });
   };
@@ -117,6 +118,7 @@ const SwapUI: React.FC = () => {
         resetSwapState
       )
         .then(() => {
+          // only want to refetch balances if transaction is confirmed as successful
           dispatch(getBalances({}));
         })
         .catch((err) => {
@@ -126,24 +128,6 @@ const SwapUI: React.FC = () => {
         });
     }
   };
-
-  // initializing swapState when wallet connects
-  React.useEffect(() => {
-    if (wallet.address) {
-      setSwapState({
-        from: {
-          name: "DAI",
-          value: "00.00",
-        },
-        to: {
-          name: "BREAD",
-          value: "00.00",
-        },
-      });
-    } else {
-      setSwapState(initialSwapState);
-    }
-  }, [wallet]);
 
   return (
     <>
@@ -225,7 +209,8 @@ const SwapUI: React.FC = () => {
           from={swapState.from.name}
           disabled={
             approval.status !== EApprovalStatus.APPROVED ||
-            parseFloat(swapState.from.value) === 0
+            parseFloat(swapState.from.value) === 0 ||
+            swapState.from.value === ""
           }
         />
       )}

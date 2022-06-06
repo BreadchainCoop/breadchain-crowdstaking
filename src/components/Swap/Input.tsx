@@ -17,7 +17,7 @@ const Input: React.FC<Props> = (props) => {
       autoComplete="off"
       autoCorrect="off"
       type="text"
-      pattern="^[0-9]*[.,]?[0-9]*$"
+      pattern="^[0-9]*[.]?[0-9]*$"
       minLength={1}
       maxLength={79}
       spellCheck="false"
