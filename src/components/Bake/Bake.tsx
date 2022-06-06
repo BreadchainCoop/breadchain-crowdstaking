@@ -1,7 +1,6 @@
 import React from "react";
 import { getAllowance } from "../../api";
 import {
-  EApprovalStatus,
   setApprovalLoading,
   setApproved,
   setNotApproved,
