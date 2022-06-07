@@ -126,6 +126,7 @@ const SwapUI: React.FC = () => {
           // currently this block will never run
           console.log(err);
         });
+
     }
   };
 
