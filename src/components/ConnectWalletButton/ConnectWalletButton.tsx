@@ -15,6 +15,8 @@ import {
   setWalletAddress,
 } from "../../features/wallet/walletSlice";
 import TextTransition from "../../transitions/TextTransition";
+import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { ProviderRpcError } from "../../metamaskErrorType";
 
 const ConnectWalletButton: React.FC = (props) => {
   const dispatch = useAppDispatch();
@@ -39,7 +41,8 @@ const ConnectWalletButton: React.FC = (props) => {
       );
       dispatch(closeModal());
     } catch (err) {
-      // !!! handle this error
+      const { message } = err as ProviderRpcError;
+      dispatch(setToast({ type: EToastType.ERROR, message }));
       dispatch(closeModal());
     }
   };
