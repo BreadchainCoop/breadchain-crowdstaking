@@ -24,19 +24,14 @@ export const getBalances = async (
     };
   };
 }> => {
+  const { ethereum } = window as any;
+
   if (network === ENetwork.UNSUPPORTED) {
     console.error("Can't get balances on an unsupported network");
     return null;
   }
 
-  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
-
-  const provider = new ethers.providers.JsonRpcProvider(
-    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
-    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
-  );
-  // ALCHEMY_URL
-  // ALCHEMY_API_KEY
+  const provider = new ethers.providers.Web3Provider(ethereum);
 
   const { DAI, BREAD } = config[network];
 

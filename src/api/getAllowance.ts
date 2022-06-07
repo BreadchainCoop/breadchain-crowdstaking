@@ -5,17 +5,23 @@ import config from "../config";
 import ERC20abi from "../ERC20.json";
 
 export const getAllowance = async (ownerAddress: string, network: ENetwork) => {
+  const { ethereum } = window as any;
+  if (!ethereum) return;
+
   if (network === ENetwork.UNSUPPORTED) {
     console.error("Can't get balances on an unsupported network");
     return null;
   }
 
-  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  // const signer = provider.getSigner();
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
-    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
-  );
+  // const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+
+  // const provider = new ethers.providers.JsonRpcProvider(
+  //   `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
+  //   // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
+  // );
 
   const { BREAD, DAI } = config[network];
 
