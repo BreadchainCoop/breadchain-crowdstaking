@@ -62,11 +62,15 @@ export const swap = async (
       txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
     }
   } catch (err: any) {
-    console.error(err);
+    // !!! this has .data property attached when trying to bake more than balance allows
+    console.log(err);
+
+    const message = err.data ? err.data.message : err.message;
+
     dispatch(
       setToast({
         type: EToastType.ERROR,
-        message: `${err.message} - ${err.data.message}`,
+        message,
       })
     );
     dispatch(closeModal());
