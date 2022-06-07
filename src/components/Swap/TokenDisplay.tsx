@@ -38,7 +38,7 @@ const TokenDisplay: React.FC & {
   BalanceButton: typeof BalanceButton;
 } = (props) => {
   return (
-    <div className="bg-breadgray-100 w-full p-2 sm:p-4 pb-4 sm:pb-8 pr-6 text-gray-300">
+    <div className="bg-breadgray-100 text-gray-300 w-full p-2 pr-4 pb-4 sm:p-4 sm:pb-8 sm:pr-8">
       {props.children}
     </div>
   );
