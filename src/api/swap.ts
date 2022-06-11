@@ -1,6 +1,5 @@
 import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
-// import BreadMainnet from "../BreadMainnet.json";
 import BreadPolygon from "../BreadPolygon.json";
 import BreadRinkeby from "../BreadRinkeby.json";
 import config from "../config";
@@ -10,7 +9,6 @@ import {
   setTransactionPending,
 } from "../features/transaction/transactionSlice";
 import {
-  closeModal,
   EModalType,
   openModal,
   unlockModal,
@@ -48,34 +46,28 @@ export const swap = async (
   const amountWith18Decimals = ethers.utils.parseUnits(value, 18);
 
   let txn;
-  try {
-    if (name === "DAI") {
-      dispatch(
-        openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
-      );
-      txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
-    }
-    if (name === "BREAD") {
-      dispatch(
-        openModal({ type: EModalType.BURNING, title: `Burning ${value} BREAD` })
-      );
-      txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
-    }
-  } catch (err: any) {
-    // !!! this has .data property attached when trying to bake more than balance allows
-    console.log(err);
-
-    const message = err.data ? err.data.message : err.message;
-
+  if (name === "DAI") {
     dispatch(
-      setToast({
-        type: EToastType.ERROR,
-        message,
-      })
+      openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
     );
-    dispatch(closeModal());
-    return;
+    txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
   }
+  if (name === "BREAD") {
+    dispatch(
+      openModal({ type: EModalType.BURNING, title: `Burning ${value} BREAD` })
+    );
+    txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
+  }
+
+  /**
+    !!!
+    
+    At this point the transaction has been successfully submitted.
+    
+    Does it make more sense to break this swap function into 2 
+    separate funcitons?
+  
+  */
 
   dispatch(setTransactionPending(txn.hash));
   dispatch(unlockModal());
