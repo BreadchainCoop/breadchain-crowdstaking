@@ -30,7 +30,11 @@ export const Bake: React.FC = () => {
 
       if (approval.status !== null) return;
       dispatch(setApprovalLoading());
-      const allowance = await getAllowance(wallet.address, network.network);
+      const allowance = await getAllowance(
+        wallet.address,
+        network.network,
+        dispatch
+      );
 
       if (!allowance) {
         dispatch(

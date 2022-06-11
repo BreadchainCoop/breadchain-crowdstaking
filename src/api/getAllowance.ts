@@ -3,8 +3,15 @@ import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
 import config from "../config";
 import ERC20abi from "../ERC20.json";
+import store from "../store";
+import { EToastType, setToast } from "../features/toast/toastSlice";
+import { closeModal } from "../features/modal/modalSlice";
 
-export const getAllowance = async (ownerAddress: string, network: ENetwork) => {
+export const getAllowance = async (
+  ownerAddress: string,
+  network: ENetwork,
+  dispatch: typeof store.dispatch
+) => {
   const { ethereum } = window as any;
   if (!ethereum) return;
 
@@ -27,9 +34,21 @@ export const getAllowance = async (ownerAddress: string, network: ENetwork) => {
 
   // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
   const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
+  try {
+    const res = await DAIcontract.allowance(ownerAddress, BREAD.address);
+    const allowance = ethers.utils.formatUnits(res);
+    return { value: parseInt(allowance) };
+  } catch (err: any) {
+    console.log(err);
+    const message = err.data ? err.data.message : err.message;
 
-  const res = await DAIcontract.allowance(ownerAddress, BREAD.address);
-
-  const allowance = ethers.utils.formatUnits(res);
-  return { value: parseInt(allowance) };
+    dispatch(
+      setToast({
+        type: EToastType.ERROR,
+        message,
+      })
+    );
+    dispatch(closeModal());
+    return;
+  }
 };
