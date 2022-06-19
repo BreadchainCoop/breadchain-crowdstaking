@@ -17,14 +17,15 @@ import {
 import TextTransition from "../../transitions/TextTransition";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { IProviderRpcError } from "../../metamaskErrorType";
+import Button from "../Button";
 
 const ConnectWalletButton: React.FC = (props) => {
   const dispatch = useAppDispatch();
   const { wallet, network } = useAppSelector((state) => state);
-  const className = appendClasses(
-    props,
-    "px-3 py-2 text-sm button-gradient bg-opacity-95 text-neutral-900 hover:bg-opacity-100"
-  );
+  // const className = appendClasses(
+  //   props,
+  //   "px-3 py-2 text-sm button-gradient bg-opacity-95 text-neutral-900 hover:bg-opacity-100"
+  // );
 
   const handleConnectWallet = async () => {
     if (!network.network) throw new Error("network not present!");
@@ -49,23 +50,21 @@ const ConnectWalletButton: React.FC = (props) => {
 
   return (
     <div className="mt-12">
-      <button className={className} onClick={handleConnectWallet}>
-        <TextTransition>
-          {(() => {
-            switch (wallet.connected) {
-              case EWalletConnectionState.NOT_CONNECTED:
-                return "Connect Wallet";
-              case EWalletConnectionState.CONNECTING:
-                return "Connecting";
-              case EWalletConnectionState.CONNECTED:
-                if (!wallet) throw new Error("no wallet present in wallet!");
-                return `address: ${wallet.address}`;
-              default:
-                throw new Error("wallet.connected not valid!");
-            }
-          })()}
-        </TextTransition>
-      </button>
+      <Button onClick={handleConnectWallet}>
+        {(() => {
+          switch (wallet.connected) {
+            case EWalletConnectionState.NOT_CONNECTED:
+              return "Connect Wallet";
+            case EWalletConnectionState.CONNECTING:
+              return "Connecting";
+            case EWalletConnectionState.CONNECTED:
+              if (!wallet) throw new Error("no wallet present in wallet!");
+              return `address: ${wallet.address}`;
+            default:
+              throw new Error("wallet.connected not valid!");
+          }
+        })()}
+      </Button>
     </div>
   );
 };

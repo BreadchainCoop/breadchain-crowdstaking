@@ -4,7 +4,6 @@ import TokenDisplay from "./TokenDisplay";
 import Input from "./Input";
 import Icon from "./Icon";
 import SwapReverse from "./SwapReverse";
-import SwapButton from "./SwapButton";
 import { EBalanceStatus } from "../../features/wallet/walletSlice";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -16,6 +15,9 @@ import { approveBREAD } from "../../api/approveBread";
 import { EApprovalStatus } from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
 import { sanitizeInputValue } from "./swapUtils";
+import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { closeModal } from "../../features/modal/modalSlice";
+import Button from "../Button";
 
 const formatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
@@ -61,8 +63,6 @@ const SwapUI: React.FC = () => {
     const { value } = event.target;
 
     const sanitizedValue = sanitizeInputValue(value);
-
-    // const newValue = sanitizedValue !== "" ? sanitizedValue : "00.00";
 
     setSwapState({
       from: {
@@ -118,15 +118,18 @@ const SwapUI: React.FC = () => {
         resetSwapState
       )
         .then(() => {
-          // only want to refetch balances if transaction is confirmed as successful
           dispatch(getBalances({}));
         })
-        .catch((err) => {
-          // !!! need to catch error here rather than inside swap function
-          // currently this block will never run
-          console.log(err);
+        .catch((err: any) => {
+          const message = err.data ? err.data.message : err.message;
+          dispatch(
+            setToast({
+              type: EToastType.ERROR,
+              message,
+            })
+          );
+          dispatch(closeModal());
         });
-
     }
   };
 
@@ -205,15 +208,18 @@ const SwapUI: React.FC = () => {
       </div>
 
       {approval.status !== null && (
-        <SwapButton
+        <Button
           onClick={handleSubmit}
-          from={swapState.from.name}
           disabled={
             approval.status !== EApprovalStatus.APPROVED ||
             parseFloat(swapState.from.value) === 0 ||
             swapState.from.value === ""
           }
-        />
+          variant="large"
+          fullWidth
+        >
+          {swapState.from.name === "BREAD" ? "BURN BREAD" : "BAKE BREAD"}
+        </Button>
       )}
       {swapState.from.name === "DAI" &&
         approval.status === EApprovalStatus.NOT_APPROVED && (

@@ -30,13 +30,6 @@ export const approveBREAD = async (
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
 
-  // const { NETWORK_STRING, ETHERSCAN_API_KEY } = config[network];
-
-  // const provider = new ethers.providers.EtherscanProvider(
-  //   NETWORK_STRING,
-  //   ETHERSCAN_API_KEY
-  // );
-
   const { DAI, BREAD } = config[network];
 
   // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);

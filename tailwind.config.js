@@ -1,5 +1,4 @@
 module.exports = {
-  // purge: ["./src/**/*.html", "./src/**/*.ts", "./src/**/*.tsx"],
   content: ["./src/**/*.{ts,tsx}", "./index.html"],
   theme: {
     extend: {
@@ -12,6 +11,7 @@ module.exports = {
           100: "#C463CA",
           200: "#FF99E2",
         },
+        "button-border": "#2E2E2E",
       },
       typography: ({ theme }) => ({
         pink: {
