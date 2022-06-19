@@ -1,22 +1,9 @@
 import React from "react";
 import { watchAsset } from "../../api/watchAsset";
-import {
-  EModalType,
-  openModal,
-  unlockModal,
-} from "../../features/modal/modalSlice";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
-const Button: React.FC<{ onClick: () => void }> = (props) => {
-  return (
-    <button
-      className="text-sm px-4 py-2 mr-4 bg-breadpink-100 text-neutral-900"
-      {...props}
-    >
-      {props.children}
-    </button>
-  );
-};
+import { useAppSelector } from "../../store/hooks";
+import Button from "../Button";
+
 export const AddTokens: React.FC = () => {
   const { network } = useAppSelector((state) => state);
 
@@ -28,10 +15,14 @@ export const AddTokens: React.FC = () => {
 
   return (
     <div className="mt-16">
-      <div className="text-xs pb-6">Add tokens to MetaMask</div>
-      <div>
-        <Button onClick={() => handleAddToken("BREAD")}>BREAD</Button>
-        <Button onClick={() => handleAddToken("DAI")}>DAI</Button>
+      <div className="text-xs mb-8">Add tokens to MetaMask</div>
+      <div className="flex gap-4">
+        <Button onClick={() => handleAddToken("BREAD")} disabled={false}>
+          BREAD
+        </Button>
+        <Button onClick={() => handleAddToken("DAI")} disabled={false}>
+          DAI
+        </Button>
       </div>
     </div>
   );
