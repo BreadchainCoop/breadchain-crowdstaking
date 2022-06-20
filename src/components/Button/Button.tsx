@@ -60,7 +60,7 @@ const Button = ({
       <div
         className={
           "absolute w-full h-1 bottom-0 left-0 right-0 transform translate-y-1 bg-button-border" +
-          (mouseIsDown ? " display-none" : "")
+          (mouseIsDown ? " hidden" : "")
         }
       ></div>
       <TextTransition>{children}</TextTransition>
