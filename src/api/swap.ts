@@ -50,6 +50,7 @@ export const swap = async (
     dispatch(
       openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
     );
+    console.log(BREADcontract.mint);
     txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
   }
   if (name === "BREAD") {

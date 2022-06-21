@@ -39,7 +39,6 @@ export const getBalances = async (
     return null;
   }
 
-
   const { DAI, BREAD } = config[network];
 
   const BREADcontract = new ethers.Contract(

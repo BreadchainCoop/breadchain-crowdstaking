@@ -24,35 +24,40 @@ type TProps = {
 
 export const Network: React.FC<TProps> = (props) => {
   const { network } = props;
+
+  let networkTitle = "";
+
+  switch (network) {
+    case ENetwork.RINKEBY:
+      networkTitle = "Rinkeby Testnet";
+      break;
+    case ENetwork.POLYGON:
+      networkTitle = "Polygon";
+      break;
+    case ENetwork.MUMBAI:
+      networkTitle = "Polygon Testnet";
+      break;
+    case ENetwork.UNSUPPORTED:
+      networkTitle = "Unsupported Chain";
+      break;
+    default:
+      networkTitle = "Invalid network state!"; // Not sure if this case will ever be reached, but I 'm preserving it
+  }
+
   return (
     <Row>
       {network
         ? (() => {
-            if (network === ENetwork.RINKEBY)
-              return (
-                <>
-                  <IconContainer>
-                    <NetworkIcon />
-                  </IconContainer>
-                  <span>
-                    <TextTransition>Rinkeby Testnet</TextTransition>
-                  </span>
-                </>
-              );
-            if (network === ENetwork.POLYGON)
-              return (
-                <>
-                  <IconContainer>
-                    <NetworkIcon />
-                  </IconContainer>
-                  <TextTransition>Polygon</TextTransition>
-                </>
-              );
-
-            if (network === ENetwork.UNSUPPORTED) return "Unsupported Chain";
-            else {
-              return "Invalid network state!";
-            }
+            return (
+              <>
+                <IconContainer>
+                  <NetworkIcon />
+                </IconContainer>
+                <span>
+                  <TextTransition>{networkTitle}</TextTransition>
+                </span>
+              </>
+            );
           })()
         : "no network"}
     </Row>
