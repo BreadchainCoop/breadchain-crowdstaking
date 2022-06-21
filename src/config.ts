@@ -40,6 +40,35 @@ const config: any = {
       address: "0x11d9efDf4Ab4A3bfabf5C7089F56AA4F059AA14C",
     },
   },
+  MUMBAI: {
+    NETWORK_STRING: "mumbai",
+    ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_API_KEY,
+    ALCHEMY_URL: "https://polygon-mumbai.g.alchemy.com/v2/",
+    // CDAI: {
+    //   address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+    // },
+    DAI: {
+      symbol: "DAI",
+      decimals: 18,
+      address:
+        import.meta.env.DAI_ADDRESS ||
+        "0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B",
+    },
+    ADAI: {
+      symbol: "ADAI",
+      decimals: 18,
+      address:
+        import.meta.env.ADAI_ADDRESS ||
+        "0xDD4f3Ee61466C4158D394d57f3D4C397E91fBc51",
+    },
+    BREAD: {
+      symbol: "BREAD",
+      decimals: 18,
+      address:
+        import.meta.env.BREAD_ADDRESS ||
+        "0x9AEe3dBCaC747bc41BcdFd94885fA6679151A931",
+    },
+  },
   RINKEBY: {
     NETWORK_STRING: "rinkeby",
     ETHERSCAN_API_KEY: import.meta.env.VITE_ETHERSCAN_API_KEY,
