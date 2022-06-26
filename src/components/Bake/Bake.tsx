@@ -1,4 +1,5 @@
 import React from "react";
+import { useConnect } from "wagmi";
 import { getAllowance } from "../../api";
 import {
   setApprovalLoading,
@@ -15,68 +16,60 @@ import Swap from "../Swap";
 import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
 export const Bake: React.FC = () => {
-  const { network, wallet, approval } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-  React.useEffect(() => {
-    (async () => {
-      if (
-        !wallet.address ||
-        !network.network ||
-        network.network === ENetwork.UNSUPPORTED
-      )
-        return;
+  const { activeConnector } = useConnect();
 
-      dispatch(getBalances({}));
+  // const { network, wallet, approval } = useAppSelector((state) => state);
+  // const dispatch = useAppDispatch();
 
-      if (approval.status !== null) return;
-      dispatch(setApprovalLoading());
-      const allowance = await getAllowance(
-        wallet.address,
-        network.network,
-        dispatch
-      );
+  // React.useEffect(() => {
+  //   (async () => {
+  //     if (
+  //       !wallet.address ||
+  //       !network.network ||
+  //       network.network === ENetwork.UNSUPPORTED
+  //     )
+  //       return;
 
-      if (!allowance) {
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "Failed to get allowance!",
-          })
-        );
-        return;
-      }
+  //     dispatch(getBalances({}));
 
-      if (allowance.value > 0) dispatch(setApproved());
-      if (allowance.value === 0) dispatch(setNotApproved());
-    })();
-  }, [wallet.address]);
+  //     if (approval.status !== null) return;
+  //     dispatch(setApprovalLoading());
+  //     const allowance = await getAllowance(
+  //       wallet.address,
+  //       network.network,
+  //       dispatch
+  //     );
+
+  //     if (!allowance) {
+  //       dispatch(
+  //         setToast({
+  //           type: EToastType.ERROR,
+  //           message: "Failed to get allowance!",
+  //         })
+  //       );
+  //       return;
+  //     }
+
+  //     if (allowance.value > 0) dispatch(setApproved());
+  //     if (allowance.value === 0) dispatch(setNotApproved());
+  //   })();
+  // }, [wallet.address]);
+
+  if (!activeConnector) {
+    return (
+      <>
+        <Main.Inner>
+          <ConnectWalletButton />
+        </Main.Inner>
+      </>
+    );
+  }
+
   return (
     <>
-      {(() => {
-        if (network && network.network === ENetwork.UNSUPPORTED)
-          return (
-            <>
-              <Main.Inner>
-                <UnsupportedNetwork />
-              </Main.Inner>
-            </>
-          );
-        if (wallet.address)
-          return (
-            <>
-              <Main.Inner>
-                <Swap />
-              </Main.Inner>
-            </>
-          );
-        return (
-          <>
-            <Main.Inner>
-              <ConnectWalletButton />
-            </Main.Inner>
-          </>
-        );
-      })()}
+      <Main.Inner>
+        <Swap />
+      </Main.Inner>
     </>
   );
 };

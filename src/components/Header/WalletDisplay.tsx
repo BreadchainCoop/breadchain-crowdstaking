@@ -1,7 +1,9 @@
 import React from "react";
+import { allChains, useDisconnect, useNetwork } from "wagmi";
 import { ENetwork } from "../../features/network/networkSlice";
 
 import TextTransition from "../../transitions/TextTransition";
+import Button from "../Button";
 import { IconContainer, NetworkIcon } from "../Icons";
 
 export const Container: React.FC = (props) => {
@@ -18,48 +20,24 @@ export const Row: React.FC = ({ children }) => (
   </span>
 );
 
-type TProps = {
-  network: null | ENetwork;
-};
-
-export const Network: React.FC<TProps> = (props) => {
-  const { network } = props;
-
-  let networkTitle = "";
-
-  switch (network) {
-    case ENetwork.RINKEBY:
-      networkTitle = "Rinkeby Testnet";
-      break;
-    case ENetwork.POLYGON:
-      networkTitle = "Polygon";
-      break;
-    case ENetwork.MUMBAI:
-      networkTitle = "Polygon Testnet";
-      break;
-    case ENetwork.UNSUPPORTED:
-      networkTitle = "Unsupported Chain";
-      break;
-    default:
-      networkTitle = "Invalid network state!"; // Not sure if this case will ever be reached, but I 'm preserving it
-  }
+export const Network: React.FC = () => {
+  const { isError, isLoading, error, activeChain } = useNetwork();
+  const { disconnectAsync } = useDisconnect();
+  if (isError) return <Row>{error}</Row>;
+  if (isLoading) return <Row>Loading</Row>;
 
   return (
     <Row>
-      {network
-        ? (() => {
-            return (
-              <>
-                <IconContainer>
-                  <NetworkIcon />
-                </IconContainer>
-                <span>
-                  <TextTransition>{networkTitle}</TextTransition>
-                </span>
-              </>
-            );
-          })()
-        : "no network"}
+      <IconContainer>
+        <NetworkIcon />
+      </IconContainer>
+      <span>
+        <TextTransition>{activeChain?.name}</TextTransition>
+      </span>
+
+      <Button variant="small" onClick={() => disconnectAsync()}>
+        Disconnect
+      </Button>
     </Row>
   );
 };

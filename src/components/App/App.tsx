@@ -30,12 +30,13 @@ import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { useConnect, useNetwork, useAccount } from "wagmi";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, wallet, network, toast, font } = appState;
+  const { modal, toast, font } = appState;
 
   /**
    * App Init
@@ -99,6 +100,8 @@ const App: React.FC = () => {
     })();
   }, []);
 
+  const { isConnected } = useConnect();
+  const { data } = useAccount();
   return (
     <AppContainer>
       {modal.type !== null && <Modal modal={modal} />}
@@ -109,12 +112,10 @@ const App: React.FC = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {network.network && (
-            <WalletDisplay.Network network={network.network} />
-          )}
-          {wallet.address && (
+          {isConnected && <WalletDisplay.Network />}
+          {data?.address && (
             <WalletDisplay.Address>
-              {formatAddress(wallet.address)}
+              {formatAddress(data.address)}
             </WalletDisplay.Address>
           )}
         </WalletDisplay.Container>

@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { Contract, ContractInterface, ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
 import BreadPolygon from "../BreadPolygon.json";
 import BreadRinkeby from "../BreadRinkeby.json";
@@ -37,11 +37,18 @@ export const swap = async (
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
 
-  const BREADcontract = new ethers.Contract(
-    BREAD.address,
-    network === ENetwork.POLYGON ? BreadPolygon.abi : BreadRinkeby.abi,
-    signer
-  );
+  let abi: ContractInterface;
+
+  switch (network) {
+    case ENetwork.POLYGON:
+    case ENetwork.MUMBAI:
+      abi = BreadPolygon.abi;
+      break;
+    default:
+      abi = BreadRinkeby.abi;
+  }
+
+  const BREADcontract = new Contract(BREAD.address, abi, signer);
 
   const amountWith18Decimals = ethers.utils.parseUnits(value, 18);
 
@@ -50,7 +57,6 @@ export const swap = async (
     dispatch(
       openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
     );
-    console.log(BREADcontract.mint);
     txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
   }
   if (name === "BREAD") {
