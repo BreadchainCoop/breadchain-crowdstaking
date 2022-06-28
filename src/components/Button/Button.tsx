@@ -1,5 +1,4 @@
 import React from "react";
-import TextTransition from "../../transitions/TextTransition";
 
 interface IProps {
   onClick: (event: React.MouseEvent) => void;
@@ -63,7 +62,7 @@ const Button = ({
           (mouseIsDown ? " hidden" : "")
         }
       ></div>
-      <TextTransition>{children}</TextTransition>
+      {children}
     </button>
   );
 };
