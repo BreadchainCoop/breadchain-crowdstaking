@@ -23,7 +23,7 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string;
 import { alchemyProvider } from "wagmi/providers/alchemy";
 
-const supportedChains = [chain.polygon, chain.polygonMumbai];
+const supportedChains = [chain.polygonMumbai, chain.polygon];
 
 const { chains, provider, webSocketProvider } = configureChains(
   supportedChains,

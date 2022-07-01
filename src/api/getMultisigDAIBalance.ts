@@ -3,6 +3,7 @@ import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
 import config from "../config";
+import { useNetwork, useProvider } from "wagmi";
 
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
 
@@ -12,21 +13,12 @@ export const getMultisigDAIBalance = async (
 ): Promise<null | {
   balance: string;
 }> => {
-  if (network === ENetwork.UNSUPPORTED) {
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
+  const provider = useProvider();
+  const { activeChain } = useNetwork();
 
-  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+  if (!activeChain || activeChain.unsupported) return null;
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
-    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
-  );
-  // ALCHEMY_URL
-  // ALCHEMY_API_KEY
-
-  const { DAI } = config[network];
+  const { DAI } = config[activeChain.id];
 
   const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
   // const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);

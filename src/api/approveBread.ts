@@ -13,26 +13,17 @@ import {
   setApprovalPending,
   setApproved,
 } from "../features/approval/approvalSlice";
+import { useNetwork, useSigner } from "wagmi";
 
 export const approveBREAD = async (
   network: ENetwork,
   dispatch: typeof store.dispatch
 ) => {
-  const { ethereum } = window as any;
-  if (!ethereum) return;
+  const { activeChain } = useNetwork();
+  const { data: signer } = useSigner();
+  if (!activeChain || activeChain.unsupported || !signer) return;
 
-  if (network === ENetwork.UNSUPPORTED) {
-    // ??? should this be shown to a user?
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
-
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-
-  const { DAI, BREAD } = config[network];
-
-  // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
+  const { DAI, BREAD } = config[activeChain.id];
   const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, signer);
 
   dispatch(

@@ -4,6 +4,7 @@ import { ENetwork } from "../features/network/networkSlice";
 import ERC20abi from "../ERC20.json";
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
+import { useNetwork, useProvider } from "wagmi";
 
 export const getRewardsAccrued = async (
   // account: string,
@@ -11,23 +12,12 @@ export const getRewardsAccrued = async (
 ): Promise<null | {
   rewardsAccrued: string;
 }> => {
-  if (network === ENetwork.UNSUPPORTED) {
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
+  const provider = useProvider();
+  const { activeChain } = useNetwork();
 
-  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
+  if (!activeChain || activeChain.unsupported) return null;
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
-    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
-  );
-  // ALCHEMY_URL
-  // ALCHEMY_API_KEY
-
-  const { BREAD } = config[network];
-
-  console.log(BREAD);
+  const { BREAD } = config[activeChain.id];
 
   const BREADcontract = new ethers.Contract(
     BREAD.address,

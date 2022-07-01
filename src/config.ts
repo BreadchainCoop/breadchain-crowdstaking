@@ -1,4 +1,22 @@
-const config: any = {
+interface IToken {
+  address: string;
+  symbol: string;
+  decimals: number;
+}
+
+interface IConfig {
+  [chainId: number]: {
+    NETWORK_STRING: string;
+    ALCHEMY_API_KEY?: string;
+    ALCHEMY_URL?: string;
+    ETHERSCAN_API_KEY?: string;
+    ETHERSCAN_URL?: string;
+    DAI: IToken;
+    DERIVATIVE: IToken;
+    BREAD: IToken;
+  };
+}
+const config: IConfig = {
   // MAINNET: {
   //   NETWORK_STRING: "homestead",
   //   ETHERSCAN_API_KEY: import.meta.env.VITE_ETHERSCAN_API_KEY,
@@ -17,7 +35,7 @@ const config: any = {
   //     address: "0xEd9265A05Fd6355061e1051c80450638EC84bff3",
   //   },
   // },
-  POLYGON: {
+  137: {
     NETWORK_STRING: "polygon",
     ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_API_KEY,
     ALCHEMY_URL: "https://polygon-mainnet.g.alchemy.com/v2/",
@@ -29,7 +47,7 @@ const config: any = {
       decimals: 18,
       address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     },
-    ADAI: {
+    DERIVATIVE: {
       symbol: "ADAI",
       decimals: 18,
       address: "0x82E64f49Ed5EC1bC6e43DAD4FC8Af9bb3A2312EE",
@@ -40,7 +58,7 @@ const config: any = {
       address: "0x11d9efDf4Ab4A3bfabf5C7089F56AA4F059AA14C",
     },
   },
-  MUMBAI: {
+  80001: {
     NETWORK_STRING: "mumbai",
     ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_API_KEY,
     ALCHEMY_URL: "https://polygon-mumbai.g.alchemy.com/v2/",
@@ -54,7 +72,7 @@ const config: any = {
         import.meta.env.DAI_ADDRESS ||
         "0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B",
     },
-    ADAI: {
+    DERIVATIVE: {
       symbol: "ADAI",
       decimals: 18,
       address:
@@ -69,12 +87,14 @@ const config: any = {
         "0x9AEe3dBCaC747bc41BcdFd94885fA6679151A931",
     },
   },
-  RINKEBY: {
+  4: {
     NETWORK_STRING: "rinkeby",
     ETHERSCAN_API_KEY: import.meta.env.VITE_ETHERSCAN_API_KEY,
     ETHERSCAN_URL: "https://api-rinkeby.etherscan.io",
-    CDAI: {
+    DERIVATIVE: {
       address: "0x6D7F0754FFeb405d23C51CE938289d4835bE3b14",
+      symbol: "CDAI",
+      decimals: 8,
     },
     DAI: {
       symbol: "DAI",

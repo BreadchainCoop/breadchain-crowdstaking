@@ -21,7 +21,7 @@ export const Row: React.FC = ({ children }) => (
 );
 
 export const Network: React.FC = () => {
-  const { isError, isLoading, error, activeChain } = useNetwork();
+  const { isError, isLoading, error, activeChain, chains } = useNetwork();
   const { disconnectAsync } = useDisconnect();
   if (isError) return <Row>{error}</Row>;
   if (isLoading) return <Row>Loading</Row>;
@@ -32,7 +32,10 @@ export const Network: React.FC = () => {
         <NetworkIcon />
       </IconContainer>
       <span>
-        <TextTransition>{activeChain?.name}</TextTransition>
+        <TextTransition>
+          {activeChain?.unsupported && "Unsupported network: "}
+          {activeChain?.name}
+        </TextTransition>
       </span>
 
       <Button variant="small" onClick={() => disconnectAsync()}>

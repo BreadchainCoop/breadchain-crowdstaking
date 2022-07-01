@@ -14,6 +14,7 @@ import {
   unlockModal,
 } from "../features/modal/modalSlice";
 import { EToastType, setToast } from "../features/toast/toastSlice";
+import { useNetwork, useSigner } from "wagmi";
 
 export const swap = async (
   network: string,
@@ -24,18 +25,11 @@ export const swap = async (
 ) => {
   const { name, value } = from;
 
-  const { ethereum } = window as any;
-  if (!ethereum) return;
+  const { activeChain } = useNetwork();
+  const { data: signer } = useSigner();
+  if (!activeChain || activeChain.unsupported || !signer) return;
 
-  if (network === ENetwork.UNSUPPORTED) {
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
-
-  const { BREAD } = config[network];
-
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
+  const { BREAD } = config[activeChain.id];
 
   let abi: ContractInterface;
 
