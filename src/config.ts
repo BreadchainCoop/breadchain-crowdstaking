@@ -4,17 +4,19 @@ interface IToken {
   decimals: number;
 }
 
-interface IConfig {
-  [chainId: number]: {
-    NETWORK_STRING: string;
-    ALCHEMY_API_KEY?: string;
-    ALCHEMY_URL?: string;
-    ETHERSCAN_API_KEY?: string;
-    ETHERSCAN_URL?: string;
-    DAI: IToken;
-    DERIVATIVE: IToken;
-    BREAD: IToken;
-  };
+export interface IConfig {
+  [chainId: number]: ChainConfiguration;
+}
+
+export interface ChainConfiguration {
+  NETWORK_STRING: string;
+  ALCHEMY_API_KEY?: string;
+  ALCHEMY_URL?: string;
+  ETHERSCAN_API_KEY?: string;
+  ETHERSCAN_URL?: string;
+  DAI: IToken;
+  DERIVATIVE: IToken;
+  BREAD: IToken;
 }
 const config: IConfig = {
   // MAINNET: {

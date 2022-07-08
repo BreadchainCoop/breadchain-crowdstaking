@@ -10,6 +10,7 @@ import {
 import { ENetwork } from "../../features/network/networkSlice";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { getBalances } from "../../features/wallet/walletSlice";
+import { useChainConfig } from "../../hooks/useChainConfig";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import * as Main from "../App/ui/Main";
 import ConnectWalletButton from "../ConnectWalletButton";
@@ -19,10 +20,10 @@ import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 export const Bake: React.FC = () => {
   const { activeConnector } = useConnect();
   const { data: accountData } = useAccount();
-  const { activeChain } = useNetwork();
+  const { configuration, unsupportedChain, activeChain } = useChainConfig();
   const provider = useProvider({ chainId: activeChain?.id });
 
-  const { network, wallet, approval } = useAppSelector((state) => state);
+  const { approval } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -62,10 +63,11 @@ export const Bake: React.FC = () => {
     !!activeConnector,
     accountData?.address,
     activeChain?.id,
+    !!configuration,
     provider.network.chainId,
   ]);
 
-  if (!activeConnector) {
+  if (!activeConnector || !activeChain || !accountData?.address) {
     return (
       <>
         <Main.Inner>
@@ -75,10 +77,18 @@ export const Bake: React.FC = () => {
     );
   }
 
+  if (unsupportedChain)
+    return <>Unsupported network, please switch to a supported chain</>;
+  if (!configuration)
+    throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
+
   return (
     <>
       <Main.Inner>
-        <Swap />
+        <Swap
+          chainConfig={configuration}
+          accountAddress={accountData.address}
+        />
       </Main.Inner>
     </>
   );

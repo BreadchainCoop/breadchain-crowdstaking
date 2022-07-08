@@ -18,10 +18,12 @@ import { sanitizeInputValue } from "./swapUtils";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { closeModal } from "../../features/modal/modalSlice";
 import Button from "../Button";
-import config from "../../config";
+import config, { ChainConfiguration } from "../../config";
 import { useAccount, useBalance, useNetwork, useSigner } from "wagmi";
 import TokenBalance from "../TokenBalance";
 import NativeBalance from "../NativeBalance";
+import { useChainConfig } from "../../hooks/useChainConfig";
+import { useTokenBalance } from "../../hooks/useTokenBalance";
 
 const formatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
@@ -51,42 +53,57 @@ const initialSwapState: ISwapState = {
   },
 };
 
-const SwapUI: React.FC = () => {
+const SwapUI: React.FC<{
+  chainConfig: ChainConfiguration;
+  accountAddress: string;
+}> = (props) => {
+  const { chainConfig, accountAddress } = props;
   const dispatch = useAppDispatch();
   const { wallet, network, transaction, approval } = useAppSelector(
     (state) => state
   );
 
-  const { activeChain } = useNetwork();
   const {
     data: account,
     isFetching: isFetchingAccount,
     error: accountError,
   } = useAccount();
+
   const {
     data: signer,
     isFetching: isFetchingSigner,
     error: signerError,
   } = useSigner();
 
+  const breadBalanceReadings = useTokenBalance(
+    chainConfig.BREAD.address,
+    accountAddress
+  );
+  const daiBalanceReadings = useTokenBalance(
+    chainConfig.DAI.address,
+    accountAddress
+  );
+
   const [swapState, setSwapState] =
     React.useState<ISwapState>(initialSwapState);
 
+  const from = wallet.tokens[swapState.from.name];
+  const to = wallet.tokens[swapState.to.name];
   const isFetching = isFetchingAccount || isFetchingSigner;
   const error = accountError || signerError;
 
-  if (!activeChain || isFetching) return <Elipsis />;
-  if (activeChain.unsupported) return <>Unsupported network</>;
+  if (isFetching) return <Elipsis />;
   if (error) return <>{error}</>;
   if (!account?.address || !signer) return <>Could not connect to wallet</>;
 
-  const from = wallet.tokens[swapState.from.name];
-  const to = wallet.tokens[swapState.to.name];
+  const inputTokenReadings =
+    swapState.from.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
 
-  const inputTokenAddress = config[activeChain.id][swapState.from.name].address;
-  const outputTokenAddress = config[activeChain.id][swapState.to.name].address;
+  const outputTokenReadings =
+    swapState.to.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("handleInputChange");
     const { value } = event.target;
 
     const sanitizedValue = sanitizeInputValue(value);
@@ -115,16 +132,11 @@ const SwapUI: React.FC = () => {
   const handleBalanceClick = () => {
     console.log("balance click", swapState);
 
-    setSwapState({
-      from: {
-        name: swapState.from.name,
-        value: from.balance,
-      },
-      to: {
-        name: swapState.to.name,
-        value: from.balance,
-      },
-    });
+    if (!inputTokenReadings.value) return;
+
+    let swapStateCopy = swapState;
+    swapStateCopy.from.value = inputTokenReadings.value.toString();
+    setSwapState({ ...swapStateCopy });
   };
 
   const resetSwapState = () => {
@@ -162,8 +174,6 @@ const SwapUI: React.FC = () => {
     }
   };
 
-  console.log("approval", approval);
-
   return (
     <>
       <TokenDisplay>
@@ -171,13 +181,7 @@ const SwapUI: React.FC = () => {
           <>
             <TokenDisplay.Header>
               <TokenDisplay.BalanceButton onClick={handleBalanceClick}>
-                This shouldnt be in a component, rather we should use a hook for
-                it: useTokenBalance(tokenAddress, holderAddress) that wraps a
-                useContractRead inside of it
-                <TokenBalance
-                  addressOrName={inputTokenAddress}
-                  holderAddress={account.address}
-                />
+                <TokenBalance {...inputTokenReadings} />
               </TokenDisplay.BalanceButton>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
@@ -200,10 +204,7 @@ const SwapUI: React.FC = () => {
           <>
             <TokenDisplay.Header>
               <TokenDisplay.Balance>
-                <TokenBalance
-                  addressOrName={outputTokenAddress}
-                  holderAddress={account.address}
-                />
+                <TokenBalance {...outputTokenReadings} />
               </TokenDisplay.Balance>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
