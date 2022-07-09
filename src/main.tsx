@@ -33,7 +33,10 @@ const { chains, provider, webSocketProvider } = configureChains(
 const client = createClient({
   autoConnect: false,
   connectors: [
-    new MetaMaskConnector({ chains }),
+    new MetaMaskConnector({
+      chains,
+      options: { shimChainChangedDisconnect: false, shimDisconnect: false },
+    }),
     new CoinbaseWalletConnector({
       chains,
       options: {

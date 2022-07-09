@@ -1,10 +1,8 @@
 import { ethers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
-
-import ERC20abi from "../ERC20.json";
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
-import { useNetwork, useProvider } from "wagmi";
+import { useValidatedWalletConnection } from "../hooks/useValidatedWalletConnection";
 
 export const getRewardsAccrued = async (
   // account: string,
@@ -12,10 +10,10 @@ export const getRewardsAccrued = async (
 ): Promise<null | {
   rewardsAccrued: string;
 }> => {
-  const provider = useProvider();
-  const { activeChain } = useNetwork();
+  const { activeChain, activeConnector } = useValidatedWalletConnection();
 
-  if (!activeChain || activeChain.unsupported) return null;
+  if (!activeChain || activeChain.unsupported || !activeConnector) return null;
+  const provider = await activeConnector.getProvider();
 
   const { BREAD } = config[activeChain.id];
 

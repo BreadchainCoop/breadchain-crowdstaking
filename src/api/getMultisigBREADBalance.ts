@@ -3,7 +3,7 @@ import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
 import config from "../config";
-import { useNetwork, useProvider } from "wagmi";
+import { useValidatedWalletConnection } from "../hooks/useValidatedWalletConnection";
 
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
 
@@ -13,11 +13,11 @@ export const getMultisigBREADBalance = async (
 ): Promise<null | {
   balance: string;
 }> => {
-  const provider = useProvider();
-  const { activeChain } = useNetwork();
+  const { activeChain, activeConnector } = useValidatedWalletConnection();
 
-  if (!activeChain || activeChain.unsupported) return null;
+  if (!activeChain || activeChain.unsupported || !activeConnector) return null;
 
+  const provider = await activeConnector.getProvider();
   const { BREAD } = config[activeChain.id];
 
   const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);

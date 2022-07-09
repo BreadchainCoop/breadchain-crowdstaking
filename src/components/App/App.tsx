@@ -31,12 +31,17 @@ import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { useConnect, useNetwork, useAccount } from "wagmi";
+import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
   const { modal, toast, font } = appState;
+  const { isConnected } = useConnect();
+  const { data } = useAccount();
+  const { status, error, activeChain, configuration, accountData } =
+    useValidatedWalletConnection();
 
   /**
    * App Init
@@ -51,18 +56,9 @@ const App: React.FC = () => {
       //   dispatch(setXr(data));
       // });
 
-      const ethereum = (window as any).ethereum;
-      if (!ethereum) {
-        // !!! handle this with some sort of message for users
-        console.log("!ethereum");
-        return;
-      }
+      if (status != "success") return;
 
-      if (ethereum.isConnected && !ethereum.isConnected()) {
-        // !!! when is this condition met? Is this check necessary?
-      }
-
-      const network = await getNetwork();
+      const network = getNetwork(activeChain!.id);
       if (!network) {
         // !!! handle this error
         dispatch(
@@ -78,30 +74,12 @@ const App: React.FC = () => {
       dispatch(setNetworkConnected(ENetworkConnectionState.CONNECTED));
 
       // bind handlers for metamask events eg account change / network change
-      ethInit(appState, dispatch);
+      // ethInit(appState, dispatch);
 
-      // If there is an address stored we can check how recently wallet was connected
-      const storedAccount = localStorage.getItem("storedAccount");
-      if (!storedAccount) return;
-
-      const account = JSON.parse(storedAccount);
-      // ignore stored account if more than an hour old
-      if (Date.now() - account.timestamp > 360_000) {
-        localStorage.removeItem("storedAccount");
-        return;
-      }
-
-      dispatch(setWalletAddress(account.account));
-
-      // if (network === ENetwork.UNSUPPORTED) {
-      //   ethInit(appState, dispatch);
-      //   return;
-      // }
+      dispatch(setWalletAddress(accountData!.address!));
     })();
-  }, []);
+  }, [status, error, !!configuration]);
 
-  const { isConnected } = useConnect();
-  const { data } = useAccount();
   return (
     <AppContainer>
       {modal.type !== null && <Modal modal={modal} />}
@@ -112,7 +90,7 @@ const App: React.FC = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {isConnected && <WalletDisplay.Network />}
+          {status === "success" && <WalletDisplay.Network />}
           {data?.address && (
             <WalletDisplay.Address>
               {formatAddress(data.address)}

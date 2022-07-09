@@ -1,64 +1,28 @@
-import { Contract, ContractInterface, ethers } from "ethers";
-import { ENetwork } from "../features/network/networkSlice";
-import BreadPolygon from "../BreadPolygon.json";
-import BreadRinkeby from "../BreadRinkeby.json";
-import config from "../config";
+import { BigNumberish } from "ethers";
 import store from "../store";
 import {
   setTransactionComplete,
   setTransactionPending,
 } from "../features/transaction/transactionSlice";
-import {
-  EModalType,
-  openModal,
-  unlockModal,
-} from "../features/modal/modalSlice";
+import { unlockModal } from "../features/modal/modalSlice";
 import { EToastType, setToast } from "../features/toast/toastSlice";
-import { useNetwork, useSigner } from "wagmi";
+import { WriteContractConfig } from "@wagmi/core";
+import { TransactionResponse } from "@ethersproject/providers";
+import { parseEther } from "ethers/lib/utils";
 
 export const swap = async (
-  network: string,
-  from: { name: string; value: string },
+  sendTx: (
+    overrideConfig?: WriteContractConfig | undefined
+  ) => Promise<TransactionResponse>,
+  amount: BigNumberish,
   dispatch: typeof store.dispatch,
   receiverAddress: string,
   resetSwapState: () => void
 ) => {
-  const { name, value } = from;
+  if (typeof amount === "number") amount = parseEther(amount.toString());
+  if (typeof amount === "string") amount = parseEther(amount);
 
-  const { activeChain } = useNetwork();
-  const { data: signer } = useSigner();
-  if (!activeChain || activeChain.unsupported || !signer) return;
-
-  const { BREAD } = config[activeChain.id];
-
-  let abi: ContractInterface;
-
-  switch (network) {
-    case ENetwork.POLYGON:
-    case ENetwork.MUMBAI:
-      abi = BreadPolygon.abi;
-      break;
-    default:
-      abi = BreadRinkeby.abi;
-  }
-
-  const BREADcontract = new Contract(BREAD.address, abi, signer);
-
-  const amountWith18Decimals = ethers.utils.parseUnits(value, 18);
-
-  let txn;
-  if (name === "DAI") {
-    dispatch(
-      openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
-    );
-    txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
-  }
-  if (name === "BREAD") {
-    dispatch(
-      openModal({ type: EModalType.BURNING, title: `Burning ${value} BREAD` })
-    );
-    txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
-  }
+  let txn = await sendTx({ args: [amount, receiverAddress] });
 
   /**
     !!!

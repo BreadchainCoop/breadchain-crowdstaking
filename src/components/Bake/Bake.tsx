@@ -11,6 +11,7 @@ import { ENetwork } from "../../features/network/networkSlice";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { getBalances } from "../../features/wallet/walletSlice";
 import { useChainConfig } from "../../hooks/useChainConfig";
+import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import * as Main from "../App/ui/Main";
 import ConnectWalletButton from "../ConnectWalletButton";
@@ -18,54 +19,56 @@ import Swap from "../Swap";
 import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
 export const Bake: React.FC = () => {
-  const { activeConnector } = useConnect();
   const { data: accountData } = useAccount();
-  const { configuration, unsupportedChain, activeChain } = useChainConfig();
-  const provider = useProvider({ chainId: activeChain?.id });
+  const { configuration, unsupportedChain, activeChain, activeConnector } =
+    useValidatedWalletConnection();
 
-  const { approval } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
+  // const { approval } = useAppSelector((state) => state);
+  // const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
-    (async () => {
-      if (!activeConnector) return;
-      if (!accountData?.address) return;
-      if (!activeChain || activeChain.unsupported) return;
-      if (activeChain.id != provider.network.chainId) return;
+  // React.useEffect(() => {
+  //   (async () => {
+  //     if (!activeConnector) return;
+  //     if (!accountData?.address) return;
+  //     if (!activeChain || activeChain.unsupported || !activeConnector) return;
 
-      const { BREAD, DAI } = config[activeChain.id];
-      dispatch(getBalances({}));
+  //     const provider = await activeConnector.getProvider();
 
-      if (approval.status !== null) return;
-      dispatch(setApprovalLoading());
-      const allowance = await getAllowance(
-        DAI.address,
-        accountData?.address,
-        BREAD.address,
-        provider,
-        dispatch
-      );
+  //     const { BREAD, DAI } = config[activeChain.id];
+  //     dispatch(getBalances({}));
 
-      if (!allowance) {
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "Failed to get allowance!",
-          })
-        );
-        return;
-      }
+  //     console.log("bake.tsx useEffect", approval);
+  //     if (approval.status !== null) return;
+  //     dispatch(setApprovalLoading());
+  //     const allowance = await getAllowance(
+  //       DAI.address,
+  //       accountData?.address,
+  //       BREAD.address,
+  //       provider,
+  //       dispatch
+  //     );
 
-      if (allowance.value > 0) dispatch(setApproved());
-      if (allowance.value === 0) dispatch(setNotApproved());
-    })();
-  }, [
-    !!activeConnector,
-    accountData?.address,
-    activeChain?.id,
-    !!configuration,
-    provider.network.chainId,
-  ]);
+  //     console.log("allowance fetched", allowance);
+
+  //     if (!allowance) {
+  //       dispatch(
+  //         setToast({
+  //           type: EToastType.ERROR,
+  //           message: "Failed to get allowance!",
+  //         })
+  //       );
+  //       return;
+  //     }
+
+  //     if (allowance.value > 0) dispatch(setApproved());
+  //     if (allowance.value === 0) dispatch(setNotApproved());
+  //   })();
+  // }, [
+  //   !!activeConnector,
+  //   accountData?.address,
+  //   activeChain?.id,
+  //   !!configuration,
+  // ]);
 
   if (!activeConnector || !activeChain || !accountData?.address) {
     return (

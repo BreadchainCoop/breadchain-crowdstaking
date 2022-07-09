@@ -4,7 +4,7 @@ import { ENetwork } from "../features/network/networkSlice";
 import ERC20abi from "../ERC20.json";
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
-import { useNetwork, useProvider } from "wagmi";
+import { useConnect, useNetwork } from "wagmi";
 
 export const getBalances = async (
   account: string,
@@ -25,16 +25,15 @@ export const getBalances = async (
     };
   };
 }> => {
-  console.log("we here");
   // const signer = provider.getSigner();
 
   // const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
 
-  const provider = useProvider();
   const { activeChain } = useNetwork();
+  const { activeConnector } = useConnect();
+  if (!activeChain || activeChain.unsupported || !activeConnector) return null;
 
-  if (!activeChain || activeChain.unsupported) return null;
-
+  const provider = await activeConnector.getProvider();
   const { DAI, BREAD } = config[activeChain.id];
 
   const BREADcontract = new ethers.Contract(

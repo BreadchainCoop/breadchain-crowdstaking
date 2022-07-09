@@ -30,10 +30,8 @@ export const getChainId = async () => {
   return network.chainId;
 };
 
-export const getNetwork = async (chainId = null) => {
-  const id = chainId ? chainId : await getChainId();
-
-  switch (id) {
+export const getNetwork = (chainId: number) => {
+  switch (chainId) {
     case 137:
       return ENetwork.POLYGON;
     case 80001:
