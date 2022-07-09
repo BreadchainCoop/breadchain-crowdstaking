@@ -7,21 +7,16 @@ import config from "../config";
 import { useNetwork, useSigner } from "wagmi";
 
 export const claimYield = async (
-  // account: string,
-  network: ENetwork
+  signer: ethers.Signer,
+  provider: ethers.providers.BaseProvider
 ): Promise<any> => {
-  const { activeChain } = useNetwork();
-  const { data: signer } = useSigner();
-  if (!activeChain || activeChain.unsupported || !signer) return;
-
-  const { BREAD } = config[activeChain.id];
+  const { BREAD } = config[provider.network.chainId];
 
   const BREADcontract = new ethers.Contract(
     BREAD.address,
     BREADabi.abi,
     signer
   );
-  // const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
 
   const claimableYield = ethers.utils.formatUnits(
     await BREADcontract.yieldAccrued()

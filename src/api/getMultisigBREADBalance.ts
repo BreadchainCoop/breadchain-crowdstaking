@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, providers } from "ethers";
 import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
@@ -8,30 +8,17 @@ import { useValidatedWalletConnection } from "../hooks/useValidatedWalletConnect
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
 
 export const getMultisigBREADBalance = async (
-  // account: string,
-  network: ENetwork
+  provider: providers.BaseProvider
 ): Promise<null | {
   balance: string;
 }> => {
-  const { activeChain, activeConnector } = useValidatedWalletConnection();
-
-  if (!activeChain || activeChain.unsupported || !activeConnector) return null;
-
-  const provider = await activeConnector.getProvider();
-  const { BREAD } = config[activeChain.id];
+  const { BREAD } = config[provider.network.chainId];
 
   const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
-  // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
 
   let balance = await BREADcontract.balanceOf(MULTISIG_ADDRESS);
 
   balance = ethers.utils.formatUnits(balance);
-
-  // const BREADBalance = ethers.utils
-  //   .formatUnits(BREADBal, BREAD.decimals)
-  //   .toString();
-  // const DAIBalance = ethers.utils.formatUnits(DAIBal, BREAD.decimals).toString();
-  // const MATICBalance = ethers.utils.formatEther(MATICBal);
 
   return {
     balance,
