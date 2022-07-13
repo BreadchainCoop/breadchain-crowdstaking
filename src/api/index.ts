@@ -30,15 +30,9 @@ export const getChainId = async () => {
   return network.chainId;
 };
 
-export const getNetwork = (chainId: number) => {
-  switch (chainId) {
-    case 137:
-      return ENetwork.POLYGON;
-    case 80001:
-      return ENetwork.MUMBAI;
-    default:
-      return ENetwork.UNSUPPORTED;
-  }
+export const getNetwork = async (chainId = null) => {
+  const id = chainId ? chainId : await getChainId();
+  return id === 137 ? ENetwork.POLYGON : ENetwork.UNSUPPORTED;
 };
 
 export * from "./getAllowance";

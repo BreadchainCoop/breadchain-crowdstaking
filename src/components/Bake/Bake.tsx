@@ -1,38 +1,82 @@
 import React from "react";
-import { useAccount } from "wagmi";
-import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
+import { getAllowance } from "../../api";
+import {
+  setApprovalLoading,
+  setApproved,
+  setNotApproved,
+} from "../../features/approval/approvalSlice";
+import { ENetwork } from "../../features/network/networkSlice";
+import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { getBalances } from "../../features/wallet/walletSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import * as Main from "../App/ui/Main";
 import ConnectWalletButton from "../ConnectWalletButton";
 import Swap from "../Swap";
+import UnsupportedNetwork from "../UnsupportedNetwork/UnsupportedNetwork";
 
 export const Bake: React.FC = () => {
-  const { data: accountData } = useAccount();
-  const { configuration, unsupportedChain, activeChain, activeConnector } =
-    useValidatedWalletConnection();
+  const { network, wallet, approval } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    (async () => {
+      if (
+        !wallet.address ||
+        !network.network ||
+        network.network === ENetwork.UNSUPPORTED
+      )
+        return;
 
-  if (!activeConnector || !activeChain || !accountData?.address) {
-    return (
-      <>
-        <Main.Inner>
-          <ConnectWalletButton />
-        </Main.Inner>
-      </>
-    );
-  }
+      dispatch(getBalances({}));
 
-  if (unsupportedChain)
-    return <>Unsupported network, please switch to a supported chain</>;
-  if (!configuration)
-    throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
+      if (approval.status !== null) return;
+      dispatch(setApprovalLoading());
+      const allowance = await getAllowance(
+        wallet.address,
+        network.network,
+        dispatch
+      );
 
+      if (!allowance) {
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message: "Failed to get allowance!",
+          })
+        );
+        return;
+      }
+
+      if (allowance.value > 0) dispatch(setApproved());
+      if (allowance.value === 0) dispatch(setNotApproved());
+    })();
+  }, [wallet.address]);
   return (
     <>
-      <Main.Inner>
-        <Swap
-          chainConfig={configuration}
-          accountAddress={accountData.address}
-        />
-      </Main.Inner>
+      {(() => {
+        if (network && network.network === ENetwork.UNSUPPORTED)
+          return (
+            <>
+              <Main.Inner>
+                <UnsupportedNetwork />
+              </Main.Inner>
+            </>
+          );
+        if (wallet.address)
+          return (
+            <>
+              <Main.Inner>
+                <Swap />
+              </Main.Inner>
+            </>
+          );
+        return (
+          <>
+            <Main.Inner>
+              <ConnectWalletButton />
+            </Main.Inner>
+          </>
+        );
+      })()}
     </>
   );
 };

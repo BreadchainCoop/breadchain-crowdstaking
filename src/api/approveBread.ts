@@ -1,60 +1,57 @@
 import { ethers } from "ethers";
 
+import { ENetwork } from "../features/network/networkSlice";
+import config from "../config";
+import ERC20abi from "../ERC20.json";
 import store from "../store";
 import {
   closeModal,
   EModalType,
   openModal,
 } from "../features/modal/modalSlice";
-import { WriteContractConfig } from "@wagmi/core";
-import { TransactionResponse } from "@ethersproject/providers";
-
-import { EToastType, setToast } from "../features/toast/toastSlice";
-import { isAddress } from "ethers/lib/utils";
 import {
-  setTransactionComplete,
-  setTransactionPending,
-} from "../features/transaction/transactionSlice";
+  setApprovalPending,
+  setApproved,
+} from "../features/approval/approvalSlice";
 
 export const approveBREAD = async (
-  sendTx: (
-    overrideConfig?: WriteContractConfig | undefined
-  ) => Promise<TransactionResponse>,
-  spenderAddress: string,
+  network: ENetwork,
   dispatch: typeof store.dispatch
 ) => {
-  if (!isAddress(spenderAddress)) {
-    return dispatch(
-      setToast({
-        type: EToastType.ERROR,
-        message: `Invalid spender address: ${spenderAddress}`,
-      })
-    );
+  const { ethereum } = window as any;
+  if (!ethereum) return;
+
+  if (network === ENetwork.UNSUPPORTED) {
+    // ??? should this be shown to a user?
+    console.error("Can't get balances on an unsupported network");
+    return null;
   }
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+
+  const { DAI, BREAD } = config[network];
+
+  // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
+  const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, signer);
 
   dispatch(
     openModal({ type: EModalType.APPROVAL, title: "Approving BREAD Contract" })
   );
   let txn;
   try {
-    txn = await sendTx({ args: [spenderAddress, ethers.constants.MaxUint256] });
+    txn = await DAIcontract.approve(BREAD.address, ethers.constants.MaxUint256);
   } catch (err) {
     // !!! handle this error
     dispatch(closeModal());
     return;
   }
   dispatch(closeModal());
-  dispatch(setTransactionPending(txn.hash));
+  dispatch(setApprovalPending());
   try {
     await txn.wait();
-    dispatch(setTransactionComplete());
+    dispatch(setApproved());
   } catch (err) {
-    console.error(err);
-    dispatch(
-      setToast({
-        type: EToastType.ERROR,
-        message: "Approve transaction failed",
-      })
-    );
+    // !!! handle this error
   }
 };

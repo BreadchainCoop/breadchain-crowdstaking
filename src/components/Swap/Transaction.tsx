@@ -1,30 +1,19 @@
 import React from "react";
 import { ENetwork } from "../../features/network/networkSlice";
 import { ETransactionStatus } from "../../features/transaction/transactionSlice";
-import { useChainConfig } from "../../hooks/useChainConfig";
 import { useAppSelector } from "../../store/hooks";
 import Elipsis from "../Elipsis/Elipsis";
 
 const Transaction: React.FC = () => {
   const {
+    network,
     transaction: { status, hash },
   } = useAppSelector((state) => state);
 
-  const { activeChain } = useChainConfig();
-
-  if (!activeChain) return <></>;
-
-  let endpoint: string;
-
-  switch (activeChain.id) {
-    case 137:
-      endpoint = "https://polygonscan.com";
-    case 80001:
-      endpoint = "https://mumbai.polygonscan.com";
-      break;
-    default:
-      return <></>;
-  }
+  const endpoint =
+    network.network === ENetwork.POLYGON
+      ? "https://polygonscan.com"
+      : `https://rinkeby.etherscan.io/`;
 
   return (
     <div className="mt-8 text-xs">
@@ -35,7 +24,7 @@ const Transaction: React.FC = () => {
           rel="noopener noreferrer"
           href={`${endpoint}/tx/${hash}`}
         >
-          {status === ETransactionStatus.COMPLETE && hash}
+          {hash}
         </a>
       </div>
       <div className="mt-4">

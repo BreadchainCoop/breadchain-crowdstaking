@@ -1,28 +1,63 @@
-import { BigNumberish } from "ethers";
+import { ethers } from "ethers";
+import { ENetwork } from "../features/network/networkSlice";
+import BreadPolygon from "../BreadPolygon.json";
+import BreadRinkeby from "../BreadRinkeby.json";
+import config from "../config";
 import store from "../store";
 import {
   setTransactionComplete,
   setTransactionPending,
 } from "../features/transaction/transactionSlice";
-import { unlockModal } from "../features/modal/modalSlice";
+import {
+  EModalType,
+  openModal,
+  unlockModal,
+} from "../features/modal/modalSlice";
 import { EToastType, setToast } from "../features/toast/toastSlice";
-import { WriteContractConfig } from "@wagmi/core";
-import { TransactionResponse } from "@ethersproject/providers";
-import { parseEther } from "ethers/lib/utils";
 
 export const swap = async (
-  sendTx: (
-    overrideConfig?: WriteContractConfig | undefined
-  ) => Promise<TransactionResponse>,
-  amount: BigNumberish,
+  network: string,
+  from: { name: string; value: string },
   dispatch: typeof store.dispatch,
   receiverAddress: string,
   resetSwapState: () => void
 ) => {
-  if (typeof amount === "number") amount = parseEther(amount.toString());
-  if (typeof amount === "string") amount = parseEther(amount);
+  const { name, value } = from;
 
-  let txn = await sendTx({ args: [amount, receiverAddress] });
+  const { ethereum } = window as any;
+  if (!ethereum) return;
+
+  if (network === ENetwork.UNSUPPORTED) {
+    console.error("Can't get balances on an unsupported network");
+    return null;
+  }
+
+  const { BREAD } = config[network];
+
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  const signer = provider.getSigner();
+
+  const BREADcontract = new ethers.Contract(
+    BREAD.address,
+    network === ENetwork.POLYGON ? BreadPolygon.abi : BreadRinkeby.abi,
+    signer
+  );
+
+  const amountWith18Decimals = ethers.utils.parseUnits(value, 18);
+
+  let txn;
+  if (name === "DAI") {
+    dispatch(
+      openModal({ type: EModalType.MINTING, title: `Baking ${value} BREAD` })
+    );
+    txn = await BREADcontract.mint(amountWith18Decimals, receiverAddress);
+  }
+  if (name === "BREAD") {
+    dispatch(
+      openModal({ type: EModalType.BURNING, title: `Burning ${value} BREAD` })
+    );
+    txn = await BREADcontract.burn(amountWith18Decimals, receiverAddress);
+  }
 
   /**
     !!!
