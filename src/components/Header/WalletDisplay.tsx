@@ -1,9 +1,7 @@
 import React from "react";
-import { allChains, useDisconnect, useNetwork } from "wagmi";
 import { ENetwork } from "../../features/network/networkSlice";
 
 import TextTransition from "../../transitions/TextTransition";
-import Button from "../Button";
 import { IconContainer, NetworkIcon } from "../Icons";
 
 export const Container: React.FC = (props) => {
@@ -20,27 +18,43 @@ export const Row: React.FC = ({ children }) => (
   </span>
 );
 
-export const Network: React.FC = () => {
-  const { isError, isLoading, error, activeChain, chains } = useNetwork();
-  const { disconnectAsync } = useDisconnect();
-  if (isError) return <Row>{error}</Row>;
-  if (isLoading) return <Row>Loading</Row>;
+type TProps = {
+  network: null | ENetwork;
+};
 
+export const Network: React.FC<TProps> = (props) => {
+  const { network } = props;
   return (
     <Row>
-      <IconContainer>
-        <NetworkIcon />
-      </IconContainer>
-      <span>
-        <TextTransition>
-          {activeChain?.unsupported && "Unsupported network: "}
-          {activeChain?.name}
-        </TextTransition>
-      </span>
+      {network
+        ? (() => {
+            if (network === ENetwork.RINKEBY)
+              return (
+                <>
+                  <IconContainer>
+                    <NetworkIcon />
+                  </IconContainer>
+                  <span>
+                    <TextTransition>Rinkeby Testnet</TextTransition>
+                  </span>
+                </>
+              );
+            if (network === ENetwork.POLYGON)
+              return (
+                <>
+                  <IconContainer>
+                    <NetworkIcon />
+                  </IconContainer>
+                  <TextTransition>Polygon</TextTransition>
+                </>
+              );
 
-      <Button variant="small" onClick={() => disconnectAsync()}>
-        Disconnect
-      </Button>
+            if (network === ENetwork.UNSUPPORTED) return "Unsupported Chain";
+            else {
+              return "Invalid network state!";
+            }
+          })()
+        : "no network"}
     </Row>
   );
 };

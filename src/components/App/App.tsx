@@ -30,18 +30,12 @@ import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
-import { useConnect, useNetwork, useAccount } from "wagmi";
-import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, toast, font } = appState;
-  const { isConnected } = useConnect();
-  const { data } = useAccount();
-  const { status, error, activeChain, configuration, accountData } =
-    useValidatedWalletConnection();
+  const { modal, wallet, network, toast, font } = appState;
 
   /**
    * App Init
@@ -56,9 +50,18 @@ const App: React.FC = () => {
       //   dispatch(setXr(data));
       // });
 
-      if (status != "success") return;
+      const ethereum = (window as any).ethereum;
+      if (!ethereum) {
+        // !!! handle this with some sort of message for users
+        console.log("!ethereum");
+        return;
+      }
 
-      const network = getNetwork(activeChain!.id);
+      if (ethereum.isConnected && !ethereum.isConnected()) {
+        // !!! when is this condition met? Is this check necessary?
+      }
+
+      const network = await getNetwork();
       if (!network) {
         // !!! handle this error
         dispatch(
@@ -74,11 +77,27 @@ const App: React.FC = () => {
       dispatch(setNetworkConnected(ENetworkConnectionState.CONNECTED));
 
       // bind handlers for metamask events eg account change / network change
-      // ethInit(appState, dispatch);
+      ethInit(appState, dispatch);
 
-      dispatch(setWalletAddress(accountData!.address!));
+      // If there is an address stored we can check how recently wallet was connected
+      const storedAccount = localStorage.getItem("storedAccount");
+      if (!storedAccount) return;
+
+      const account = JSON.parse(storedAccount);
+      // ignore stored account if more than an hour old
+      if (Date.now() - account.timestamp > 360_000) {
+        localStorage.removeItem("storedAccount");
+        return;
+      }
+
+      dispatch(setWalletAddress(account.account));
+
+      // if (network === ENetwork.UNSUPPORTED) {
+      //   ethInit(appState, dispatch);
+      //   return;
+      // }
     })();
-  }, [status, error, !!configuration]);
+  }, []);
 
   return (
     <AppContainer>
@@ -90,10 +109,12 @@ const App: React.FC = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {status === "success" && <WalletDisplay.Network />}
-          {data?.address && (
+          {network.network && (
+            <WalletDisplay.Network network={network.network} />
+          )}
+          {wallet.address && (
             <WalletDisplay.Address>
-              {formatAddress(data.address)}
+              {formatAddress(wallet.address)}
             </WalletDisplay.Address>
           )}
         </WalletDisplay.Container>

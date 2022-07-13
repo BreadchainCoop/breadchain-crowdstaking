@@ -1,19 +1,11 @@
-import { useNetwork } from "wagmi";
 import config from "../config";
 import { unlockModal } from "../features/modal/modalSlice";
 import { ENetwork } from "../features/network/networkSlice";
 import store from "../store";
 
-export const watchAsset = async (
-  network: ENetwork,
-  tokenKey: "DAI" | "BREAD" | "DERIVATIVE"
-) => {
-  const { activeChain } = useNetwork();
-  if (!activeChain || activeChain.unsupported) return null;
-
+export const watchAsset = async (network: ENetwork, tokenKey: string) => {
   const ethereum = (window as any).ethereum;
-  const { address, symbol, decimals } = config[activeChain.id][tokenKey];
-
+  const { address, symbol, decimals } = config[network][tokenKey];
   ethereum.request({
     method: "wallet_watchAsset",
     params: {
