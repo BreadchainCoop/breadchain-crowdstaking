@@ -14,21 +14,27 @@ Breadchain is a collective federation of decentralized cooperative projects look
 
 You need to have the [Metamask](https://metamask.io/) browser plugin (or a wallet that can inject as Metamask), the amount of DAI to mint into BREAD, and some MATIC cryptocurrency to pay for the transaction fee for the Polygon Network.
 
+### How do I connect to the Polygon network?
+[Here](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) are the instructions for doing so on Metamask.
+
 ### How do I get DAI and MATIC on the Polygon network?
 
-First make sure that your wallet can connect to Polygon. [Here](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) are the instructions for doing so on Metamask. There are then several options for getting DAI and MATIC to your wallet on the Polygon network.
+There are several options for getting DAI and MATIC to your wallet on the Polygon network. You will need MATIC first to pay for transaction fees on Polygon. If you already have MATIC in your Polygon wallet, you can swap for DAI on [Uniswap](https://app.uniswap.org/#/swap?chain=polygon) on the Polygon network. If you need MATIC, there are several options..
 
-#### **Option 1** - [Crypto.com](http://Crypto.com) or Binance
-[Crypto.com](http://Crypto.com), Binance, and MEXC offer direct withdraw of MATIC to the Polygon network.
+**Option 1** - Direct deposit to Polygon from a crypto exchange
+
+Crypto.com, Binance, and MEXC offer direct withdraw of MATIC to the Polygon network.
 
 **Option 2** - Transak / Moonpay
+
 With [Transak](https://transak.com/) you can buy crypto with a debit or credit card including MATIC to send to a polygon wallet. [Moonpay](https://www.moonpay.com/buy/matic) is another option for those in the US. You may need to go through KYC.
 
 **Option 3** - Layerswap
 [Layerswap.io](http://Layerswap.io) offers for many CEXs to withdraw directly to Polygon and several other L2s but does not offer MATIC, only ETH, USDC, or LRC so the user will need MATIC already on a Polygon wallet. If a user does not have MATIC but can use Layerswap, they can also use the MATIC faucet to get the first amount needed to make transactions: [https://matic.supply/](https://matic.supply/) (will need to do several times).
 
-**Option 4** - Polygon Bridge
-The official Polygon bridge can be used by those who already have assets on the ethereum main chain but there will potentially be a significant gas cost.
+**Option 4** - Polygon Bridge / Hop Protocol
+
+The official [Polygon bridge](https://wallet.polygon.technology/bridge/) can be used by those who already have assets on the ethereum main chain but there will potentially be a significant gas cost. Another option if you have assets on other EVM chains is [Hop Protocol](https://hop.exchange/).
 
 ### Why use Polygon and not another network?
 
@@ -52,7 +58,11 @@ It disappears! This way, the only amount of BREAD that can be existence is the e
 
 ### What can I do with BREAD?
 
-BREAD is essentially a wrapped version of DAI and is always backed by an equivalent amount of DAI so you can use BREAD similarly as you would DAI except by using BREAD, you are expressing your support for the cooperative economy. In the Crypto Leftist discord community, as a BREAD holder you get access to an extra channel only accessible to holders of BREAD. As the Breadchain Network grows, we plan on having more benefits to holding or transacting with BREAD. If you’re interested in partnering up to explore uses of BREAD with your own project, please reach out at breadchaincoop@gmail.com. We are especially interested in attempts to use BREAD as a reserve asset for helping cooperative blockchain projects.
+BREAD is essentially a wrapped version of DAI and is always backed by an equivalent amount of DAI so you can use BREAD similarly as you would DAI except by using BREAD, you are expressing your support for the cooperative economy. In the Crypto Leftist discord community, as a BREAD holder you get access to an extra channel only accessible to holders of BREAD.
+
+You can also help add liquidity in our managed [Arrakis liquidity pool](https://beta.arrakis.finance/#/vaults/0x3055C602454ddE1BDa3e98B1bCfD2Ed68ab9789E) on Uniswap V3 which anyone can provide DAI and BREAD in equal amounts as liquidity, but only at a price range at a fraction of penny below and above $1. Providing liquidity through this pool helps protect the BREAD token from speculators.
+    
+As the Breadchain Network grows, we plan on having more benefits to holding or transacting with BREAD. If you’re interested in partnering up to explore uses of BREAD with your own project, please reach out at breadchaincoop@gmail.com. We are especially interested in attempts to use BREAD as a reserve asset for helping cooperative blockchain projects.
 
 ### Is this stablecoin risky like what happened with LUNA / UST?
 
