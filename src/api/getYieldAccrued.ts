@@ -1,49 +1,26 @@
 import { ethers } from "ethers";
-import { ENetwork } from "../features/network/networkSlice";
+import { BaseProvider } from "@ethersproject/providers";
 
-import ERC20abi from "../ERC20.json";
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
 
 export const getYieldAccrued = async (
-  // account: string,
-  network: ENetwork
+  provider: BaseProvider
 ): Promise<null | {
   yieldAccrued: string;
 }> => {
-  if (network === ENetwork.UNSUPPORTED) {
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
-
-  const { ALCHEMY_URL, ALCHEMY_API_KEY } = config[network];
-
-  const provider = new ethers.providers.JsonRpcProvider(
-    `${ALCHEMY_URL}${ALCHEMY_API_KEY}`
-    // "https://polygon-mainnet.g.alchemy.com/v2/xkoKqq5hIQHfQIWBLBEs841-QxllCrK9"
-  );
-  // ALCHEMY_URL
-  // ALCHEMY_API_KEY
-
-  const { BREAD } = config[network];
+  const { BREAD } = config[provider.network.chainId];
 
   const BREADcontract = new ethers.Contract(
     BREAD.address,
     BREADabi.abi,
     provider
   );
-  // const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, provider);
 
   let yieldAccrued = await BREADcontract.yieldAccrued();
   console.log("yieldAccrued raw value: ", yieldAccrued);
 
   const yieldAccruedFormatted = ethers.utils.formatUnits(yieldAccrued);
-
-  // const BREADBalance = ethers.utils
-  //   .formatUnits(BREADBal, BREAD.decimals)
-  //   .toString();
-  // const DAIBalance = ethers.utils.formatUnits(DAIBal, DAI.decimals).toString();
-  // const MATICBalance = ethers.utils.formatEther(MATICBal);
 
   return {
     yieldAccrued: yieldAccruedFormatted,

@@ -9,6 +9,7 @@ export enum ENetworkConnectionState {
 export enum ENetwork {
   MAINNET = "MAINNET",
   POLYGON = "POLYGON",
+  MUMBAI = "MUMBAI",
   RINKEBY = "RINKEBY",
   UNSUPPORTED = "UNSUPPORTED",
 }

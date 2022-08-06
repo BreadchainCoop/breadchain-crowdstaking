@@ -21,15 +21,13 @@
     "gsap": "^3.9.1",
     "lodash": "^4.17.21",
     "postcss": "^8.4.6",
-    "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-markdown": "^8.0.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.3.0",
     "tailwindcss": "^3.0.23",
-    "util": "^0.12.4",
-    "wagmi": "^0.6.1"
+    "wagmi": "^0.4.12"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
