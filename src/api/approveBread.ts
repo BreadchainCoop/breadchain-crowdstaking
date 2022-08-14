@@ -1,13 +1,10 @@
-import { ethers } from "ethers";
-
 import store from "../store";
 import {
   closeModal,
   EModalType,
   openModal,
 } from "../features/modal/modalSlice";
-import { WriteContractConfig } from "@wagmi/core";
-import { TransactionResponse } from "@ethersproject/providers";
+import {} from "@wagmi/core";
 
 import { EToastType, setToast } from "../features/toast/toastSlice";
 import { isAddress } from "ethers/lib/utils";
@@ -15,29 +12,32 @@ import {
   setTransactionComplete,
   setTransactionPending,
 } from "../features/transaction/transactionSlice";
+import { Contract, ethers, Signer } from "ethers";
+import ERC20ABI from "../ERC20.json";
 
 export const approveBREAD = async (
-  sendTx: (
-    overrideConfig?: WriteContractConfig | undefined
-  ) => Promise<TransactionResponse>,
-  spenderAddress: string,
+  signer: Signer,
+  daiAddress: string,
+  breadAddress: string,
   dispatch: typeof store.dispatch
 ) => {
-  if (!isAddress(spenderAddress)) {
+  if (!isAddress(breadAddress)) {
     return dispatch(
       setToast({
         type: EToastType.ERROR,
-        message: `Invalid spender address: ${spenderAddress}`,
+        message: `Invalid spender address: ${breadAddress}`,
       })
     );
   }
+
+  const dai = new Contract(daiAddress, ERC20ABI, signer);
 
   dispatch(
     openModal({ type: EModalType.APPROVAL, title: "Approving BREAD Contract" })
   );
   let txn;
   try {
-    txn = await sendTx({ args: [spenderAddress, ethers.constants.MaxUint256] });
+    txn = await dai.approve(breadAddress, ethers.constants.MaxUint256);
   } catch (err) {
     // !!! handle this error
     dispatch(closeModal());

@@ -7,16 +7,16 @@ import getMultisigBREADBalance from "../../api/getMultisigBREADBalance";
 import getYieldAccrued from "../../api/getYieldAccrued";
 import Button from "../Button";
 import Elipsis from "../Elipsis/Elipsis";
-import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
-import { useProvider } from "wagmi";
+import { useAccount, useNetwork, useProvider, useSigner } from "wagmi";
 import { BaseProvider } from "@ethersproject/providers";
 
-export const Pantry: React.FC = () => {
+export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
   const polygonProvider = useProvider({ chainId: 137 });
   const mumbaiProvider = useProvider({ chainId: 80001 });
 
-  const { activeConnector, signerData, activeChain, unsupportedChain } =
-    useValidatedWalletConnection();
+  const { connector: activeConnector } = useAccount();
+  const { data: signer } = useSigner();
+  const { chain: activeChain } = useNetwork();
 
   const [breadSupply, setBreadSupply] = React.useState<string | null>(null);
 
@@ -88,13 +88,13 @@ export const Pantry: React.FC = () => {
   }, [polygonProvider, activeConnector?.id, activeChain?.id, claimingYield]);
 
   const handleClaimYield = () => {
-    if (unsupportedChain) return;
+    if (activeChain?.unsupported) return;
     if (!activeChain) return;
-    if (!signerData) return;
+    if (!signer) return;
 
     let provider = activeChain.id === 80001 ? mumbaiProvider : polygonProvider;
 
-    claimYield(signerData, provider)
+    claimYield(signer, provider)
       .then((tx) => {
         setYieldAccrued("claiming yield...");
         return tx.wait();

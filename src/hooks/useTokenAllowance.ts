@@ -13,11 +13,16 @@ export function useTokenAllowance(
   holderAddress: string,
   spenderAddress: string
 ): UseTokenAllowance {
-  const { data, status, error } = useContractRead(
-    { addressOrName: tokenAddress, contractInterface: abi },
-    "allowance",
-    { args: [holderAddress, spenderAddress], watch: true }
-  );
+  const args = [holderAddress, spenderAddress];
+  const watch = true;
+
+  const { data, status, error } = useContractRead({
+    addressOrName: tokenAddress,
+    contractInterface: abi,
+    functionName: "allowance",
+    args,
+    watch,
+  });
 
   return { value: data && BigNumber.from(data.toString()), status, error };
 }

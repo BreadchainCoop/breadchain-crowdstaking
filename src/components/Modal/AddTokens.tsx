@@ -4,10 +4,10 @@ import { watchAsset } from "../../api/watchAsset";
 import { useAppSelector } from "../../store/hooks";
 import Button from "../Button";
 
-export const AddTokens: React.FC = () => {
+export const AddTokens: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { network } = useAppSelector((state) => state);
 
-  const handleAddToken = async (token: string) => {
+  const handleAddToken = async (token: "DAI" | "BREAD") => {
     if (!network.network) return;
 
     watchAsset(network.network, token);

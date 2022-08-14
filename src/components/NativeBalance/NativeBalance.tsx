@@ -28,9 +28,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
 });
 
-export const NativeBalance: React.FC<
-  INativeBalanceProps & INativeBalanceOpts
-> = (props) => {
+export const NativeBalance: React.FC<React.PropsWithChildren<INativeBalanceProps & INativeBalanceOpts>> = (props) => {
   const { addressOrName, bigNumberFormat } = {
     ...defaultProps,
     ...props,

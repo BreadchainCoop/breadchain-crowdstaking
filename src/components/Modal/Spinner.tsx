@@ -4,7 +4,7 @@ type TProps = {
   size?: "lg";
   color?: string;
 };
-export const Spinner: React.FC<TProps> = (props) => {
+export const Spinner: React.FC<React.PropsWithChildren<TProps>> = (props) => {
   const squares = [
     { d: "M0 0h5.292v5.292H0z" },
     { d: "M5.292 0h5.292v5.292H5.292z" },

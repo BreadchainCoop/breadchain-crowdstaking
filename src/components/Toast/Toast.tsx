@@ -9,7 +9,7 @@ type TProps = {
   message: string;
 };
 
-const ToastContainer: React.FC = (props) => {
+const ToastContainer: React.FC<React.PropsWithChildren<unknown>> = (props) => {
   return (
     <div className="p-4 w-full">
       <div className="px-6 py-8 md:px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
@@ -22,7 +22,7 @@ const ToastContainer: React.FC = (props) => {
 type TCloseProps = {
   onClick: () => void;
 };
-const CloseButton: React.FC<TCloseProps> = (props) => {
+const CloseButton: React.FC<React.PropsWithChildren<TCloseProps>> = (props) => {
   return (
     <button
       className="absolute right-0 top-0 w-12 h-12 p-2 text-neutral-700 hover:text-neutral-500"
@@ -40,7 +40,7 @@ const CloseButton: React.FC<TCloseProps> = (props) => {
   );
 };
 
-const Toast: React.FC<TProps> = (props) => {
+const Toast: React.FC<React.PropsWithChildren<TProps>> = (props) => {
   const dispatch = useAppDispatch();
   const ref = React.useRef(null);
   const handleCloseToast = () => {

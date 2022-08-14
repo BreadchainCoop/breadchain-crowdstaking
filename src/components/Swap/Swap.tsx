@@ -20,15 +20,22 @@ import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { closeModal } from "../../features/modal/modalSlice";
 import Button from "../Button";
 import { ChainConfiguration } from "../../config";
-import { useAccount, useContractWrite, useSigner } from "wagmi";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useSigner,
+} from "wagmi";
 import TokenBalance from "../TokenBalance";
 import NativeBalance from "../NativeBalance";
 import { useTokenBalance } from "../../hooks/useTokenBalance";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { abi as BreadABI } from "../../BreadPolygon.json";
 import { useTokenAllowance } from "../../hooks/useTokenAllowance";
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { ETransactionStatus } from "../../features/transaction/transactionSlice";
+import { swapDaiForBread } from "../../api/swapDaiForBread";
+import { swapBreadForDai } from "../../api/swapBreadForDai";
 
 interface ISwapState {
   from: {
@@ -56,21 +63,20 @@ const initialSwapState: ISwapState = {
   },
 };
 
-const SwapUI: React.FC<{
+const SwapUI: React.FC<React.PropsWithChildren<{
   chainConfig: ChainConfiguration;
   accountAddress: string;
-}> = (props) => {
+}>> = (props) => {
   const { chainConfig, accountAddress } = props;
+  const [swapState, setSwapState] =
+    React.useState<ISwapState>(initialSwapState);
+
   const dispatch = useAppDispatch();
   const { DAI, BREAD } = chainConfig;
 
   const { transaction } = useAppSelector((state) => state);
 
-  const {
-    data: account,
-    isFetching: isFetchingAccount,
-    error: accountError,
-  } = useAccount();
+  const { isConnecting } = useAccount();
 
   const {
     data: signer,
@@ -87,35 +93,58 @@ const SwapUI: React.FC<{
     BREAD.address
   );
 
-  const { writeAsync: sendBakeTransaction } = useContractWrite(
-    { addressOrName: BREAD.address, contractInterface: BreadABI },
-    "mint"
-  );
-  const { writeAsync: sendBurnTransaction } = useContractWrite(
-    { addressOrName: BREAD.address, contractInterface: BreadABI },
-    "burn"
-  );
+  // const { config: bakeTxConfig } = usePrepareContractWrite({
+  //   addressOrName: BREAD.address,
+  //   contractInterface: BreadABI,
+  //   functionName: "mint",
+  //   args: [swapState.from.value, accountAddress],
+  // });
+  // const { writeAsync: sendBakeTransaction } = useContractWrite({
+  //   ...bakeTxConfig,
+  //   args: [swapState.from.value, accountAddress],
+  // });
 
-  const { writeAsync: sendApproveTransaction } = useContractWrite(
-    { addressOrName: DAI.address, contractInterface: BreadABI },
-    "approve"
-  );
+  // const { config: burnTxConfig } = usePrepareContractWrite({
+  //   addressOrName: BREAD.address,
+  //   contractInterface: BreadABI,
+  //   functionName: "burn",
+  // });
+  // const { writeAsync: sendBurnTransaction } = useContractWrite({
+  //   ...burnTxConfig,
+  //   args: [swapState.from.value, accountAddress],
+  // });
+
+  // const { config: approveTxConfig } = usePrepareContractWrite({
+  //   addressOrName: DAI.address,
+  //   contractInterface: BreadABI,
+  //   functionName: "approve",
+  // });
+  // const { writeAsync: sendApproveTransaction } = useContractWrite({
+  //   ...approveTxConfig,
+  //   args: [BREAD.address, ethers.constants.MaxUint256],
+  // });
+  const resetSwapState = () => {
+    setSwapState(initialSwapState);
+  };
 
   useEffect(() => {
     resetSwapState();
   }, [chainConfig.NETWORK_STRING]);
 
-  const [swapState, setSwapState] =
-    React.useState<ISwapState>(initialSwapState);
-
-  const isFetching = isFetchingAccount || isFetchingSigner;
-  const error = accountError || signerError;
+  const isLoading = isConnecting || isFetchingSigner;
+  const error = signerError;
+  // // const writeTxHooksLoading =
+  // //   !sendBakeTransaction || !sendBurnTransaction || !sendApproveTransaction;
 
   const inputTokenReadings =
     swapState.from.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
 
   const outputTokenReadings =
     swapState.to.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
+
+  if (isLoading) return <Elipsis />;
+  if (error) return <>{error}</>;
+  if (!accountAddress || !signer) return <>Could not connect to wallet</>;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -147,32 +176,25 @@ const SwapUI: React.FC<{
   };
 
   const handleBalanceClick = () => {
-    if (!inputTokenReadings.value) return;
-
-    let swapStateCopy = swapState;
-    swapStateCopy.from.value = formatEther(inputTokenReadings.value);
-    setSwapState({ ...swapStateCopy });
-  };
-
-  const resetSwapState = () => {
-    setSwapState(initialSwapState);
+    // if (!inputTokenReadings.value) return;
+    // let swapStateCopy = swapState;
+    // swapStateCopy.from.value = formatEther(inputTokenReadings.value);
+    // setSwapState({ ...swapStateCopy });
   };
 
   const handleApproveBREAD = async () => {
-    await approveBREAD(sendApproveTransaction, BREAD.address, dispatch);
+    await approveBREAD(signer, DAI.address, BREAD.address, dispatch);
   };
 
-  const handleSubmit = async () => {
-    if (!["DAI", "BREAD"].includes(swapState.from.name)) return;
+  const handleSwapDaiForBread = async () => {
+    if (swapState.from.name != "DAI") return;
 
-    let txWriter =
-      swapState.from.name === "DAI" ? sendBakeTransaction : sendBurnTransaction;
-
-    swap(
-      txWriter,
+    swapDaiForBread(
+      signer,
       swapState.from.value,
-      dispatch,
+      BREAD.address,
       accountAddress,
+      dispatch,
       resetSwapState
     )
       .then(() => {
@@ -190,9 +212,38 @@ const SwapUI: React.FC<{
       });
   };
 
-  if (isFetching) return <Elipsis />;
-  if (error) return <>{error}</>;
-  if (!account?.address || !signer) return <>Could not connect to wallet</>;
+  const handleSwapBreadForDai = async () => {
+    if (swapState.from.name != "BREAD") return;
+
+    swapBreadForDai(
+      signer,
+      swapState.from.value,
+      BREAD.address,
+      accountAddress,
+      dispatch,
+      resetSwapState
+    )
+      .then(() => {
+        dispatch(getBalances({}));
+      })
+      .catch((err: any) => {
+        const message = err.data ? err.data.message : err.message;
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message,
+          })
+        );
+        dispatch(closeModal());
+      });
+  };
+
+  const handleSubmit = async () => {
+    if (!["DAI", "BREAD"].includes(swapState.from.name)) return;
+
+    if (swapState.from.name === "DAI") handleSwapDaiForBread();
+    if (swapState.from.name === "BREAD") handleSwapBreadForDai();
+  };
 
   const showBakeBurnButton =
     swapState.from.name === "BREAD" ||
@@ -249,7 +300,7 @@ const SwapUI: React.FC<{
         )}
       </TokenDisplay>
       <div className="w-full px-4 pt-8 pb-12 text-xs">
-        Matic <NativeBalance addressOrName={account.address} />
+        Matic <NativeBalance addressOrName={accountAddress} />
       </div>
 
       {showBakeBurnButton && (

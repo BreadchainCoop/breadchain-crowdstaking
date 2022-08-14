@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Logo: React.FC = () => {
+export const Logo: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <div className="flex items-center">
       <Link to="/">

@@ -1,16 +1,15 @@
 import React from "react";
-import { ENetwork } from "../../features/network/networkSlice";
+import { useNetwork } from "wagmi";
 import { ETransactionStatus } from "../../features/transaction/transactionSlice";
-import { useChainConfig } from "../../hooks/useChainConfig";
 import { useAppSelector } from "../../store/hooks";
 import Elipsis from "../Elipsis/Elipsis";
 
-const Transaction: React.FC = () => {
+const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     transaction: { status, hash },
   } = useAppSelector((state) => state);
 
-  const { activeChain } = useChainConfig();
+  const { chain: activeChain } = useNetwork();
 
   if (!activeChain) return <></>;
 

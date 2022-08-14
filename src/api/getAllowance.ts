@@ -1,12 +1,9 @@
 import { ethers } from "ethers";
 
-import { ENetwork } from "../features/network/networkSlice";
-import config from "../config";
 import ERC20abi from "../ERC20.json";
 import store from "../store";
 import { EToastType, setToast } from "../features/toast/toastSlice";
 import { closeModal } from "../features/modal/modalSlice";
-import { Chain, useNetwork, useSigner } from "wagmi";
 
 export const getAllowance = async (
   tokenAddress: string,

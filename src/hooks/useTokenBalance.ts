@@ -12,11 +12,13 @@ export function useTokenBalance(
   tokenAddress: string,
   holderAddress: string
 ): UseTokenBalanceResult {
-  const { data, status, error } = useContractRead(
-    { addressOrName: tokenAddress, contractInterface: abi },
-    "balanceOf",
-    { args: [holderAddress], watch: true }
-  );
+  const { data, status, error } = useContractRead({
+    addressOrName: tokenAddress,
+    contractInterface: abi,
+    functionName: "balanceOf",
+    args: [holderAddress],
+    watch: true,
+  });
 
   return { value: data && BigNumber.from(data.toString()), status, error };
 }

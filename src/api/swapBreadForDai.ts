@@ -1,4 +1,4 @@
-import { BigNumberish } from "ethers";
+import { BigNumberish, Contract, Signer } from "ethers";
 import store from "../store";
 import {
   setTransactionComplete,
@@ -6,41 +6,23 @@ import {
 } from "../features/transaction/transactionSlice";
 import { unlockModal } from "../features/modal/modalSlice";
 import { EToastType, setToast } from "../features/toast/toastSlice";
-import {
-  TransactionResponse,
-  TransactionReceipt,
-} from "@ethersproject/providers";
 import { parseEther } from "ethers/lib/utils";
-import { UseContractWriteMutationArgs } from "wagmi/dist/declarations/src/hooks/contracts/useContractWrite";
+import { abi as BreadABI } from "../BreadPolygon.json";
 
-interface WaitableHash {
-  hash: string;
-  wait: (confirmations?: number) => Promise<TransactionReceipt>;
-}
-
-export const swap = async (
-  sendTx: (
-    override?: UseContractWriteMutationArgs | undefined
-  ) => Promise<WaitableHash>,
+export const swapBreadForDai = async (
+  signer: Signer,
   amount: BigNumberish,
-  dispatch: typeof store.dispatch,
+  breadAddress: string,
   receiverAddress: string,
+  dispatch: typeof store.dispatch,
   resetSwapState: () => void
 ) => {
   if (typeof amount === "number") amount = parseEther(amount.toString());
   if (typeof amount === "string") amount = parseEther(amount);
 
-  let txn = await sendTx();
+  const bread = new Contract(breadAddress, BreadABI, signer);
 
-  /**
-    !!!
-    
-    At this point the transaction has been successfully submitted.
-    
-    Does it make more sense to break this swap function into 2 
-    separate funcitons?
-  
-  */
+  let txn = await bread.burn(amount, receiverAddress);
 
   dispatch(setTransactionPending(txn.hash));
   dispatch(unlockModal());
@@ -52,7 +34,7 @@ export const swap = async (
     dispatch(
       setToast({
         type: EToastType.ERROR,
-        message: "bake/burn transaction failed",
+        message: "burn transaction failed",
       })
     );
   }

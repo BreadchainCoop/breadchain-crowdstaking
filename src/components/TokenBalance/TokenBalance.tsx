@@ -1,8 +1,5 @@
-import { useAccount, useContractRead } from "wagmi";
-import { performanceConfig } from "../../config.performance";
 import Elipsis from "../Elipsis/Elipsis";
-import abi from "../../ERC20.json";
-import { formatEther, formatUnits } from "ethers/lib/utils";
+import { formatEther } from "ethers/lib/utils";
 import { UseTokenBalanceResult } from "../../hooks/useTokenBalance";
 
 interface TokenBalanceOpts {
@@ -22,9 +19,7 @@ const formatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
 });
 
-export const TokenBalance: React.FC<
-  UseTokenBalanceResult & TokenBalanceOpts
-> = (props) => {
+export const TokenBalance: React.FC<React.PropsWithChildren<UseTokenBalanceResult & TokenBalanceOpts>> = (props) => {
   const { value, status, error, bigNumberFormat } = props;
 
   let displayedValue = "Unknown";

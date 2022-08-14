@@ -3,7 +3,6 @@ import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
 import config from "../config";
-import { useValidatedWalletConnection } from "../hooks/useValidatedWalletConnection";
 
 const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
 

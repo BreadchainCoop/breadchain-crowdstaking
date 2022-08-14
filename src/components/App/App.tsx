@@ -9,12 +9,11 @@ import Modal from "../Modal";
 import Logo from "../Header/Logo";
 import * as WalletDisplay from "../Header/WalletDisplay";
 
-import { getNetwork, ethInit } from "../../api";
+import { getNetwork } from "../../api";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setWalletAddress } from "../../features/wallet/walletSlice";
 import {
-  ENetwork,
   ENetworkConnectionState,
   setNetwork,
   setNetworkConnected,
@@ -30,18 +29,15 @@ import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
-import { useConnect, useNetwork, useAccount } from "wagmi";
-import { useValidatedWalletConnection } from "../../hooks/useValidatedWalletConnection";
+import { useAccount, useNetwork } from "wagmi";
 
-const App: React.FC = () => {
+const App: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
   const { modal, toast, font } = appState;
-  const { isConnected } = useConnect();
-  const { data } = useAccount();
-  const { status, error, activeChain, configuration, accountData } =
-    useValidatedWalletConnection();
+  const { isConnected, address: accountAddress } = useAccount();
+  const { chain: activeChain } = useNetwork();
 
   /**
    * App Init
@@ -56,9 +52,9 @@ const App: React.FC = () => {
       //   dispatch(setXr(data));
       // });
 
-      if (status != "success") return;
+      if (!isConnected || !activeChain || !accountAddress) return;
 
-      const network = getNetwork(activeChain!.id);
+      const network = getNetwork(activeChain.id);
       if (!network) {
         // !!! handle this error
         dispatch(
@@ -76,9 +72,9 @@ const App: React.FC = () => {
       // bind handlers for metamask events eg account change / network change
       // ethInit(appState, dispatch);
 
-      dispatch(setWalletAddress(accountData!.address!));
+      dispatch(setWalletAddress(accountAddress));
     })();
-  }, [status, error, !!configuration]);
+  }, [isConnected, activeChain?.id, accountAddress]);
 
   return (
     <AppContainer>
@@ -90,10 +86,10 @@ const App: React.FC = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {status === "success" && <WalletDisplay.Network />}
-          {data?.address && (
+          {<WalletDisplay.Network />}
+          {accountAddress && (
             <WalletDisplay.Address>
-              {formatAddress(data.address)}
+              {formatAddress(accountAddress)}
             </WalletDisplay.Address>
           )}
         </WalletDisplay.Container>

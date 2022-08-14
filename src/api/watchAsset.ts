@@ -8,7 +8,7 @@ export const watchAsset = async (
   network: ENetwork,
   tokenKey: "DAI" | "BREAD" | "DERIVATIVE"
 ) => {
-  const { activeChain } = useNetwork();
+  const { chain: activeChain } = useNetwork();
   if (!activeChain || activeChain.unsupported) return null;
 
   const ethereum = (window as any).ethereum;

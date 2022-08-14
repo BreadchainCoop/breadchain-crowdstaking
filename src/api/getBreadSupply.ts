@@ -3,7 +3,6 @@ import { BaseProvider } from "@ethersproject/providers";
 
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
-import { useValidatedWalletConnection } from "../hooks/useValidatedWalletConnection";
 
 export const getBreadSupply = async (
   provider: BaseProvider

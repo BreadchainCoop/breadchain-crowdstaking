@@ -1,8 +1,8 @@
 import React from "react";
 
-export const Icon: React.FC<{
+export const Icon: React.FC<React.PropsWithChildren<{
   type: string;
-}> = (props) => {
+}>> = (props) => {
   const { type } = props;
   return type === "DAI" ? (
     <div className="w-6 h-6">

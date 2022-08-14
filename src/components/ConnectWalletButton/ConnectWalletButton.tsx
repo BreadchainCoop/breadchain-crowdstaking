@@ -1,52 +1,29 @@
 import React from "react";
 
-import { appendClasses } from "../../transitions/NiceTransition";
-
-import { getAccount } from "../../api";
-
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  openModal,
-  closeModal,
-  EModalType,
-} from "../../features/modal/modalSlice";
-import {
-  EWalletConnectionState,
-  setWalletAddress,
-} from "../../features/wallet/walletSlice";
-import TextTransition from "../../transitions/TextTransition";
-import { EToastType, setToast } from "../../features/toast/toastSlice";
-import { IProviderRpcError } from "../../metamaskErrorType";
 import Button from "../Button";
-import { useConnect } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 
-const ConnectWalletButton: React.FC = (props) => {
-  const {
-    activeConnector,
-    connect,
-    connectors,
-    error,
-    isConnecting,
-    pendingConnector,
-  } = useConnect();
+const ConnectWalletButton: React.FC<React.PropsWithChildren<unknown>> = (props) => {
+  const { connector: activeConnector, isConnected } = useAccount();
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect();
+
+  if (!!activeConnector && isConnected) return <></>;
 
   return (
     <div className="mt-12">
-      {connectors
-        .filter((x) => {
-          return x.ready && x.id !== activeConnector?.id;
-        })
-        .map((x) => {
-          const text = `${x.name} ${
-            isConnecting && x.id === pendingConnector?.id ? "(Connecting)" : ""
-          }`;
+      {connectors.map((connector) => {
+        return (
+          <Button
+            disabled={!connector.ready}
+            key={connector.id}
+            onClick={() => connect({ connector })}
+          >
+            {connector.name}
+          </Button>
+        );
+      })}
 
-          return (
-            <Button key={x.id} onClick={() => connect(x)}>
-              {text}
-            </Button>
-          );
-        })}
       {error && <div>{error.message}</div>}
     </div>
   );
