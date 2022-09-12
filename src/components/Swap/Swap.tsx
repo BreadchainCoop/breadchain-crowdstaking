@@ -63,10 +63,12 @@ const initialSwapState: ISwapState = {
   },
 };
 
-const SwapUI: React.FC<React.PropsWithChildren<{
-  chainConfig: ChainConfiguration;
-  accountAddress: string;
-}>> = (props) => {
+const SwapUI: React.FC<
+  React.PropsWithChildren<{
+    chainConfig: ChainConfiguration;
+    accountAddress: string;
+  }>
+> = (props) => {
   const { chainConfig, accountAddress } = props;
   const [swapState, setSwapState] =
     React.useState<ISwapState>(initialSwapState);
@@ -93,36 +95,6 @@ const SwapUI: React.FC<React.PropsWithChildren<{
     BREAD.address
   );
 
-  // const { config: bakeTxConfig } = usePrepareContractWrite({
-  //   addressOrName: BREAD.address,
-  //   contractInterface: BreadABI,
-  //   functionName: "mint",
-  //   args: [swapState.from.value, accountAddress],
-  // });
-  // const { writeAsync: sendBakeTransaction } = useContractWrite({
-  //   ...bakeTxConfig,
-  //   args: [swapState.from.value, accountAddress],
-  // });
-
-  // const { config: burnTxConfig } = usePrepareContractWrite({
-  //   addressOrName: BREAD.address,
-  //   contractInterface: BreadABI,
-  //   functionName: "burn",
-  // });
-  // const { writeAsync: sendBurnTransaction } = useContractWrite({
-  //   ...burnTxConfig,
-  //   args: [swapState.from.value, accountAddress],
-  // });
-
-  // const { config: approveTxConfig } = usePrepareContractWrite({
-  //   addressOrName: DAI.address,
-  //   contractInterface: BreadABI,
-  //   functionName: "approve",
-  // });
-  // const { writeAsync: sendApproveTransaction } = useContractWrite({
-  //   ...approveTxConfig,
-  //   args: [BREAD.address, ethers.constants.MaxUint256],
-  // });
   const resetSwapState = () => {
     setSwapState(initialSwapState);
   };
@@ -176,10 +148,10 @@ const SwapUI: React.FC<React.PropsWithChildren<{
   };
 
   const handleBalanceClick = () => {
-    // if (!inputTokenReadings.value) return;
-    // let swapStateCopy = swapState;
-    // swapStateCopy.from.value = formatEther(inputTokenReadings.value);
-    // setSwapState({ ...swapStateCopy });
+    if (!inputTokenReadings.value) return;
+    let swapStateCopy = swapState;
+    swapStateCopy.from.value = formatEther(inputTokenReadings.value);
+    setSwapState({ ...swapStateCopy });
   };
 
   const handleApproveBREAD = async () => {
