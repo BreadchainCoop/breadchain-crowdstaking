@@ -6,7 +6,9 @@ import TextTransition from "../../transitions/TextTransition";
 import Button from "../Button";
 import { IconContainer, NetworkIcon } from "../Icons";
 
-export const Container: React.FC<React.PropsWithChildren<unknown>> = (props) => {
+export const Container: React.FC<React.PropsWithChildren<unknown>> = (
+  props
+) => {
   return (
     <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
       {props.children}
@@ -14,19 +16,19 @@ export const Container: React.FC<React.PropsWithChildren<unknown>> = (props) => 
   );
 };
 
-export const Row: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => (
+export const Row: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => (
   <span className="text-xs text-center flex justify-center md:justify-end items-center gap-4">
     {children}
   </span>
 );
 
 export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
-  console.log("hey network");
   const { chain: activeChain } = useNetwork();
 
   const { disconnectAsync } = useDisconnect();
 
-  console.log("activeChain", activeChain);
   if (!activeChain) return <></>;
 
   return (

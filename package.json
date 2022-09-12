@@ -12,6 +12,7 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@reduxjs/toolkit": "^1.7.2",
+    "@rollup/plugin-inject": "^4.0.4",
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.2",
     "axios": "^0.26.0",
