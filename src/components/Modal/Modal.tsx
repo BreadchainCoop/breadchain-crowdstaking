@@ -14,7 +14,7 @@ import * as Modal from "./ui";
 type TProps = {
   modal: IModalState;
 };
-const ShowModal: React.FC<TProps> = (props) => {
+const ShowModal: React.FC<React.PropsWithChildren<TProps>> = (props) => {
   const { modal } = props;
   const dispatch = useAppDispatch();
   const handleCloseModal = () => {

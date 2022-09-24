@@ -1,6 +1,6 @@
 import React from "react";
 
-const MobileNavigationToggle: React.FC = () => {
+const MobileNavigationToggle: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <div className="flex justify-end md:hidden">
       <button className="text-neutral-600 p-1 h-10 w-10 fill">

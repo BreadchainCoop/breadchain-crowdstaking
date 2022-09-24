@@ -1,10 +1,14 @@
 import React from "react";
+import { allChains, useAccount, useDisconnect, useNetwork } from "wagmi";
 import { ENetwork } from "../../features/network/networkSlice";
 
 import TextTransition from "../../transitions/TextTransition";
+import Button from "../Button";
 import { IconContainer, NetworkIcon } from "../Icons";
 
-export const Container: React.FC = (props) => {
+export const Container: React.FC<React.PropsWithChildren<unknown>> = (
+  props
+) => {
   return (
     <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
       {props.children}
@@ -12,54 +16,41 @@ export const Container: React.FC = (props) => {
   );
 };
 
-export const Row: React.FC = ({ children }) => (
+export const Row: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => (
   <span className="text-xs text-center flex justify-center md:justify-end items-center gap-4">
     {children}
   </span>
 );
 
-type TProps = {
-  network: null | ENetwork;
-};
+export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
+  const { chain: activeChain } = useNetwork();
 
-export const Network: React.FC<TProps> = (props) => {
-  const { network } = props;
+  const { disconnectAsync } = useDisconnect();
+
+  if (!activeChain) return <></>;
+
   return (
     <Row>
-      {network
-        ? (() => {
-            if (network === ENetwork.RINKEBY)
-              return (
-                <>
-                  <IconContainer>
-                    <NetworkIcon />
-                  </IconContainer>
-                  <span>
-                    <TextTransition>Rinkeby Testnet</TextTransition>
-                  </span>
-                </>
-              );
-            if (network === ENetwork.POLYGON)
-              return (
-                <>
-                  <IconContainer>
-                    <NetworkIcon />
-                  </IconContainer>
-                  <TextTransition>Polygon</TextTransition>
-                </>
-              );
+      <IconContainer>
+        <NetworkIcon />
+      </IconContainer>
+      <span>
+        <TextTransition>
+          {activeChain.unsupported && "Unsupported network: "}
+          {activeChain.name}
+        </TextTransition>
+      </span>
 
-            if (network === ENetwork.UNSUPPORTED) return "Unsupported Chain";
-            else {
-              return "Invalid network state!";
-            }
-          })()
-        : "no network"}
+      <Button variant="small" onClick={() => disconnectAsync()}>
+        Disconnect
+      </Button>
     </Row>
   );
 };
 
-export const Address: React.FC = (props) => {
+export const Address: React.FC<React.PropsWithChildren<unknown>> = (props) => {
   const { children } = props;
 
   return (

@@ -8,7 +8,7 @@ type TProps = {
   status: EApprovalStatus;
 };
 
-const ApproveBreadButton: React.FC<TProps> = (props) => {
+const ApproveBreadButton: React.FC<React.PropsWithChildren<TProps>> = (props) => {
   return (
     <button
       onClick={props.handleClick}

@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 
 import { useAppSelector } from "../store/hooks";
 
-const TextTransition: React.FC = (props) => {
+const TextTransition: React.FC<React.PropsWithChildren<unknown>> = (props) => {
   const { font } = useAppSelector((state) => state);
 
   const ref: React.RefObject<HTMLElement> = React.useRef(null);

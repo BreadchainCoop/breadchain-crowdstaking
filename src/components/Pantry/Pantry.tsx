@@ -1,19 +1,27 @@
-import { spawn } from "child_process";
 import React from "react";
 import claimYield from "../../api/claimYield";
 import getBreadSupply from "../../api/getBreadSupply";
 import getMultisigDAIBalance from "../../api/getMultisigDAIBalance";
 import getMultisigEtherBalance from "../../api/getMultisigEtherBalance";
 import getMultisigBREADBalance from "../../api/getMultisigBREADBalance";
-import getRewardsAccrued from "../../api/getRewardsAccrued";
 import getYieldAccrued from "../../api/getYieldAccrued";
-import { ENetwork } from "../../features/network/networkSlice";
-import { useAppSelector } from "../../store/hooks";
 import Button from "../Button";
 import Elipsis from "../Elipsis/Elipsis";
+import { useAccount, useNetwork, useProvider, useSigner } from "wagmi";
+import { BaseProvider } from "@ethersproject/providers";
 
-export const Pantry: React.FC = () => {
+export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
+  const polygonProvider = useProvider({ chainId: 137 });
+  const mumbaiProvider = useProvider({ chainId: 80001 });
+
+  const { connector: activeConnector } = useAccount();
+  const { data: signer } = useSigner();
+  const { chain: activeChain } = useNetwork();
+
   const [breadSupply, setBreadSupply] = React.useState<string | null>(null);
+
+  const [claimingYield, setClaimingYield] = React.useState<number>(0);
+
   const [yieldAccrued, setYieldAccrued] = React.useState<string | null>(null);
   const [rewardsAccrued, setRewardsAccrued] = React.useState<string | null>(
     null
@@ -28,19 +36,19 @@ export const Pantry: React.FC = () => {
     string | null
   >(null);
 
-  const { network, wallet } = useAppSelector((state) => state);
-
   React.useEffect(() => {
-    if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
+    let provider: BaseProvider =
+      activeChain?.id === 80001 ? mumbaiProvider : polygonProvider;
 
-    getBreadSupply(network.network).then((res) => {
+    getBreadSupply(provider).then((res) => {
       if (!res) {
         console.error("failed to get bread supply!");
         return;
       }
       setBreadSupply(res.totalSupply);
     });
-    getYieldAccrued(network.network).then((res) => {
+
+    getYieldAccrued(provider).then((res) => {
       if (!res) {
         console.error("Failed to get accrued yield!");
         return;
@@ -56,54 +64,43 @@ export const Pantry: React.FC = () => {
     //   console.log("yieldAccrued: ", res.rewardsAccrued);
     //   if (res.rewardsAccrued) setRewardsAccrued(res.rewardsAccrued);
     // });
-    getMultisigDAIBalance(network.network).then((res) => {
+    getMultisigDAIBalance(provider).then((res) => {
       if (!res) {
         console.error("Failed to get multisig balance!");
         return;
       }
       if (res.balance) setMultisigDAIBalance(res.balance);
     });
-    getMultisigEtherBalance().then((res) => {
+    getMultisigEtherBalance(provider).then((res) => {
       if (!res) {
         console.error("Failed to get multisig balance!");
         return;
       }
       if (res.balance) setMultisigEtherBalance(res.balance);
     });
-    getMultisigBREADBalance(network.network).then((res) => {
+    getMultisigBREADBalance(provider).then((res) => {
       if (!res) {
         console.error("Failed to get multisig balance!");
         return;
       }
       if (res.balance) setMultisigBREADBalance(res.balance);
     });
-  }, [network]);
+  }, [polygonProvider, activeConnector?.id, activeChain?.id, claimingYield]);
 
   const handleClaimYield = () => {
-    if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
-    claimYield(network.network).then(async (tx) => {
-      if (!network.network || network.network === ENetwork.UNSUPPORTED) return;
-      setYieldAccrued("claiming yield...");
-      await tx.wait();
-      getYieldAccrued(network.network).then((res) => {
-        if (!res) {
-          console.error("Failed to get accrued yield!");
-          return;
-        }
-        console.log("yieldAccrued: ", res.yieldAccrued);
-        if (res.yieldAccrued) setYieldAccrued(res.yieldAccrued);
-        if (!network.network || network.network === ENetwork.UNSUPPORTED)
-          return;
-        getMultisigDAIBalance(network.network).then((res) => {
-          setMultisigDAIBalance(null);
-          if (!res) {
-            console.error("Failed to get multisig balance!");
-            return;
-          }
-          if (res.balance) setMultisigDAIBalance(res.balance);
-        });
-      });
-    });
+    if (activeChain?.unsupported) return;
+    if (!activeChain) return;
+    if (!signer) return;
+
+    let provider = activeChain.id === 80001 ? mumbaiProvider : polygonProvider;
+
+    claimYield(signer, provider)
+      .then((tx) => {
+        setYieldAccrued("claiming yield...");
+        return tx.wait();
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setClaimingYield(claimingYield + 1));
   };
 
   const BREADformatter = new Intl.NumberFormat("en-US", {
@@ -140,8 +137,8 @@ export const Pantry: React.FC = () => {
         <Elipsis />
       )}
       <span>Yield Accrued: </span>
-      {yieldAccrued ? (
-        <span>{DAIformatter.format(parseFloat(yieldAccrued))}</span>
+      {parseFloat(yieldAccrued || "") ? (
+        <span>{DAIformatter.format(parseFloat(yieldAccrued!))}</span>
       ) : (
         <Elipsis />
       )}

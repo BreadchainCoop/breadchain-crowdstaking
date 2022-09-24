@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppSelector } from "../store/hooks";
 
-const EtherBalance: React.FC = () => {
+const EtherBalance: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     network,
     wallet: { tokens },

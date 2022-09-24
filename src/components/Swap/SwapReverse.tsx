@@ -4,7 +4,7 @@ type Props = {
   onClick: () => void;
 };
 
-const SwapReverse: React.FC<Props> = (props) => {
+const SwapReverse: React.FC<React.PropsWithChildren<Props>> = (props) => {
   return (
     <button
       className="inline-block my-4 p-3 rounded-full bg-breadgray-100 text-neutral-600 hover:text-neutral-500"

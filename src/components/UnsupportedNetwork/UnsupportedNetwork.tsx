@@ -9,7 +9,7 @@ import {
 import { useAppDispatch } from "../../store/hooks";
 import TextTransition from "../../transitions/TextTransition";
 
-const UnsupportedNetwork: React.FC = () => {
+const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
 
   const handleSwitchToEthereum = async () => {

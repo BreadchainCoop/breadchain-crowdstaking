@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import TokenDisplay from "./TokenDisplay";
 import Input from "./Input";
 import Icon from "./Icon";
 import SwapReverse from "./SwapReverse";
-import { EBalanceStatus } from "../../features/wallet/walletSlice";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { swap } from "../../api/swap";
@@ -12,27 +11,42 @@ import Transaction from "./Transaction";
 import { getBalances } from "../../features/wallet/walletSlice";
 import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
 import { approveBREAD } from "../../api/approveBread";
-import { EApprovalStatus } from "../../features/approval/approvalSlice";
+import approvalSlice, {
+  EApprovalStatus,
+} from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
 import { sanitizeInputValue } from "./swapUtils";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { closeModal } from "../../features/modal/modalSlice";
 import Button from "../Button";
-
-const formatter = new Intl.NumberFormat("en-US", {
-  minimumFractionDigits: 2,
-  minimumIntegerDigits: 1,
-  useGrouping: false,
-});
+import { ChainConfiguration } from "../../config";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useSigner,
+} from "wagmi";
+import TokenBalance from "../TokenBalance";
+import NativeBalance from "../NativeBalance";
+import { useTokenBalance } from "../../hooks/useTokenBalance";
+import { formatEther, parseEther } from "ethers/lib/utils";
+import { abi as BreadABI } from "../../BreadPolygon.json";
+import { useTokenAllowance } from "../../hooks/useTokenAllowance";
+import { BigNumber, ethers } from "ethers";
+import { ETransactionStatus } from "../../features/transaction/transactionSlice";
+import { swapDaiForBread } from "../../api/swapDaiForBread";
+import { swapBreadForDai } from "../../api/swapBreadForDai";
 
 interface ISwapState {
   from: {
-    name: string;
+    name: "DAI" | "BREAD";
     value: string;
+    bnValue: BigNumber;
   };
   to: {
-    name: string;
+    name: "DAI" | "BREAD";
     value: string;
+    bnValue: BigNumber;
   };
 }
 
@@ -40,38 +54,86 @@ const initialSwapState: ISwapState = {
   from: {
     name: "DAI",
     value: "",
+    bnValue: BigNumber.from(0),
   },
   to: {
     name: "BREAD",
     value: "",
+    bnValue: BigNumber.from(0),
   },
 };
 
-const SwapUI: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { wallet, network, transaction, approval } = useAppSelector(
-    (state) => state
-  );
-
+const SwapUI: React.FC<
+  React.PropsWithChildren<{
+    chainConfig: ChainConfiguration;
+    accountAddress: string;
+  }>
+> = (props) => {
+  const { chainConfig, accountAddress } = props;
   const [swapState, setSwapState] =
     React.useState<ISwapState>(initialSwapState);
 
-  const from = wallet.tokens[swapState.from.name];
-  const to = wallet.tokens[swapState.to.name];
+  const dispatch = useAppDispatch();
+  const { DAI, BREAD } = chainConfig;
+
+  const { transaction } = useAppSelector((state) => state);
+
+  const { isConnecting } = useAccount();
+
+  const {
+    data: signer,
+    isFetching: isFetchingSigner,
+    error: signerError,
+  } = useSigner();
+
+  const breadBalanceReadings = useTokenBalance(BREAD.address, accountAddress);
+  const daiBalanceReadings = useTokenBalance(DAI.address, accountAddress);
+
+  const daiAllowanceReadings = useTokenAllowance(
+    DAI.address,
+    accountAddress,
+    BREAD.address
+  );
+
+  const resetSwapState = () => {
+    setSwapState(initialSwapState);
+  };
+
+  useEffect(() => {
+    resetSwapState();
+  }, [chainConfig.NETWORK_STRING]);
+
+  const isLoading = isConnecting || isFetchingSigner;
+  const error = signerError;
+  // // const writeTxHooksLoading =
+  // //   !sendBakeTransaction || !sendBurnTransaction || !sendApproveTransaction;
+
+  const inputTokenReadings =
+    swapState.from.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
+
+  const outputTokenReadings =
+    swapState.to.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
+
+  if (isLoading) return <Elipsis />;
+  if (error) return <>{error}</>;
+  if (!accountAddress || !signer) return <>Could not connect to wallet</>;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
     const sanitizedValue = sanitizeInputValue(value);
+    const bnValue = parseEther(sanitizedValue || "0");
 
     setSwapState({
       from: {
         name: swapState.from.name,
         value: sanitizedValue,
+        bnValue,
       },
       to: {
         name: swapState.to.name,
         value: sanitizedValue,
+        bnValue,
       },
     });
   };
@@ -79,59 +141,92 @@ const SwapUI: React.FC = () => {
   const handleSwapReverse = () => {
     setSwapState((state) => {
       return {
-        from: { ...state.to, value: "" },
-        to: { ...state.from, value: "" },
+        from: { ...state.to, value: "0" },
+        to: { ...state.from, value: "0" },
       };
     });
   };
 
   const handleBalanceClick = () => {
-    setSwapState({
-      from: {
-        name: swapState.from.name,
-        value: from.balance,
-      },
-      to: {
-        name: swapState.to.name,
-        value: from.balance,
-      },
-    });
-  };
-
-  const resetSwapState = () => {
-    setSwapState(initialSwapState);
+    if (!inputTokenReadings.value) return;
+    let swapStateCopy = swapState;
+    swapStateCopy.from.value = formatEther(inputTokenReadings.value);
+    setSwapState({ ...swapStateCopy });
   };
 
   const handleApproveBREAD = async () => {
-    if (network.network && wallet.address) {
-      await approveBREAD(network.network, dispatch);
-    }
+    await approveBREAD(signer, DAI.address, BREAD.address, dispatch);
+  };
+
+  const handleSwapDaiForBread = async () => {
+    if (swapState.from.name != "DAI") return;
+
+    swapDaiForBread(
+      signer,
+      swapState.from.value,
+      BREAD.address,
+      accountAddress,
+      dispatch,
+      resetSwapState
+    )
+      .then(() => {
+        dispatch(getBalances({}));
+      })
+      .catch((err: any) => {
+        const message = err.data ? err.data.message : err.message;
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message,
+          })
+        );
+        dispatch(closeModal());
+      });
+  };
+
+  const handleSwapBreadForDai = async () => {
+    if (swapState.from.name != "BREAD") return;
+
+    swapBreadForDai(
+      signer,
+      swapState.from.value,
+      BREAD.address,
+      accountAddress,
+      dispatch,
+      resetSwapState
+    )
+      .then(() => {
+        dispatch(getBalances({}));
+      })
+      .catch((err: any) => {
+        const message = err.data ? err.data.message : err.message;
+        dispatch(
+          setToast({
+            type: EToastType.ERROR,
+            message,
+          })
+        );
+        dispatch(closeModal());
+      });
   };
 
   const handleSubmit = async () => {
-    if (network.network && wallet.address) {
-      swap(
-        network.network,
-        swapState.from,
-        dispatch,
-        wallet.address,
-        resetSwapState
-      )
-        .then(() => {
-          dispatch(getBalances({}));
-        })
-        .catch((err: any) => {
-          const message = err.data ? err.data.message : err.message;
-          dispatch(
-            setToast({
-              type: EToastType.ERROR,
-              message,
-            })
-          );
-          dispatch(closeModal());
-        });
-    }
+    if (!["DAI", "BREAD"].includes(swapState.from.name)) return;
+
+    if (swapState.from.name === "DAI") handleSwapDaiForBread();
+    if (swapState.from.name === "BREAD") handleSwapBreadForDai();
   };
+
+  const showBakeBurnButton =
+    swapState.from.name === "BREAD" ||
+    (swapState.from.name === "DAI" &&
+      daiAllowanceReadings.value?.gte(swapState.from.bnValue));
+
+  const showApprovalButton =
+    swapState.from.name === "DAI" &&
+    transaction.status != ETransactionStatus.PENDING &&
+    (daiAllowanceReadings.value?.lt(swapState.from.bnValue) ||
+      daiAllowanceReadings.value?.eq(0));
 
   return (
     <>
@@ -140,17 +235,7 @@ const SwapUI: React.FC = () => {
           <>
             <TokenDisplay.Header>
               <TokenDisplay.BalanceButton onClick={handleBalanceClick}>
-                Balance:{" "}
-                {wallet.address &&
-                swapState.from.name &&
-                wallet.tokens &&
-                from.status === EBalanceStatus.LOADING ? (
-                  <Elipsis />
-                ) : wallet.tokens && from.status === EBalanceStatus.REJECTED ? (
-                  ""
-                ) : (
-                  formatter.format(parseFloat(from.balance))
-                )}
+                <TokenBalance {...inputTokenReadings} />
               </TokenDisplay.BalanceButton>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
@@ -173,14 +258,7 @@ const SwapUI: React.FC = () => {
           <>
             <TokenDisplay.Header>
               <TokenDisplay.Balance>
-                Balance:{" "}
-                {wallet.tokens && to.status === EBalanceStatus.LOADING ? (
-                  <Elipsis />
-                ) : wallet.tokens && to.status === EBalanceStatus.REJECTED ? (
-                  ""
-                ) : (
-                  formatter.format(parseFloat(to.balance))
-                )}
+                <TokenBalance {...outputTokenReadings} />
               </TokenDisplay.Balance>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
@@ -194,26 +272,17 @@ const SwapUI: React.FC = () => {
         )}
       </TokenDisplay>
       <div className="w-full px-4 pt-8 pb-12 text-xs">
-        Matic Balance:
-        {wallet.tokens &&
-        wallet.tokens.MATIC.status === EBalanceStatus.LOADING ? (
-          <Elipsis />
-        ) : wallet.tokens.MATIC.status === EBalanceStatus.REJECTED ? (
-          ""
-        ) : (
-          <span className="ml-4">
-            {parseFloat(wallet.tokens.MATIC.balance).toFixed(4)}
-          </span>
-        )}
+        Matic <NativeBalance addressOrName={accountAddress} />
       </div>
 
-      {approval.status !== null && (
+      {showBakeBurnButton && (
         <Button
           onClick={handleSubmit}
           disabled={
-            approval.status !== EApprovalStatus.APPROVED ||
+            transaction.status == ETransactionStatus.PENDING ||
             parseFloat(swapState.from.value) === 0 ||
-            swapState.from.value === ""
+            swapState.from.value === "" ||
+            inputTokenReadings.value?.lt(swapState.from.bnValue)
           }
           variant="large"
           fullWidth
@@ -221,34 +290,23 @@ const SwapUI: React.FC = () => {
           {swapState.from.name === "BREAD" ? "BURN BREAD" : "BAKE BREAD"}
         </Button>
       )}
-      {swapState.from.name === "DAI" &&
-        approval.status === EApprovalStatus.NOT_APPROVED && (
-          <div className="py-12 text-xs text-neutral-300">
-            <div className="pb-6 text-xs text-neutral-300">
-              You'll need to approve the BREAD contract to mint BREAD
-            </div>
-            <ApproveBreadButton
-              handleClick={handleApproveBREAD}
-              status={approval.status}
-            />
-          </div>
-        )}
-      {approval.status === EApprovalStatus.LOADING && (
-        <div className="w-full py-12 text-xs text-neutral-300">
-          Checking contract approval <Elipsis />
-        </div>
-      )}
-      {approval.status === EApprovalStatus.PENDING && (
+      {showApprovalButton && (
         <div className="py-12 text-xs text-neutral-300">
           <div className="pb-6 text-xs text-neutral-300">
             You'll need to approve the BREAD contract to mint BREAD
           </div>
           <ApproveBreadButton
             handleClick={handleApproveBREAD}
-            status={approval.status}
+            status={EApprovalStatus.NOT_APPROVED}
           />
         </div>
       )}
+      {daiAllowanceReadings.status === "loading" && (
+        <div className="w-full py-12 text-xs text-neutral-300">
+          Checking contract approval <Elipsis />
+        </div>
+      )}
+
       {transaction.hash && <Transaction />}
     </>
   );

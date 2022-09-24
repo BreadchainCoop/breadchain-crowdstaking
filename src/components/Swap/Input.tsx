@@ -6,7 +6,7 @@ type Props = {
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input: React.FC<Props> = (props) => {
+const Input: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const { name, value, handleInputChange } = props;
   return (
     <input

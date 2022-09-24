@@ -9,12 +9,11 @@ import Modal from "../Modal";
 import Logo from "../Header/Logo";
 import * as WalletDisplay from "../Header/WalletDisplay";
 
-import { getNetwork, ethInit } from "../../api";
+import { getNetwork } from "../../api";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setWalletAddress } from "../../features/wallet/walletSlice";
 import {
-  ENetwork,
   ENetworkConnectionState,
   setNetwork,
   setNetworkConnected,
@@ -30,12 +29,15 @@ import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
 import { EToastType, setToast } from "../../features/toast/toastSlice";
+import { useAccount, useNetwork } from "wagmi";
 
-const App: React.FC = () => {
+const App: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, wallet, network, toast, font } = appState;
+  const { modal, toast, font } = appState;
+  const { isConnected, address: accountAddress } = useAccount();
+  const { chain: activeChain } = useNetwork();
 
   /**
    * App Init
@@ -50,18 +52,9 @@ const App: React.FC = () => {
       //   dispatch(setXr(data));
       // });
 
-      const ethereum = (window as any).ethereum;
-      if (!ethereum) {
-        // !!! handle this with some sort of message for users
-        console.log("!ethereum");
-        return;
-      }
+      if (!isConnected || !activeChain || !accountAddress) return;
 
-      if (ethereum.isConnected && !ethereum.isConnected()) {
-        // !!! when is this condition met? Is this check necessary?
-      }
-
-      const network = await getNetwork();
+      const network = getNetwork(activeChain.id);
       if (!network) {
         // !!! handle this error
         dispatch(
@@ -77,27 +70,11 @@ const App: React.FC = () => {
       dispatch(setNetworkConnected(ENetworkConnectionState.CONNECTED));
 
       // bind handlers for metamask events eg account change / network change
-      ethInit(appState, dispatch);
+      // ethInit(appState, dispatch);
 
-      // If there is an address stored we can check how recently wallet was connected
-      const storedAccount = localStorage.getItem("storedAccount");
-      if (!storedAccount) return;
-
-      const account = JSON.parse(storedAccount);
-      // ignore stored account if more than an hour old
-      if (Date.now() - account.timestamp > 360_000) {
-        localStorage.removeItem("storedAccount");
-        return;
-      }
-
-      dispatch(setWalletAddress(account.account));
-
-      // if (network === ENetwork.UNSUPPORTED) {
-      //   ethInit(appState, dispatch);
-      //   return;
-      // }
+      dispatch(setWalletAddress(accountAddress));
     })();
-  }, []);
+  }, [isConnected, activeChain?.id, accountAddress]);
 
   return (
     <AppContainer>
@@ -109,12 +86,10 @@ const App: React.FC = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {network.network && (
-            <WalletDisplay.Network network={network.network} />
-          )}
-          {wallet.address && (
+          {<WalletDisplay.Network />}
+          {accountAddress && (
             <WalletDisplay.Address>
-              {formatAddress(wallet.address)}
+              {formatAddress(accountAddress)}
             </WalletDisplay.Address>
           )}
         </WalletDisplay.Container>

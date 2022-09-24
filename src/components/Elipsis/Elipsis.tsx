@@ -1,6 +1,6 @@
 import React from "react";
 
-const Elipsis: React.FC = () => {
+const Elipsis: React.FC<React.PropsWithChildren<unknown>> = () => {
   // const [hide, setHide] = React.useState([0]);
   // let interval: NodeJS.Timeout;
   // React.useEffect(() => {

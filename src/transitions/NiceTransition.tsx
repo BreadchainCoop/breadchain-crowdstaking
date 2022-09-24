@@ -18,7 +18,7 @@ type TProps = {
   onRenderClasses?: string;
 };
 
-const NiceTransition: React.FC<TProps> = (props) => {
+const NiceTransition: React.FC<React.PropsWithChildren<TProps>> = (props) => {
   const { children } = props;
   const onRenderClasses = props.onRenderClasses ? props.onRenderClasses : "";
 

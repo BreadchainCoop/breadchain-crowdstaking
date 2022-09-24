@@ -6,7 +6,7 @@ interface IDesktopNavLinkProps {
   isCurrentPage: boolean;
 }
 
-const DesktopNavLink: React.FC<IDesktopNavLinkProps> = (props) => {
+const DesktopNavLink: React.FC<React.PropsWithChildren<IDesktopNavLinkProps>> = (props) => {
   return (
     <Link
       className={
@@ -25,7 +25,7 @@ interface IDesktopNavExternalLinkProps {
   href: string;
 }
 
-const DesktopNavExternalLink: React.FC<IDesktopNavExternalLinkProps> = (
+const DesktopNavExternalLink: React.FC<React.PropsWithChildren<IDesktopNavExternalLinkProps>> = (
   props
 ) => {
   return (
@@ -40,7 +40,7 @@ const DesktopNavExternalLink: React.FC<IDesktopNavExternalLinkProps> = (
   );
 };
 
-const DesktopNavigation: React.FC = () => {
+const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
   const location = useLocation();
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
