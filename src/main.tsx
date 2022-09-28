@@ -10,13 +10,7 @@ import App from "./components/App";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 import "./css/index.css";
-import {
-  WagmiConfig,
-  createClient,
-  chain,
-  configureChains,
-  defaultChains,
-} from "wagmi";
+import { WagmiConfig, createClient, chain, configureChains } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
@@ -79,16 +73,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <ErrorBoundary>
-//       <Provider store={store}>
-//         <HashRouter>
-//           <App />
-//         </HashRouter>
-//       </Provider>
-//     </ErrorBoundary>
-//   </React.StrictMode>,
-//   document.getElementById("root")
-// );
