@@ -22,14 +22,16 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 
-const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+
+const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
 
 const supportedChains = [chain.polygonMumbai, chain.polygon];
 
 const { chains, provider, webSocketProvider } = configureChains(
   supportedChains,
-  [alchemyProvider({ apiKey })]
+  [alchemyProvider({ apiKey }), publicProvider()]
 );
 
 const client = createClient({
