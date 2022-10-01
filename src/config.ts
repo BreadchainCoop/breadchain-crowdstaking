@@ -19,27 +19,9 @@ export interface ChainConfiguration {
   BREAD: IToken;
 }
 const config: IConfig = {
-  // MAINNET: {
-  //   NETWORK_STRING: "homestead",
-  //   ETHERSCAN_API_KEY: import.meta.env.VITE_ETHERSCAN_API_KEY?.toString(),
-  //   ETHERSCAN_URL: "https://api.etherscan.io",
-  //   CDAI: {
-  //     address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
-  //   },
-  //   DAI: {
-  //     symbol: "DAI",
-  //     decimals: 18,
-  //     address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-  //   },
-  //   BREAD: {
-  //     symbol: "BREAD",
-  //     decimals: 18,
-  //     address: "0xEd9265A05Fd6355061e1051c80450638EC84bff3",
-  //   },
-  // },
   137: {
     NETWORK_STRING: "polygon",
-    ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_API_KEY?.toString(),
+    ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_ID?.toString(),
     ALCHEMY_URL: "https://polygon-mainnet.g.alchemy.com/v2/",
     // CDAI: {
     //   address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
@@ -62,7 +44,7 @@ const config: IConfig = {
   },
   80001: {
     NETWORK_STRING: "mumbai",
-    ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_API_KEY?.toString(),
+    ALCHEMY_API_KEY: import.meta.env.VITE_ALCHEMY_ID?.toString(),
     ALCHEMY_URL: "https://polygon-mumbai.g.alchemy.com/v2/",
     // CDAI: {
     //   address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
