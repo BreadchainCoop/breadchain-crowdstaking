@@ -18,7 +18,7 @@ import {
   setNetwork,
   setNetworkConnected,
 } from "../../features/network/networkSlice";
-import { formatAddress } from "../../util/formatWalletAddress";
+import { formatAddress } from "@/util";
 import { setIsLoaded } from "../../features/font/fontSlice";
 
 import Toast from "../Toast/Toast";
