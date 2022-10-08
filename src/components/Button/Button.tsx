@@ -1,13 +1,11 @@
-import React from "react";
+import { useState } from "react";
 
-export const classNames = (...classes: String[]) => {
-  return classes.filter(Boolean).join(" ");
-};
+import { classNames } from "@/util";
 
 interface IProps {
   onClick: (event: React.MouseEvent) => void;
   disabled?: boolean;
-  children: string;
+  children: React.ReactNode;
   variant?: "small" | "regular" | "large";
   fullWidth?: boolean;
 }
@@ -25,7 +23,7 @@ const Button = ({
   onClick,
   disabled = false,
 }: IProps) => {
-  const [mouseIsDown, setMouseIsDown] = React.useState(false);
+  const [mouseIsDown, setMouseIsDown] = useState(false);
 
   const handleMouseDown = () => {
     setMouseIsDown(true);
