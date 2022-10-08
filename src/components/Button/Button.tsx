@@ -1,12 +1,20 @@
-import React from "react";
+import { useState } from "react";
+
+import { classNames } from "@/util";
 
 interface IProps {
   onClick: (event: React.MouseEvent) => void;
   disabled?: boolean;
-  children: string;
+  children: React.ReactNode;
   variant?: "small" | "regular" | "large";
   fullWidth?: boolean;
 }
+
+const EVariants = {
+  small: "px-5 py-2 text-xs sm:text-sm",
+  regular: "px-6 py-3 text-xs sm:text-sm",
+  large: "px-7 py-4 text-xl sm:text-2xl",
+};
 
 const Button = ({
   children,
@@ -15,27 +23,7 @@ const Button = ({
   onClick,
   disabled = false,
 }: IProps) => {
-  const [mouseIsDown, setMouseIsDown] = React.useState(false);
-  let classList =
-    "relative flex items-center justify-center button-gradient button-shadow bg-opacity-85 text-neutral-900 hover:bg-opacity-100";
-
-  const smallClasses = " px-6 py-3 text-xs sm:text-sm";
-  const regularClasses = " px-6 py-3 text-xs sm:text-sm";
-  const largeClasses = " px-6 py-3 text-xl sm:text-2xl";
-
-  switch (variant) {
-    case "small":
-      classList += smallClasses;
-      break;
-    case "regular":
-      classList += regularClasses;
-      break;
-    case "large":
-      classList += largeClasses;
-      break;
-  }
-
-  if (fullWidth) classList += " w-full";
+  const [mouseIsDown, setMouseIsDown] = useState(false);
 
   const handleMouseDown = () => {
     setMouseIsDown(true);
@@ -47,7 +35,12 @@ const Button = ({
 
   return (
     <button
-      className={classList + (mouseIsDown ? " transform translate-y-1" : "")}
+      className={classNames(
+        "relative flex items-center justify-center button-gradient button-shadow bg-opacity-85 text-neutral-900 hover:bg-opacity-100",
+        EVariants[variant],
+        fullWidth ? "w-full" : "",
+        mouseIsDown ? "transform translate-y-1" : ""
+      )}
       onClick={onClick}
       disabled={disabled}
       onMouseDown={handleMouseDown}

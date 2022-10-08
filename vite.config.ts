@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import GlobalPolyFill from "@esbuild-plugins/node-globals-polyfill";
+import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -27,7 +28,7 @@ export default defineConfig({
   resolve: {
     alias: {
       process: "process/browser",
-      util: "util",
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   optimizeDeps: {
