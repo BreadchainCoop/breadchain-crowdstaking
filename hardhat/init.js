@@ -33,44 +33,40 @@ const config = {
 
 const main = async () => {
   const addressWithDAI = "0xd6b26861139a52877Cd7adc437Edd7c5383fF585";
-  const hardhatWallet = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const myWallet = "0x8a35D1EB766f4f0Cb3Bb34760B7628f3e04c1c0d";
+  const hardhat1 = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+  const hardhat2 = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
+  const hardhat3 = "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC";
 
   const signer = await hre.ethers.getImpersonatedSigner(addressWithDAI);
 
   const DAIcontract = new hre.ethers.Contract(config.DAI.address, ABI, signer);
-  const BREADcontract = new hre.ethers.Contract(
-    config.BREAD.address,
-    ABI,
-    signer
+
+  let DAIbalanceHardhat = await DAIcontract.balanceOf(hardhat1);
+  let DAIbalanceSource = await DAIcontract.balanceOf(addressWithDAI);
+  const parsedDAIHardhatbalance = hre.ethers.utils.formatUnits(
+    DAIbalanceHardhat,
+    18
   );
-
-  let DAIbalance = await DAIcontract.balanceOf(hardhatWallet);
-  const parsedDAIbalance = hre.ethers.utils.formatUnits(DAIbalance, 18);
-
-  // console.log("myWallet balance: ", parsedDAIbalance);
-
-  // let BREADbalance = await BREADcontract.balanceOf(hardhatWallet);
-  // const parsedBREADbalance = hre.ethers.utils.formatUnits(BREADbalance, 18);
+  const parsedDAISourcebalance = hre.ethers.utils.formatUnits(
+    DAIbalanceSource,
+    18
+  );
 
   console.log(
-    "BEFORE TRANSFER - hardhat wallet DAI balance: ",
-    parsedDAIbalance
+    "BEFORE TRANSFER - source wallet DAI balance: ",
+    parsedDAISourcebalance
   );
 
-  // balance = await DAIcontract.balanceOf(myWallet);
-  // const parsed = hre.ethers.utils.formatUnits(balance.toString(), 18);
-
-  // console.log("dev wallet balance: ", parsed);
-
-  // const res = await hre.network.provider.send("hardhat_reset");
-
-  await DAIcontract.transfer(
-    hardhatWallet,
-    hre.ethers.utils.parseEther("20.00")
+  console.log(
+    "BEFORE TRANSFER - hardhat1 wallet DAI balance: ",
+    parsedDAIHardhatbalance
   );
 
-  let DAIbalanceNEW = await DAIcontract.balanceOf(hardhatWallet);
+  await DAIcontract.transfer(hardhat1, hre.ethers.utils.parseEther("20000.00"));
+  await DAIcontract.transfer(hardhat2, hre.ethers.utils.parseEther("20000.00"));
+  await DAIcontract.transfer(hardhat3, hre.ethers.utils.parseEther("20000.00"));
+
+  let DAIbalanceNEW = await DAIcontract.balanceOf(hardhat1);
   const parsedDAIbalanceNEW = hre.ethers.utils.formatUnits(DAIbalanceNEW, 18);
 
   console.log(
