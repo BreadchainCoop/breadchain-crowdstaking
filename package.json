@@ -10,8 +10,9 @@
     "serve": "serve dist",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "hardhat:dev": "concurrently \"yarn hardhat:chain\" \"yarn hardhat:fund\"",
     "hardhat:chain": "hardhat node",
-    "hardhat:init": "HARDHAT_NETWORK=localhost node hardhat/init.js"
+    "hardhat:fund": "HARDHAT_NETWORK=localhost node hardhat/fund.js"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
@@ -21,6 +22,7 @@
     "autoprefixer": "^10.4.2",
     "axios": "^0.26.0",
     "buffer": "^6.0.3",
+    "concurrently": "^7.4.0",
     "env-cmd": "^10.1.0",
     "ethers": "^5.5.4",
     "gsap": "^3.9.1",
