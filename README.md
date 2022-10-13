@@ -17,6 +17,14 @@ $ yarn && yarn dev
 $ yarn build
 ```
 
+## Hardhat
+
+Run a chain locally and fund 3 wallets with DAI
+
+```sh
+$ yarn hardhat:dev
+```
+
 ## Storybook
 
 ```sh
