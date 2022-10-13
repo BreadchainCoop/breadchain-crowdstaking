@@ -6,9 +6,10 @@ const ABI = require("../src/ERC20.json");
 require("dotenv").config();
 
 const addressWithDAI = "0xd6b26861139a52877Cd7adc437Edd7c5383fF585";
-const sourceSigner = await hre.ethers.getImpersonatedSigner(addressWithDAI);
 
 const fundAccount = async ({ address, name }) => {
+  const sourceSigner = await hre.ethers.getImpersonatedSigner(addressWithDAI);
+
   const DAIcontract = new hre.ethers.Contract(
     config.DAI.address,
     ABI,
@@ -46,7 +47,7 @@ const main = async () => {
       },
     ];
     await Promise.all(accounts.map((account) => fundAccount(account)));
-  }, 3000);
+  }, 4000);
 };
 
 main();
