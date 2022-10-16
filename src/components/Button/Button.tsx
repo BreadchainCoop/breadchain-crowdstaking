@@ -8,6 +8,7 @@ interface IProps {
   children: React.ReactNode;
   variant?: "small" | "regular" | "large";
   fullWidth?: boolean;
+  dataTest?: string;
 }
 
 const EVariants = {
@@ -22,6 +23,7 @@ const Button = ({
   fullWidth = false,
   onClick,
   disabled = false,
+  dataTest,
 }: IProps) => {
   const [mouseIsDown, setMouseIsDown] = useState(false);
 
@@ -45,6 +47,7 @@ const Button = ({
       disabled={disabled}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      data-test={dataTest || ""}
     >
       <div className="absolute w-1 h-full left-0 transform -translate-x-1 bg-button-border"></div>
       <div className="absolute w-1 h-full right-0 transform translate-x-1 bg-button-border"></div>

@@ -37,10 +37,9 @@ export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
   >(null);
 
   React.useEffect(() => {
-    let provider: BaseProvider =
-      activeChain?.id === 80001 ? mumbaiProvider : polygonProvider;
+    let provider = activeChain?.id === 80001 ? mumbaiProvider : polygonProvider;
 
-    getBreadSupply(provider).then((res) => {
+    getBreadSupply(provider as BaseProvider).then((res) => {
       if (!res) {
         console.error("failed to get bread supply!");
         return;
@@ -48,7 +47,7 @@ export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
       setBreadSupply(res.totalSupply);
     });
 
-    getYieldAccrued(provider).then((res) => {
+    getYieldAccrued(provider as BaseProvider).then((res) => {
       if (!res) {
         console.error("Failed to get accrued yield!");
         return;

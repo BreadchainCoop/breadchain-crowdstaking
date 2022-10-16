@@ -28,3 +28,7 @@ dist-ssr
 
 # hardhat cache
 cache/
+
+/tests/e2e/videos/*
+
+dev.sh

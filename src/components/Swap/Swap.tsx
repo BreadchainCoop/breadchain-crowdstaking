@@ -217,6 +217,8 @@ const SwapUI: React.FC<
     if (swapState.from.name === "BREAD") handleSwapBreadForDai();
   };
 
+  console.log("daiAllowanceReadings.value -- ", daiAllowanceReadings.value);
+
   const showBakeBurnButton =
     swapState.from.name === "BREAD" ||
     (swapState.from.name === "DAI" &&

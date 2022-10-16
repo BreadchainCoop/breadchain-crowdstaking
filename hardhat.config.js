@@ -12,6 +12,10 @@ module.exports = {
         url: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_ID}`,
         blockNumber: 34005554,
       },
+      mining: {
+        auto: false,
+        interval: 2000,
+      },
     },
   },
   solidity: "0.8.17",

@@ -1,5 +1,10 @@
-export const Container: React.FC<React.PropsWithChildren<unknown>> = (props) => (
-  <section className="z-10 fixed h-screen w-screen bg-breadgray-200 bg-opacity-95 p-4 flex justify-center items-center">
+export const Container: React.FC<React.PropsWithChildren<unknown>> = (
+  props
+) => (
+  <section
+    data-test="modal"
+    className="z-10 fixed h-screen w-screen bg-breadgray-200 bg-opacity-95 p-4 flex justify-center items-center"
+  >
     {props.children}
   </section>
 );

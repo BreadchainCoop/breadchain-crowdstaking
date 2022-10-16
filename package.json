@@ -12,7 +12,10 @@
     "build-storybook": "build-storybook",
     "hardhat:dev": "concurrently \"yarn hardhat:chain\" \"yarn hardhat:fund\"",
     "hardhat:chain": "hardhat node",
-    "hardhat:fund": "HARDHAT_NETWORK=localhost node hardhat/fund.js"
+    "hardhat:fund": "HARDHAT_NETWORK=localhost node hardhat/fund.js",
+    "test": "env-cmd -f .env yarn synpress run --config supportFile='tests/e2e/support.js'",
+    "//test": "env-cmd -f .env yarn synpress run -cf synpress.json --config supportFile='support.js'",
+    "test:watch": "env-cmd -f .env npx synpress open -cf synpress.json"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
@@ -48,6 +51,7 @@
     "@storybook/builder-vite": "^0.1.39",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@synthetixio/synpress": "latest",
     "@types/lodash": "^4.14.182",
     "@types/node": "^17.0.21",
     "@types/react": "^18.0.17",
