@@ -23,4 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+
 .env
+
+# hardhat cache
+cache/

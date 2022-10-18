@@ -1,5 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import { createClient, WagmiConfig } from "wagmi";
+
 import "./shims.ts";
 
 import { Provider } from "react-redux";
@@ -10,56 +12,20 @@ import App from "./components/App";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 import "./css/index.css";
-import { WagmiConfig, createClient, chain, configureChains } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { getClient, IClient } from "./client";
 
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+const env = process.env.NODE_ENV as IClient;
 
-const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
+if (!env) throw new Error("NODE_ENV not set!");
 
-const supportedChains = [chain.polygonMumbai, chain.polygon];
+const client = createClient(getClient(env));
 
-const { chains, provider, webSocketProvider } = configureChains(
-  supportedChains,
-  [alchemyProvider({ apiKey }), publicProvider()]
-);
+const container = document.getElementById("root");
+if (!container) throw new Error("no root element found!");
 
-const client = createClient({
-  autoConnect: false,
-  connectors: [
-    new MetaMaskConnector({
-      chains,
-      options: { shimChainChangedDisconnect: false, shimDisconnect: false },
-    }),
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: "wagmi",
-      },
-    }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
-    new InjectedConnector({
-      chains,
-      options: {
-        name: "Injected",
-        shimDisconnect: true,
-      },
-    }),
-  ],
-  provider,
-  webSocketProvider,
-});
+const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
-ReactDOM.render(
+root.render(
   <React.StrictMode>
     <ErrorBoundary>
       <WagmiConfig client={client}>
@@ -70,6 +36,5 @@ ReactDOM.render(
         </Provider>
       </WagmiConfig>
     </ErrorBoundary>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
