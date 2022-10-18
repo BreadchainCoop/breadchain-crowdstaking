@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:testing": "yarn build --mode testing",
     "preview": "vite preview",
     "serve": "serve dist",
     "storybook": "start-storybook -p 6006",
