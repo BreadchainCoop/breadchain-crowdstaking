@@ -120,6 +120,7 @@ const SwapUI: React.FC<
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    console.log({ value });
 
     const sanitizedValue = sanitizeInputValue(value);
     const bnValue = parseEther(sanitizedValue || "0");
@@ -217,8 +218,6 @@ const SwapUI: React.FC<
     if (swapState.from.name === "BREAD") handleSwapBreadForDai();
   };
 
-  console.log("daiAllowanceReadings.value -- ", daiAllowanceReadings.value);
-
   const showBakeBurnButton =
     swapState.from.name === "BREAD" ||
     (swapState.from.name === "DAI" &&
@@ -284,7 +283,7 @@ const SwapUI: React.FC<
             transaction.status == ETransactionStatus.PENDING ||
             parseFloat(swapState.from.value) === 0 ||
             swapState.from.value === "" ||
-            inputTokenReadings.value?.lt(swapState.from.bnValue)
+            daiAllowanceReadings.value?.lt(swapState.from.bnValue)
           }
           variant="large"
           fullWidth
