@@ -2,7 +2,7 @@
 
 Frontend for interacting with the Breadchain Crowdstaking contract
 
-## Run Locally
+## Local Development
 
 This project uses volta to pin specific versions of node and yarn. You can install it
 [here](https://docs.volta.sh/guide/getting-started).
@@ -17,7 +17,7 @@ $ yarn && yarn dev
 $ yarn build
 ```
 
-## Hardhat
+### Hardhat
 
 Run a chain locally and fund 3 wallets with DAI
 
@@ -25,7 +25,15 @@ Run a chain locally and fund 3 wallets with DAI
 $ yarn hardhat:dev
 ```
 
-## Storybook
+### Tests
+
+Run e2e tests against local hardhat node. This script kills anything running on `localhost:8545` so tests can be run against a fresh clone of the chain.
+
+```sh
+$ yarn e2e:local
+```
+
+### Storybook
 
 ```sh
 # run the book
