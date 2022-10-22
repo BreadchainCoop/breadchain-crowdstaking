@@ -1,13 +1,15 @@
 # Breadchain Crowdstaking
 
-Frontend for interacting with the Breadchain Crowdstaking contract
+Frontend for interacting with the Breadchain Crowdstaking contract.
 
 ## Local Development
 
 This project uses volta to pin specific versions of node and yarn. You can install it
 [here](https://docs.volta.sh/guide/getting-started).
 
-Once you've created an `.env` file based on `.example.env`....
+Create an `.env` file based on `.example.env`.
+
+Then run:
 
 ```sh
 # install dependencies and run the dev server
@@ -19,13 +21,17 @@ $ yarn build
 
 ### Hardhat
 
-Run a chain locally and fund 3 wallets with DAI
+Run a chain locally and fund 3 wallets with DAI:
 
 ```sh
 $ yarn hardhat:dev
 ```
 
 Add a hardhat wallet to metamask to test application manually.
+
+### Ethernal
+
+To connect to ethernal and inspect blocks/transactions on your local chain set `ETHERNAL_EMAIL` and `ETHERNAL_PASSWORD` variables in your `.env`.
 
 ### Tests
 
