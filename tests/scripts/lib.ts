@@ -58,17 +58,17 @@ export const spawnchildProcess = ({
 
 export const runTests = () => {
   return new Promise<void>((resolve) => {
-    console.log(chalk.yellow("running tests..."));
+    console.log(chalk.bgGray.magenta.bold("running tests..."));
     const test = spawn("yarn", ["test:synpress"]);
 
+    test.stdout.pipe(process.stdin);
+
     test.stdout.on("data", (data) => {
-      console.log(data.toString());
       const filepath = path.join(__dirname, `logs`, `test.log`);
       appendLog(filepath, JSON.stringify(data));
     });
 
     test.on("exit", function (data) {
-      console.log(JSON.stringify(data));
       process.stdout.write(chalk.bgGray.greenBright("tests complete"));
       resolve();
     });
