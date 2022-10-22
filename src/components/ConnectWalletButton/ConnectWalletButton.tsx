@@ -11,7 +11,6 @@ const ConnectWalletButton = () => {
   return (
     <div className="mt-12">
       {connectors.map((connector) => {
-        console.log(connector);
         return (
           <Button
             disabled={!connector.ready}
