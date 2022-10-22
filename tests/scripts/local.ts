@@ -5,6 +5,13 @@ const main = async () => {
   try {
     clearLogs();
 
+    // kill chain if it's running already so we start tests with clean slate
+    try {
+      await kill(8545);
+    } catch (err) {
+      ("hardhat not currently running");
+    }
+
     console.log("starting local chain and server");
     const chainProcess = spawnchildProcess({
       name: "chain",
