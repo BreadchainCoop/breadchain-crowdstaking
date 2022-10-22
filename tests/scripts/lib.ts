@@ -1,4 +1,5 @@
 import fs from "fs";
+import { promises as fsPromises } from "fs";
 import path from "path";
 import { spawn } from "child_process";
 import chalk from "chalk";
@@ -14,9 +15,16 @@ export const appendLog = (filepath: string, data: string) =>
     }
   });
 
-export const clearLogs = () => {
-  fs.rmdirSync(path.join(__dirname, "logs"), { recursive: true });
-  fs.mkdirSync(path.join(__dirname, "logs"));
+export const clearLogs = async () => {
+  const logsDir = path.join(__dirname, "logs");
+  try {
+    // throws if directory doesn't exist
+    await fsPromises.access(logsDir);
+    fs.rmdirSync(logsDir, { recursive: true });
+    fs.mkdirSync(logsDir);
+  } catch (err) {
+    fs.mkdirSync(logsDir);
+  }
 };
 
 export const spawnchildProcess = ({
