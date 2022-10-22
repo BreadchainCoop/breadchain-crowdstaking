@@ -25,6 +25,8 @@ Run a chain locally and fund 3 wallets with DAI
 $ yarn hardhat:dev
 ```
 
+Add a hardhat wallet to metamask to test application manually.
+
 ### Tests
 
 Run e2e tests against local hardhat node. This script kills anything running on `localhost:8545` so tests can be run against a fresh clone of the chain.
