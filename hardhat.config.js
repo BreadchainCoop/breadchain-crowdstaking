@@ -1,7 +1,8 @@
 require("@nomiclabs/hardhat-ethers");
-require("hardhat-ethernal");
-
 require("dotenv").config();
+
+if (process.env.ETHERNAL_EMAIL && process.env.ETHERNAL_PASSWORD)
+  require("hardhat-ethernal");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -11,6 +12,10 @@ module.exports = {
       forking: {
         url: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_ID}`,
         blockNumber: 34005554,
+      },
+      mining: {
+        auto: false,
+        interval: 2000,
       },
     },
   },

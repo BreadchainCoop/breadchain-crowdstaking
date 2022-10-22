@@ -12,11 +12,13 @@ import App from "./components/App";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 import "./css/index.css";
-import { getClient, IClient } from "./client";
+import { getClient } from "./client";
 
-const env = process.env.NODE_ENV as IClient;
+export type IViteMode = "production" | "development" | "testing" | undefined;
 
-if (!env) throw new Error("NODE_ENV not set!");
+const env = import.meta.env.MODE as IViteMode;
+
+if (env === undefined) throw new Error("NODE_ENV not set!");
 
 const client = createClient(getClient(env));
 

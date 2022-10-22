@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "baseUrl": "../../node_modules",
+    "types": ["node"],
+    "outDir": "./output"
+  },
+  "include": ["**/*.*"]
+}

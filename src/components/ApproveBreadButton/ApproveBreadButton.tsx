@@ -10,7 +10,11 @@ interface IProps {
 
 const ApproveBreadButton = ({ status, handleClick }: IProps) => {
   return (
-    <Button onClick={handleClick} variant="large">
+    <Button
+      onClick={handleClick}
+      variant="large"
+      dataTest="approve-contract-button"
+    >
       {status === EApprovalStatus.NOT_APPROVED ? (
         "Approve Contract"
       ) : (
