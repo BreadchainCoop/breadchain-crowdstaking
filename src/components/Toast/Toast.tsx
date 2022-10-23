@@ -1,11 +1,9 @@
 import React from "react";
-import { gsap } from "gsap";
 
-import { clearToast, EToastType } from "../../features/toast/toastSlice";
-import { useAppDispatch } from "../../store/hooks";
+import { TToastType, useToast } from "../../context/ToastContext";
 
 type TProps = {
-  type: EToastType;
+  type: TToastType;
   message: string;
 };
 
@@ -22,6 +20,7 @@ const ToastContainer: React.FC<React.PropsWithChildren<unknown>> = (props) => {
 type TCloseProps = {
   onClick: () => void;
 };
+
 const CloseButton: React.FC<React.PropsWithChildren<TCloseProps>> = (props) => {
   return (
     <button
@@ -41,31 +40,14 @@ const CloseButton: React.FC<React.PropsWithChildren<TCloseProps>> = (props) => {
 };
 
 const Toast: React.FC<React.PropsWithChildren<TProps>> = (props) => {
-  const dispatch = useAppDispatch();
+  const { dispatch: toastDispatch } = useToast();
   const ref = React.useRef(null);
   const handleCloseToast = () => {
-    gsap.to(ref.current, {
-      duration: 0.1,
-      opacity: 0,
-      y: 50,
-      ease: "back.in(1)",
-      onComplete() {
-        dispatch(clearToast());
-      },
-    });
+    toastDispatch({ type: "CLEAR_TOAST" });
   };
 
-  React.useEffect(() => {
-    gsap.from(ref.current, {
-      duration: 0.4,
-      opacity: 0,
-      y: 50,
-      ease: "back.out(1)",
-    });
-  }, []);
-
   switch (props.type) {
-    case EToastType.ERROR:
+    case "ERROR":
       return (
         <div ref={ref} className="fixed z-10 bottom-0 w-full">
           <ToastContainer>

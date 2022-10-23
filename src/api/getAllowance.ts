@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 
 import ERC20abi from "../ERC20.json";
 import store from "../store";
-import { EToastType, setToast } from "../features/toast/toastSlice";
 import { closeModal } from "../features/modal/modalSlice";
+import { useToast } from "../context/ToastContext";
 
 export const getAllowance = async (
   tokenAddress: string,
@@ -12,6 +12,7 @@ export const getAllowance = async (
   provider: ethers.providers.BaseProvider,
   dispatch: typeof store.dispatch
 ) => {
+  const { dispatch: toastDispatch } = useToast();
   const token = new ethers.Contract(tokenAddress, ERC20abi, provider);
 
   try {
@@ -21,13 +22,14 @@ export const getAllowance = async (
   } catch (err: any) {
     console.log(err);
     const message = err.data ? err.data.message : err.message;
-
-    dispatch(
-      setToast({
-        type: EToastType.ERROR,
+    toastDispatch({
+      type: "SET_TOAST",
+      payload: {
+        type: "ERROR",
         message,
-      })
-    );
+      },
+    });
+
     dispatch(closeModal());
     return;
   }

@@ -6,7 +6,6 @@ import Icon from "./Icon";
 import SwapReverse from "./SwapReverse";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { swap } from "../../api/swap";
 import Transaction from "./Transaction";
 import { getBalances } from "../../features/wallet/walletSlice";
 import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
@@ -16,26 +15,20 @@ import approvalSlice, {
 } from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
 import { sanitizeInputValue } from "./swapUtils";
-import { EToastType, setToast } from "../../features/toast/toastSlice";
 import { closeModal } from "../../features/modal/modalSlice";
 import Button from "../Button";
 import { ChainConfiguration } from "../../config";
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useSigner,
-} from "wagmi";
+import { useAccount, useSigner } from "wagmi";
 import TokenBalance from "../TokenBalance";
 import NativeBalance from "../NativeBalance";
 import { useTokenBalance } from "../../hooks/useTokenBalance";
 import { formatEther, parseEther } from "ethers/lib/utils";
-import { abi as BreadABI } from "../../BreadPolygon.json";
 import { useTokenAllowance } from "../../hooks/useTokenAllowance";
 import { BigNumber, ethers } from "ethers";
 import { ETransactionStatus } from "../../features/transaction/transactionSlice";
 import { swapDaiForBread } from "../../api/swapDaiForBread";
 import { swapBreadForDai } from "../../api/swapBreadForDai";
+import { useToast } from "../../context/ToastContext";
 
 interface ISwapState {
   from: {
@@ -77,7 +70,7 @@ const SwapUI: React.FC<
   const { DAI, BREAD } = chainConfig;
 
   const { transaction } = useAppSelector((state) => state);
-
+  const { state: toast, dispatch: dispatchToast } = useToast();
   const { isConnecting } = useAccount();
 
   const {
@@ -105,8 +98,6 @@ const SwapUI: React.FC<
 
   const isLoading = isConnecting || isFetchingSigner;
   const error = signerError;
-  // // const writeTxHooksLoading =
-  // //   !sendBakeTransaction || !sendBurnTransaction || !sendApproveTransaction;
 
   const inputTokenReadings =
     swapState.from.name === "BREAD" ? breadBalanceReadings : daiBalanceReadings;
@@ -156,7 +147,13 @@ const SwapUI: React.FC<
   };
 
   const handleApproveBREAD = async () => {
-    await approveBREAD(signer, DAI.address, BREAD.address, dispatch);
+    await approveBREAD(
+      signer,
+      DAI.address,
+      BREAD.address,
+      dispatch,
+      dispatchToast
+    );
   };
 
   const handleSwapDaiForBread = async () => {
@@ -168,6 +165,7 @@ const SwapUI: React.FC<
       BREAD.address,
       accountAddress,
       dispatch,
+      dispatchToast,
       resetSwapState
     )
       .then(() => {
@@ -175,12 +173,13 @@ const SwapUI: React.FC<
       })
       .catch((err: any) => {
         const message = err.data ? err.data.message : err.message;
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
+        dispatchToast({
+          type: "SET_TOAST",
+          payload: {
+            type: "ERROR",
             message,
-          })
-        );
+          },
+        });
         dispatch(closeModal());
       });
   };
@@ -194,6 +193,7 @@ const SwapUI: React.FC<
       BREAD.address,
       accountAddress,
       dispatch,
+      dispatchToast,
       resetSwapState
     )
       .then(() => {
@@ -201,12 +201,13 @@ const SwapUI: React.FC<
       })
       .catch((err: any) => {
         const message = err.data ? err.data.message : err.message;
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
+        dispatchToast({
+          type: "SET_TOAST",
+          payload: {
+            type: "ERROR",
             message,
-          })
-        );
+          },
+        });
         dispatch(closeModal());
       });
   };

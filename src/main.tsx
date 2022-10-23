@@ -13,6 +13,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 import "./css/index.css";
 import { getClient } from "./client";
+import { ToastProvider } from "./context/ToastContext";
 
 export type IViteMode = "production" | "development" | "testing" | undefined;
 
@@ -31,11 +32,13 @@ root.render(
   <React.StrictMode>
     <ErrorBoundary>
       <WagmiConfig client={client}>
-        <Provider store={store}>
-          <HashRouter>
-            <App />
-          </HashRouter>
-        </Provider>
+        <ToastProvider>
+          <Provider store={store}>
+            <HashRouter>
+              <App />
+            </HashRouter>
+          </Provider>
+        </ToastProvider>
       </WagmiConfig>
     </ErrorBoundary>
   </React.StrictMode>

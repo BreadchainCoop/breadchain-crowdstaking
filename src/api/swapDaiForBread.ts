@@ -5,9 +5,11 @@ import {
   setTransactionPending,
 } from "../features/transaction/transactionSlice";
 import { unlockModal } from "../features/modal/modalSlice";
-import { EToastType, setToast } from "../features/toast/toastSlice";
+
 import { parseEther } from "ethers/lib/utils";
 import { abi as BreadABI } from "../BreadPolygon.json";
+import { TToastDispatch } from "../context/ToastContext";
+import { IProviderRpcError } from "../metamaskErrorType";
 
 export const swapDaiForBread = async (
   signer: Signer,
@@ -15,6 +17,7 @@ export const swapDaiForBread = async (
   breadAddress: string,
   receiverAddress: string,
   dispatch: typeof store.dispatch,
+  dispatchToast: TToastDispatch,
   resetSwapState: () => void
 ) => {
   if (typeof amount === "number") amount = parseEther(amount.toString());
@@ -22,7 +25,20 @@ export const swapDaiForBread = async (
 
   const bread = new Contract(breadAddress, BreadABI, signer);
 
-  let txn = await bread.mint(amount, receiverAddress);
+  let txn;
+
+  try {
+    txn = await bread.mint(amount, receiverAddress);
+  } catch (err) {
+    const { message } = err as IProviderRpcError;
+    dispatchToast({
+      type: "SET_TOAST",
+      payload: {
+        type: "ERROR",
+        message,
+      },
+    });
+  }
 
   dispatch(setTransactionPending(txn.hash));
   dispatch(unlockModal());
@@ -31,12 +47,14 @@ export const swapDaiForBread = async (
     await txn.wait();
   } catch (err: any) {
     console.error(err);
-    dispatch(
-      setToast({
-        type: EToastType.ERROR,
+
+    dispatchToast({
+      type: "SET_TOAST",
+      payload: {
+        type: "ERROR",
         message: "bake transaction failed",
-      })
-    );
+      },
+    });
   }
   dispatch(setTransactionComplete());
 };
