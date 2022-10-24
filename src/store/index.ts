@@ -1,16 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import walletSlice from "../features/wallet/walletSlice";
-import networkSlice from "../features/network/networkSlice";
-import modalSlice from "../features/modal/modalSlice"; // XXX
-import fontSlice from "../features/font/fontSlice"; // XXX
-import transactionSlice from "../features/transaction/transactionSlice"; // XXX
-// import approvalSlice from "../features/approval/approvalSlice";
+import modalSlice from "../features/modal/modalSlice";
+import fontSlice from "../features/font/fontSlice";
+import transactionSlice from "../features/transaction/transactionSlice";
 
 const store = configureStore({
   reducer: {
-    wallet: walletSlice,
-    network: networkSlice,
     modal: modalSlice,
     font: fontSlice,
     transaction: transactionSlice,
