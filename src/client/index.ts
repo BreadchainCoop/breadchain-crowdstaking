@@ -1,1 +1,1 @@
-export * from "./wagmiClient";
+export * from './wagmiClient';

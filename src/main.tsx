@@ -1,30 +1,30 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { createClient, WagmiConfig } from "wagmi";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { createClient, WagmiConfig } from 'wagmi';
 
-import "./shims.ts";
+import './shims.ts';
 
-import { Provider } from "react-redux";
-import { HashRouter } from "react-router-dom";
-import store from "./store";
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+import store from './store';
 
-import App from "./components/App";
-import ErrorBoundary from "./components/ErrorBoundary";
+import App from './components/App';
+import ErrorBoundary from './components/ErrorBoundary';
 
-import "./css/index.css";
-import { getClient } from "./client";
-import { ToastProvider } from "./context/ToastContext";
+import './css/index.css';
+import { getClient } from './client';
+import { ToastProvider } from './context/ToastContext';
 
-export type IViteMode = "production" | "development" | "testing" | undefined;
+export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 
 const env = import.meta.env.MODE as IViteMode;
 
-if (env === undefined) throw new Error("NODE_ENV not set!");
+if (env === undefined) throw new Error('NODE_ENV not set!');
 
 const client = createClient(getClient(env));
 
-const container = document.getElementById("root");
-if (!container) throw new Error("no root element found!");
+const container = document.getElementById('root');
+if (!container) throw new Error('no root element found!');
 
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
@@ -41,5 +41,5 @@ root.render(
         </ToastProvider>
       </WagmiConfig>
     </ErrorBoundary>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

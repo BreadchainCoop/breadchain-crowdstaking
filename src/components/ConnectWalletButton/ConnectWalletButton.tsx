@@ -1,31 +1,30 @@
-import Button from "../Button";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount, useConnect } from 'wagmi';
+import Button from '../Button';
 
-const ConnectWalletButton = () => {
+function ConnectWalletButton() {
   const { connector: activeConnector, isConnected } = useAccount();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
+  const {
+    connect, connectors, error, isLoading, pendingConnector,
+  } = useConnect();
 
   if (!!activeConnector && isConnected) return <></>;
 
   return (
     <div className="mt-12">
-      {connectors.map((connector) => {
-        return (
-          <Button
-            disabled={!connector.ready}
-            key={connector.id}
-            onClick={() => connect({ connector })}
-            dataTest={`connect-wallet-${connector.name.toLowerCase()}`}
-          >
-            {connector.name}
-          </Button>
-        );
-      })}
+      {connectors.map((connector) => (
+        <Button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect({ connector })}
+          dataTest={`connect-wallet-${connector.name.toLowerCase()}`}
+        >
+          {connector.name}
+        </Button>
+      ))}
 
       {error && <div>{error.message}</div>}
     </div>
   );
-};
+}
 
 export default ConnectWalletButton;

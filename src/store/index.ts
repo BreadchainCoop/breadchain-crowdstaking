@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import modalSlice from "../features/modal/modalSlice";
-import transactionSlice from "../features/transaction/transactionSlice";
+import modalSlice from '../features/modal/modalSlice';
+import transactionSlice from '../features/transaction/transactionSlice';
 
 const store = configureStore({
   reducer: {

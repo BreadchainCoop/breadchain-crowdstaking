@@ -1,1 +1,1 @@
-export * from "./BreadchainInfo";
+export * from './BreadchainInfo';

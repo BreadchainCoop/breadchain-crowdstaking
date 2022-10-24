@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export enum ETransactionStatus {
-  PENDING = "PENDING",
-  COMPLETE = "COMPLETE",
+  PENDING = 'PENDING',
+  COMPLETE = 'COMPLETE',
 }
 
 interface TransactionState {
@@ -16,7 +16,7 @@ const initialState: TransactionState = {
 };
 
 const TransactionSlice = createSlice({
-  name: "Transaction",
+  name: 'Transaction',
   initialState,
   reducers: {
     setTransactionPending(state, action: PayloadAction<string>) {

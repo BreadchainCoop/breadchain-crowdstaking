@@ -1,26 +1,26 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 
-import AppContainer from "./ui/AppContainer";
-import Header from "../Header";
-import * as Main from "./ui/Main";
-import Footer from "../Footer";
-import Modal from "../Modal";
-import Logo from "../Header/Logo";
-import * as WalletDisplay from "../Header/WalletDisplay";
+import { useAccount } from 'wagmi';
+import AppContainer from './ui/AppContainer';
+import Header from '../Header';
+import * as Main from './ui/Main';
+import Footer from '../Footer';
+import Modal from '../Modal';
+import Logo from '../Header/Logo';
+import * as WalletDisplay from '../Header/WalletDisplay';
 
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { formatAddress } from "@/util";
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { formatAddress } from '@/util';
 
-import Toast from "../Toast/Toast";
-import { Pantry } from "../Pantry";
-import Index from "../../routes/Index";
-import DesktopNavigation from "../Navigation/DesktopNavigation";
-import About from "../../routes/Info";
-import MobileNavigationToggle from "../Header/MobileNavigationToggle";
-import SiteTitle from "../SiteTitle/SiteTitle";
-import { useAccount } from "wagmi";
-import { useToast } from "../../context/ToastContext";
+import Toast from '../Toast/Toast';
+import { Pantry } from '../Pantry';
+import Index from '../../routes/Index';
+import DesktopNavigation from '../Navigation/DesktopNavigation';
+import About from '../../routes/Info';
+import MobileNavigationToggle from '../Header/MobileNavigationToggle';
+import SiteTitle from '../SiteTitle/SiteTitle';
+import { useToast } from '../../context/ToastContext';
 
 const App: React.FC<React.PropsWithChildren<unknown>> = () => {
   const appState = useAppSelector((state) => state);
@@ -38,7 +38,7 @@ const App: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Logo />
         <DesktopNavigation />
         <WalletDisplay.Container>
-          {<WalletDisplay.Network />}
+          <WalletDisplay.Network />
           {accountAddress && (
             <WalletDisplay.Address>
               {formatAddress(accountAddress)}

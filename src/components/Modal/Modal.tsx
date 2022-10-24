@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   closeModal,
   EModalStatus,
   EModalType,
   IModalState,
-} from "../../features/modal/modalSlice";
-import { useAppDispatch } from "../../store/hooks";
-import Elipsis from "../Elipsis/Elipsis";
-import AddTokens from "./AddTokens";
-import Spinner from "./Spinner";
-import * as Modal from "./ui";
+} from '../../features/modal/modalSlice';
+import { useAppDispatch } from '../../store/hooks';
+import Elipsis from '../Elipsis/Elipsis';
+import AddTokens from './AddTokens';
+import Spinner from './Spinner';
+import * as Modal from './ui';
 
 type TProps = {
   modal: IModalState;

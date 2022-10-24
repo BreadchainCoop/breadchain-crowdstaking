@@ -1,12 +1,12 @@
-import { ethers, providers } from "ethers";
+import { ethers, providers } from 'ethers';
 
-import ERC20abi from "../ERC20.json";
-import config from "../config";
+import ERC20abi from '../ERC20.json';
+import config from '../config';
 
-const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
+const MULTISIG_ADDRESS = '0x6A148b997e6651237F2fCfc9E30330a6480519f0';
 
 export const getMultisigBREADBalance = async (
-  provider: providers.BaseProvider
+  provider: providers.BaseProvider,
 ): Promise<null | {
   balance: string;
 }> => {

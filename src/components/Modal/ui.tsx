@@ -1,5 +1,5 @@
 export const Container: React.FC<React.PropsWithChildren<unknown>> = (
-  props
+  props,
 ) => (
   <section
     data-test="modal"

@@ -1,33 +1,33 @@
-import { IProviderRpcError } from "@/metamaskErrorType";
+import { isAddress } from 'ethers/lib/utils';
+import { Contract, ethers, Signer } from 'ethers';
+import { IProviderRpcError } from '@/metamaskErrorType';
 
-import store from "../store";
+import store from '../store';
 import {
   closeModal,
   EModalType,
   openModal,
-} from "../features/modal/modalSlice";
+} from '../features/modal/modalSlice';
 
-import { isAddress } from "ethers/lib/utils";
 import {
   setTransactionComplete,
   setTransactionPending,
-} from "../features/transaction/transactionSlice";
-import { Contract, ethers, Signer } from "ethers";
-import ERC20ABI from "../ERC20.json";
-import { TToastDispatch } from "../context/ToastContext";
+} from '../features/transaction/transactionSlice';
+import ERC20ABI from '../ERC20.json';
+import { TToastDispatch } from '../context/ToastContext';
 
 export const approveBREAD = async (
   signer: Signer,
   daiAddress: string,
   breadAddress: string,
   dispatch: typeof store.dispatch,
-  dispatchToast: TToastDispatch
+  dispatchToast: TToastDispatch,
 ) => {
   if (!isAddress(breadAddress)) {
     return dispatchToast({
-      type: "SET_TOAST",
+      type: 'SET_TOAST',
       payload: {
-        type: "ERROR",
+        type: 'ERROR',
         message: `Invalid spender address: ${breadAddress}`,
       },
     });
@@ -36,7 +36,7 @@ export const approveBREAD = async (
   const dai = new Contract(daiAddress, ERC20ABI, signer);
 
   dispatch(
-    openModal({ type: EModalType.APPROVAL, title: "Approving BREAD Contract" })
+    openModal({ type: EModalType.APPROVAL, title: 'Approving BREAD Contract' }),
   );
   let txn;
   try {
@@ -44,9 +44,9 @@ export const approveBREAD = async (
   } catch (err) {
     const { message } = err as IProviderRpcError;
     dispatchToast({
-      type: "SET_TOAST",
+      type: 'SET_TOAST',
       payload: {
-        type: "ERROR",
+        type: 'ERROR',
         message,
       },
     });
@@ -62,10 +62,10 @@ export const approveBREAD = async (
     console.error(err);
 
     dispatchToast({
-      type: "SET_TOAST",
+      type: 'SET_TOAST',
       payload: {
-        type: "ERROR",
-        message: "Approve transaction failed",
+        type: 'ERROR',
+        message: 'Approve transaction failed',
       },
     });
   }

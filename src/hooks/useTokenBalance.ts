@@ -1,21 +1,21 @@
-import { BigNumber } from "ethers";
-import { useContractRead } from "wagmi";
-import abi from "../ERC20.json";
+import { BigNumber } from 'ethers';
+import { useContractRead } from 'wagmi';
+import abi from '../ERC20.json';
 
 export interface UseTokenBalanceResult {
   value?: BigNumber;
-  status: "error" | "idle" | "loading" | "success";
+  status: 'error' | 'idle' | 'loading' | 'success';
   error: Error | null;
 }
 
 export function useTokenBalance(
   tokenAddress: string,
-  holderAddress: string
+  holderAddress: string,
 ): UseTokenBalanceResult {
   const { data, status, error } = useContractRead({
     addressOrName: tokenAddress,
     contractInterface: abi,
-    functionName: "balanceOf",
+    functionName: 'balanceOf',
     args: [holderAddress],
     watch: true,
   });

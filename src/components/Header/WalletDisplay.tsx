@@ -1,18 +1,16 @@
-import React from "react";
-import { useDisconnect, useNetwork } from "wagmi";
+import React from 'react';
+import { useDisconnect, useNetwork } from 'wagmi';
 
-import Button from "../Button";
-import { IconContainer, NetworkIcon } from "../Icons";
+import Button from '../Button';
+import { IconContainer, NetworkIcon } from '../Icons';
 
 export const Container: React.FC<React.PropsWithChildren<unknown>> = (
-  props
-) => {
-  return (
-    <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
-      {props.children}
-    </section>
-  );
-};
+  props,
+) => (
+  <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
+    {props.children}
+  </section>
+);
 
 export const Row: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
@@ -35,7 +33,7 @@ export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
         <NetworkIcon />
       </IconContainer>
       <span>
-        {activeChain.unsupported && "Unsupported network: "}
+        {activeChain.unsupported && 'Unsupported network: '}
         {activeChain.name}
       </span>
 

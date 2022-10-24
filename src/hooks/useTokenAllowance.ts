@@ -1,17 +1,17 @@
-import { BigNumber } from "ethers";
-import { useContractRead } from "wagmi";
-import abi from "../ERC20.json";
+import { BigNumber } from 'ethers';
+import { useContractRead } from 'wagmi';
+import abi from '../ERC20.json';
 
 export interface UseTokenAllowance {
   value?: BigNumber;
-  status: "error" | "idle" | "loading" | "success";
+  status: 'error' | 'idle' | 'loading' | 'success';
   error: Error | null;
 }
 
 export function useTokenAllowance(
   tokenAddress: string,
   holderAddress: string,
-  spenderAddress: string
+  spenderAddress: string,
 ): UseTokenAllowance {
   const args = [holderAddress, spenderAddress];
   const watch = true;
@@ -19,7 +19,7 @@ export function useTokenAllowance(
   const { data, status, error } = useContractRead({
     addressOrName: tokenAddress,
     contractInterface: abi,
-    functionName: "allowance",
+    functionName: 'allowance',
     args,
     watch,
   });

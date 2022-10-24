@@ -1,3 +1,3 @@
-import { NativeBalance } from "./NativeBalance";
+import { NativeBalance } from './NativeBalance';
 
 export default NativeBalance;

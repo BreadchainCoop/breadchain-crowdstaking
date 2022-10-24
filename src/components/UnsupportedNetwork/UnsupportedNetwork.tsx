@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import Button from "../Button";
+import Button from '../Button';
 import {
   openModal,
   closeModal,
   EModalType,
-} from "../../features/modal/modalSlice";
-import { useAppDispatch } from "../../store/hooks";
+} from '../../features/modal/modalSlice';
+import { useAppDispatch } from '../../store/hooks';
 
 const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
@@ -15,26 +15,26 @@ const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
     // const { appState, dispatch } = useAppState();
     try {
       dispatch(
-        openModal({ type: EModalType.CHANGE_NETWORK, title: "Switch Network" })
+        openModal({ type: EModalType.CHANGE_NETWORK, title: 'Switch Network' }),
       );
       const { ethereum } = window as any;
       await ethereum.request({
-        method: "wallet_switchEthereumChain",
+        method: 'wallet_switchEthereumChain',
         params: [
           {
-            chainId: "0x89",
+            chainId: '0x89',
           },
         ],
       });
       dispatch(
         openModal({
           type: EModalType.CHANGING_NETWORK,
-          title: "Switching Network...",
-        })
+          title: 'Switching Network...',
+        }),
       );
     } catch (err) {
       // !!! handle in ui?
-      console.error("failed switching to ethereum chain!");
+      console.error('failed switching to ethereum chain!');
       dispatch(closeModal());
     }
   };

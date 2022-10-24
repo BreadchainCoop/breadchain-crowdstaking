@@ -1,8 +1,8 @@
-import React from "react";
-import { useNetwork } from "wagmi";
-import { ETransactionStatus } from "../../features/transaction/transactionSlice";
-import { useAppSelector } from "../../store/hooks";
-import Elipsis from "../Elipsis/Elipsis";
+import React from 'react';
+import { useNetwork } from 'wagmi';
+import { ETransactionStatus } from '../../features/transaction/transactionSlice';
+import { useAppSelector } from '../../store/hooks';
+import Elipsis from '../Elipsis/Elipsis';
 
 const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
@@ -17,9 +17,9 @@ const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   switch (activeChain.id) {
     case 137:
-      endpoint = "https://polygonscan.com";
+      endpoint = 'https://polygonscan.com';
     case 80001:
-      endpoint = "https://mumbai.polygonscan.com";
+      endpoint = 'https://mumbai.polygonscan.com';
       break;
     default:
       return <></>;
@@ -44,7 +44,7 @@ const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
             <Elipsis />
           </>
         )}
-        {status === ETransactionStatus.COMPLETE && "transaction complete!"}
+        {status === ETransactionStatus.COMPLETE && 'transaction complete!'}
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 
-import markdown from "../../info";
+import markdown from '../../info';
 
-const BreadchainInfo: React.FC<React.PropsWithChildren<unknown>> = () => {
-  return (
-    <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert  m-auto px-4 py-16 sm:px-4 md:px-6">
-      <ReactMarkdown>{markdown}</ReactMarkdown>
-      {/* <div class="accordion" id="accordionExample">
+const BreadchainInfo: React.FC<React.PropsWithChildren<unknown>> = () => (
+  <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert  m-auto px-4 py-16 sm:px-4 md:px-6">
+    <ReactMarkdown>{markdown}</ReactMarkdown>
+    {/* <div class="accordion" id="accordionExample">
         <div class="accordion-item bg-white border border-gray-200">
           <h2 class="accordion-header mb-0" id="headingOne">
             <button
@@ -54,10 +53,9 @@ const BreadchainInfo: React.FC<React.PropsWithChildren<unknown>> = () => {
             </div>
           </div>
         </div>
-        
+
       </div> */}
-    </section>
-  );
-};
+  </section>
+);
 
 export default BreadchainInfo;

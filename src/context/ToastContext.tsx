@@ -1,6 +1,6 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from 'react';
 
-export type TToastType = "INFO" | "ERROR" | "SUCCESS";
+export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
 
 export type TToast = null | {
   type: TToastType;
@@ -9,14 +9,14 @@ export type TToast = null | {
 
 export type TToastAction =
   | {
-      type: "SET_TOAST";
+      type: 'SET_TOAST';
       payload: {
         type: TToastType;
         message: string;
       };
     }
   | {
-      type: "CLEAR_TOAST";
+      type: 'CLEAR_TOAST';
     };
 
 export type TToastDispatch = (action: TToastAction) => void;
@@ -32,7 +32,7 @@ const ToastContext = createContext<
 const toastReducer = (state: TToast, action: TToastAction) => {
   const { type: actionType } = action;
   switch (actionType) {
-    case "SET_TOAST":
+    case 'SET_TOAST':
       const {
         payload: { type: toastType, message },
       } = action;
@@ -40,7 +40,7 @@ const toastReducer = (state: TToast, action: TToastAction) => {
         type: toastType,
         message,
       };
-    case "CLEAR_TOAST":
+    case 'CLEAR_TOAST':
       return null;
     default:
       return state;
@@ -51,7 +51,7 @@ interface IToastProviderProps {
   children: React.ReactNode;
 }
 
-const ToastProvider = ({ children }: IToastProviderProps) => {
+function ToastProvider({ children }: IToastProviderProps) {
   const [state, dispatch] = useReducer(toastReducer, null);
 
   const value = { state, dispatch };
@@ -59,12 +59,12 @@ const ToastProvider = ({ children }: IToastProviderProps) => {
   return (
     <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
   );
-};
+}
 
 const useToast = () => {
   const context = useContext(ToastContext);
   if (context === undefined) {
-    throw new Error("useToast must be used within a ToastProvider");
+    throw new Error('useToast must be used within a ToastProvider');
   }
   return context;
 };

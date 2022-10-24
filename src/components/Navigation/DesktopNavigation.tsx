@@ -1,54 +1,50 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface IDesktopNavLinkProps {
   to: string;
   isCurrentPage: boolean;
 }
 
-const DesktopNavLink: React.FC<React.PropsWithChildren<IDesktopNavLinkProps>> = (props) => {
-  return (
-    <Link
-      className={
+const DesktopNavLink: React.FC<React.PropsWithChildren<IDesktopNavLinkProps>> = (props) => (
+  <Link
+    className={
         props.isCurrentPage
-          ? "px-5 text-sm text-neutral-200 hover:text-neutral-200"
-          : "px-5 text-sm text-neutral-400 hover:text-neutral-200"
+          ? 'px-5 text-sm text-neutral-200 hover:text-neutral-200'
+          : 'px-5 text-sm text-neutral-400 hover:text-neutral-200'
       }
-      to={props.to}
-    >
-      {props.children}
-    </Link>
-  );
-};
+    to={props.to}
+  >
+    {props.children}
+  </Link>
+);
 
 interface IDesktopNavExternalLinkProps {
   href: string;
 }
 
 const DesktopNavExternalLink: React.FC<React.PropsWithChildren<IDesktopNavExternalLinkProps>> = (
-  props
-) => {
-  return (
-    <a
-      href={props.href}
-      rel="noopener noreferrer nofollow"
-      target="_blank"
-      className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
-    >
-      {props.children}
-    </a>
-  );
-};
+  props,
+) => (
+  <a
+    href={props.href}
+    rel="noopener noreferrer nofollow"
+    target="_blank"
+    className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
+  >
+    {props.children}
+  </a>
+);
 
 const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
   const location = useLocation();
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
-      <DesktopNavLink isCurrentPage={location.pathname === "/"} to="/">
+      <DesktopNavLink isCurrentPage={location.pathname === '/'} to="/">
         Bake
       </DesktopNavLink>
       <DesktopNavLink
-        isCurrentPage={location.pathname === "/about"}
+        isCurrentPage={location.pathname === '/about'}
         to="/about"
       >
         About

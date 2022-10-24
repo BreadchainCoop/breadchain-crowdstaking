@@ -1,8 +1,8 @@
-import React from "react";
-import Footer from "./Footer";
-import AppContainer from "./App/ui/AppContainer";
-import * as Main from "./App/ui/Main";
-import SiteTitle from "./SiteTitle/SiteTitle";
+import React from 'react';
+import Footer from './Footer';
+import AppContainer from './App/ui/AppContainer';
+import * as Main from './App/ui/Main';
+import SiteTitle from './SiteTitle/SiteTitle';
 
 interface IErrorBoundaryProps {
   children: React.ReactNode;

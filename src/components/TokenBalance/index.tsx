@@ -1,3 +1,3 @@
-import { TokenBalance } from "./TokenBalance";
+import { TokenBalance } from './TokenBalance';
 
 export default TokenBalance;

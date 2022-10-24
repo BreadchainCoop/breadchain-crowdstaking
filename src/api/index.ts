@@ -1,23 +1,23 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
 export const requestAccount = async () => {
   const { ethereum } = window as any;
-  return await ethereum.request({ method: "eth_requestAccounts" });
+  return await ethereum.request({ method: 'eth_requestAccounts' });
 };
 
 export const requestPermissions = async () => {
   const { ethereum } = window as any;
-  return await ethereum.request({ method: "eth_requestPermissions" });
+  return await ethereum.request({ method: 'eth_requestPermissions' });
 };
 
 export const getAccount = async () => {
   const accounts = await requestAccount();
   // const permissions = await requestPermissions();
-  if (!accounts.length) throw new Error("no accounts returned!");
+  if (!accounts.length) throw new Error('no accounts returned!');
   if (accounts.length === 1) {
     return accounts[0];
   }
-  throw new Error("getAccount failed!");
+  throw new Error('getAccount failed!');
 };
 
 export const getChainId = async () => {

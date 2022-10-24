@@ -1,11 +1,11 @@
-import { ethers } from "ethers";
-import { BaseProvider } from "@ethersproject/providers";
+import { ethers } from 'ethers';
+import { BaseProvider } from '@ethersproject/providers';
 
-import BREADabi from "../BreadPolygon.json";
-import config from "../config";
+import BREADabi from '../BreadPolygon.json';
+import config from '../config';
 
 export const getYieldAccrued = async (
-  provider: BaseProvider
+  provider: BaseProvider,
 ): Promise<null | {
   yieldAccrued: string;
 }> => {
@@ -14,11 +14,11 @@ export const getYieldAccrued = async (
   const BREADcontract = new ethers.Contract(
     BREAD.address,
     BREADabi.abi,
-    provider
+    provider,
   );
 
-  let yieldAccrued = await BREADcontract.yieldAccrued();
-  console.log("yieldAccrued raw value: ", yieldAccrued);
+  const yieldAccrued = await BREADcontract.yieldAccrued();
+  console.log('yieldAccrued raw value: ', yieldAccrued);
 
   const yieldAccruedFormatted = ethers.utils.formatUnits(yieldAccrued);
 
