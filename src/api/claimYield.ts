@@ -1,10 +1,8 @@
 import { ethers } from "ethers";
-import { ENetwork } from "../features/network/networkSlice";
 
-import ERC20abi from "../ERC20.json";
 import BREADabi from "../BreadPolygon.json";
 import config from "../config";
-import { useNetwork, useSigner } from "wagmi";
+import { useNetwork, useProvider, useSigner } from "wagmi";
 
 export const claimYield = async (
   signer: ethers.Signer,

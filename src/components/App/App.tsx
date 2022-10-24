@@ -9,15 +9,7 @@ import Modal from "../Modal";
 import Logo from "../Header/Logo";
 import * as WalletDisplay from "../Header/WalletDisplay";
 
-import { getNetwork } from "../../api";
-
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setWalletAddress } from "../../features/wallet/walletSlice";
-import {
-  ENetworkConnectionState,
-  setNetwork,
-  setNetworkConnected,
-} from "../../features/network/networkSlice";
 import { formatAddress } from "@/util";
 import { setIsLoaded } from "../../features/font/fontSlice";
 
@@ -28,16 +20,17 @@ import DesktopNavigation from "../Navigation/DesktopNavigation";
 import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
-import { EToastType, setToast } from "../../features/toast/toastSlice";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
+import { useToast } from "../../context/ToastContext";
 
 const App: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, toast, font } = appState;
-  const { isConnected, address: accountAddress } = useAccount();
-  const { chain: activeChain } = useNetwork();
+  const { modal, font } = appState;
+  const { address: accountAddress } = useAccount();
+
+  const { state: toast } = useToast();
 
   /**
    * App Init
@@ -47,41 +40,13 @@ const App: React.FC<React.PropsWithChildren<unknown>> = () => {
       document.fonts.ready.then(() => {
         if (!font.isLoaded) dispatch(setIsLoaded(true));
       });
-
-      // getXr().then((data) => {
-      //   dispatch(setXr(data));
-      // });
-
-      if (!isConnected || !activeChain || !accountAddress) return;
-
-      const network = getNetwork(activeChain.id);
-      if (!network) {
-        // !!! handle this error
-        dispatch(
-          setToast({
-            type: EToastType.ERROR,
-            message: "Failed to get current network!",
-          })
-        );
-        return;
-      }
-
-      dispatch(setNetwork(network));
-      dispatch(setNetworkConnected(ENetworkConnectionState.CONNECTED));
-
-      // bind handlers for metamask events eg account change / network change
-      // ethInit(appState, dispatch);
-
-      dispatch(setWalletAddress(accountAddress));
     })();
-  }, [isConnected, activeChain?.id, accountAddress]);
+  });
 
   return (
     <AppContainer>
       {modal.type !== null && <Modal modal={modal} />}
-      {toast.type !== null && toast.message !== null && (
-        <Toast type={toast.type} message={toast.message} />
-      )}
+      {toast && <Toast type={toast.type} message={toast.message} />}
       <Header>
         <Logo />
         <DesktopNavigation />

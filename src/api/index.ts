@@ -1,7 +1,5 @@
 import { ethers } from "ethers";
 
-import { ENetwork } from "../features/network/networkSlice";
-
 export const requestAccount = async () => {
   const { ethereum } = window as any;
   return await ethereum.request({ method: "eth_requestAccounts" });
@@ -30,17 +28,13 @@ export const getChainId = async () => {
   return network.chainId;
 };
 
-export const getNetwork = (chainId: number) => {
-  switch (chainId) {
-    case 137:
-      return ENetwork.POLYGON;
-    case 80001:
-      return ENetwork.MUMBAI;
-    default:
-      return ENetwork.UNSUPPORTED;
-  }
-};
-
-export * from "./getAllowance";
-export * from "./getBalances";
-export * from "./ethInit";
+// export const getNetwork = (chainId: number) => {
+//   switch (chainId) {
+//     case 137:
+//       return ENetwork.POLYGON;
+//     case 80001:
+//       return ENetwork.MUMBAI;
+//     default:
+//       return ENetwork.UNSUPPORTED;
+//   }
+// };

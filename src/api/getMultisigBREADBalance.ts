@@ -1,5 +1,4 @@
 import { ethers, providers } from "ethers";
-import { ENetwork } from "../features/network/networkSlice";
 
 import ERC20abi from "../ERC20.json";
 import config from "../config";

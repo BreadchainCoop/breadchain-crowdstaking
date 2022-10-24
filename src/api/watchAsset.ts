@@ -1,13 +1,7 @@
 import { useNetwork } from "wagmi";
 import config from "../config";
-import { unlockModal } from "../features/modal/modalSlice";
-import { ENetwork } from "../features/network/networkSlice";
-import store from "../store";
 
-export const watchAsset = async (
-  network: ENetwork,
-  tokenKey: "DAI" | "BREAD" | "DERIVATIVE"
-) => {
+export const watchAsset = async (tokenKey: "DAI" | "BREAD" | "DERIVATIVE") => {
   const { chain: activeChain } = useNetwork();
   if (!activeChain || activeChain.unsupported) return null;
 
