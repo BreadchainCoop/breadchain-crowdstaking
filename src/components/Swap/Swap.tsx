@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Transaction from "./Transaction";
 import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
 import { approveBREAD } from "../../api/approveBread";
-import { EApprovalStatus } from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
 import { sanitizeInputValue } from "./swapUtils";
 import { closeModal } from "../../features/modal/modalSlice";
@@ -288,7 +287,7 @@ const SwapUI: React.FC<
           </div>
           <ApproveBreadButton
             handleClick={handleApproveBREAD}
-            status={EApprovalStatus.NOT_APPROVED}
+            status={"NOT_APPROVED"}
           />
         </div>
       )}

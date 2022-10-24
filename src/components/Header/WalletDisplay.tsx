@@ -1,7 +1,6 @@
 import React from "react";
 import { useDisconnect, useNetwork } from "wagmi";
 
-import TextTransition from "../../transitions/TextTransition";
 import Button from "../Button";
 import { IconContainer, NetworkIcon } from "../Icons";
 
@@ -36,10 +35,8 @@ export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
         <NetworkIcon />
       </IconContainer>
       <span>
-        <TextTransition>
-          {activeChain.unsupported && "Unsupported network: "}
-          {activeChain.name}
-        </TextTransition>
+        {activeChain.unsupported && "Unsupported network: "}
+        {activeChain.name}
       </span>
 
       <Button variant="small" onClick={() => disconnectAsync()}>
@@ -55,7 +52,7 @@ export const Address: React.FC<React.PropsWithChildren<unknown>> = (props) => {
   return (
     <Row>
       <span className="text-xs w-full flex items-center pt-0.5 justify-center md:justify-start truncate text-ellipsis">
-        <TextTransition>{children}</TextTransition>
+        {children}
       </span>
     </Row>
   );
