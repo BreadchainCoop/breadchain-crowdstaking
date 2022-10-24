@@ -43,4 +43,3 @@ export const getNetwork = (chainId: number) => {
 
 export * from "./getAllowance";
 export * from "./getBalances";
-export * from "./ethInit";
