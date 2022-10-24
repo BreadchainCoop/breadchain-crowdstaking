@@ -9,15 +9,7 @@ import Modal from "../Modal";
 import Logo from "../Header/Logo";
 import * as WalletDisplay from "../Header/WalletDisplay";
 
-import { getNetwork } from "../../api";
-
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setWalletAddress } from "../../features/wallet/walletSlice";
-import {
-  ENetworkConnectionState,
-  setNetwork,
-  setNetworkConnected,
-} from "../../features/network/networkSlice";
 import { formatAddress } from "@/util";
 import { setIsLoaded } from "../../features/font/fontSlice";
 
@@ -28,7 +20,7 @@ import DesktopNavigation from "../Navigation/DesktopNavigation";
 import About from "../../routes/Info";
 import MobileNavigationToggle from "../Header/MobileNavigationToggle";
 import SiteTitle from "../SiteTitle/SiteTitle";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 import { useToast } from "../../context/ToastContext";
 
 const App: React.FC<React.PropsWithChildren<unknown>> = () => {

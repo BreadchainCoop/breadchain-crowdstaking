@@ -7,12 +7,9 @@ import SwapReverse from "./SwapReverse";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Transaction from "./Transaction";
-import { getBalances } from "../../features/wallet/walletSlice";
 import ApproveBreadButton from "../ApproveBreadButton/ApproveBreadButton";
 import { approveBREAD } from "../../api/approveBread";
-import approvalSlice, {
-  EApprovalStatus,
-} from "../../features/approval/approvalSlice";
+import { EApprovalStatus } from "../../features/approval/approvalSlice";
 import Elipsis from "../Elipsis/Elipsis";
 import { sanitizeInputValue } from "./swapUtils";
 import { closeModal } from "../../features/modal/modalSlice";
@@ -24,7 +21,7 @@ import NativeBalance from "../NativeBalance";
 import { useTokenBalance } from "../../hooks/useTokenBalance";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { useTokenAllowance } from "../../hooks/useTokenAllowance";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber } from "ethers";
 import { ETransactionStatus } from "../../features/transaction/transactionSlice";
 import { swapDaiForBread } from "../../api/swapDaiForBread";
 import { swapBreadForDai } from "../../api/swapBreadForDai";
@@ -167,21 +164,17 @@ const SwapUI: React.FC<
       dispatch,
       dispatchToast,
       resetSwapState
-    )
-      .then(() => {
-        dispatch(getBalances({}));
-      })
-      .catch((err: any) => {
-        const message = err.data ? err.data.message : err.message;
-        dispatchToast({
-          type: "SET_TOAST",
-          payload: {
-            type: "ERROR",
-            message,
-          },
-        });
-        dispatch(closeModal());
+    ).catch((err: any) => {
+      const message = err.data ? err.data.message : err.message;
+      dispatchToast({
+        type: "SET_TOAST",
+        payload: {
+          type: "ERROR",
+          message,
+        },
       });
+      dispatch(closeModal());
+    });
   };
 
   const handleSwapBreadForDai = async () => {
@@ -195,21 +188,17 @@ const SwapUI: React.FC<
       dispatch,
       dispatchToast,
       resetSwapState
-    )
-      .then(() => {
-        dispatch(getBalances({}));
-      })
-      .catch((err: any) => {
-        const message = err.data ? err.data.message : err.message;
-        dispatchToast({
-          type: "SET_TOAST",
-          payload: {
-            type: "ERROR",
-            message,
-          },
-        });
-        dispatch(closeModal());
+    ).catch((err: any) => {
+      const message = err.data ? err.data.message : err.message;
+      dispatchToast({
+        type: "SET_TOAST",
+        payload: {
+          type: "ERROR",
+          message,
+        },
       });
+      dispatch(closeModal());
+    });
   };
 
   const handleSubmit = async () => {
