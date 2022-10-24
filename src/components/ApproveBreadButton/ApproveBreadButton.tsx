@@ -1,11 +1,9 @@
 import Button from "@/components/Button";
 import Elipsis from "@/components/Elipsis";
 
-import { EApprovalStatus } from "../../features/approval/approvalSlice";
-
 interface IProps {
   handleClick: () => void;
-  status: EApprovalStatus;
+  status: "NOT_APPROVED";
 }
 
 const ApproveBreadButton = ({ status, handleClick }: IProps) => {
@@ -15,7 +13,7 @@ const ApproveBreadButton = ({ status, handleClick }: IProps) => {
       variant="large"
       dataTest="approve-contract-button"
     >
-      {status === EApprovalStatus.NOT_APPROVED ? (
+      {status === "NOT_APPROVED" ? (
         "Approve Contract"
       ) : (
         <>

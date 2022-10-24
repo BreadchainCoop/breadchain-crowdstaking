@@ -11,7 +11,6 @@ import * as WalletDisplay from "../Header/WalletDisplay";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { formatAddress } from "@/util";
-import { setIsLoaded } from "../../features/font/fontSlice";
 
 import Toast from "../Toast/Toast";
 import { Pantry } from "../Pantry";
@@ -24,24 +23,12 @@ import { useAccount } from "wagmi";
 import { useToast } from "../../context/ToastContext";
 
 const App: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const dispatch = useAppDispatch();
   const appState = useAppSelector((state) => state);
 
-  const { modal, font } = appState;
+  const { modal } = appState;
   const { address: accountAddress } = useAccount();
 
   const { state: toast } = useToast();
-
-  /**
-   * App Init
-   */
-  React.useEffect(() => {
-    (async () => {
-      document.fonts.ready.then(() => {
-        if (!font.isLoaded) dispatch(setIsLoaded(true));
-      });
-    })();
-  });
 
   return (
     <AppContainer>

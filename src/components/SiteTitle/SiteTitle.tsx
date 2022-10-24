@@ -1,5 +1,4 @@
 import React from "react";
-import TextTransition from "../../transitions/TextTransition";
 
 export const Title: React.FC<React.PropsWithChildren<unknown>> = (props) => {
   return (
@@ -22,12 +21,8 @@ export const H2: React.FC<React.PropsWithChildren<unknown>> = (props) => (
 const SiteTitle: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <Title>
-      <H1>
-        <TextTransition>BREADCHAIN</TextTransition>
-      </H1>
-      <H2>
-        <TextTransition>Crowdstaking</TextTransition>
-      </H2>
+      <H1>BREADCHAIN</H1>
+      <H2>Crowdstaking</H2>
     </Title>
   );
 };

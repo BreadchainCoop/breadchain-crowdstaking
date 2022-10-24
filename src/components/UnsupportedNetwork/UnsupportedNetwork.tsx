@@ -7,7 +7,6 @@ import {
   EModalType,
 } from "../../features/modal/modalSlice";
 import { useAppDispatch } from "../../store/hooks";
-import TextTransition from "../../transitions/TextTransition";
 
 const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
   const dispatch = useAppDispatch();
@@ -43,9 +42,7 @@ const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
   return (
     <div className="flex flex-col">
       <span className="mb-12 text-xs sm:text-base text-center">
-        <TextTransition>
-          You are not connected to a supported chain!
-        </TextTransition>
+        You are not connected to a supported chain!
       </span>
       <span className="flex justify-center">
         <Button onClick={handleSwitchToEthereum}>Connect to Polygon</Button>
