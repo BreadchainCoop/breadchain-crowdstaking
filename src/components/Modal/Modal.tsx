@@ -1,21 +1,20 @@
-import React from "react";
+import React from 'react';
 import {
   closeModal,
   EModalStatus,
   EModalType,
   IModalState,
-} from "../../features/modal/modalSlice";
-import { useAppDispatch } from "../../store/hooks";
-import Elipsis from "../Elipsis/Elipsis";
-import AddTokens from "./AddTokens";
-import Spinner from "./Spinner";
-import * as Modal from "./ui";
+} from '../../features/modal/modalSlice';
+import { useAppDispatch } from '../../store/hooks';
+import Elipsis from '../Elipsis/Elipsis';
+import AddTokens from './AddTokens';
+import * as Modal from './ui';
 
 type TProps = {
   modal: IModalState;
 };
-const ShowModal: React.FC<React.PropsWithChildren<TProps>> = (props) => {
-  const { modal } = props;
+
+function ShowModal({ modal }: TProps) {
   const dispatch = useAppDispatch();
   const handleCloseModal = () => {
     dispatch(closeModal());
@@ -27,6 +26,7 @@ const ShowModal: React.FC<React.PropsWithChildren<TProps>> = (props) => {
           <Modal.Inner>
             {modal.status === EModalStatus.UNLOCKED && (
               <button
+                type="button"
                 className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
                 onClick={handleCloseModal}
               >
@@ -56,6 +56,7 @@ const ShowModal: React.FC<React.PropsWithChildren<TProps>> = (props) => {
           <Modal.Inner>
             {modal.status === EModalStatus.UNLOCKED && (
               <button
+                type="button"
                 className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
                 onClick={handleCloseModal}
               >
@@ -125,12 +126,8 @@ const ShowModal: React.FC<React.PropsWithChildren<TProps>> = (props) => {
         </Modal.Container>
       );
     default:
-      return (
-        <Modal.Container>
-          <Spinner size="lg" color="#303030" />
-        </Modal.Container>
-      );
+      throw new Error('modal type invalid');
   }
-};
+}
 
 export default ShowModal;

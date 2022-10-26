@@ -1,10 +1,7 @@
-import React from "react";
+import React from 'react';
 
-export const Icon: React.FC<React.PropsWithChildren<{
-  type: string;
-}>> = (props) => {
-  const { type } = props;
-  return type === "DAI" ? (
+export function Icon({ type }: { type: string }) {
+  return type === 'DAI' ? (
     <div className="w-6 h-6">
       <svg fill="none" viewBox="0 0 350 350">
         <path d="M0 0h350v350H0z" />
@@ -27,5 +24,5 @@ export const Icon: React.FC<React.PropsWithChildren<{
       />
     </div>
   );
-};
+}
 export default Icon;

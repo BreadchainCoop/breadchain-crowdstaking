@@ -1,9 +1,5 @@
-import React from "react";
+import BreadchainInfo from '../components/BreadchainInfo/BreadchainInfo';
 
-import BreadchainInfo from "../components/BreadchainInfo/BreadchainInfo";
-
-const About: React.FC<React.PropsWithChildren<unknown>> = () => {
-  return <BreadchainInfo />;
-};
+function About() { return <BreadchainInfo />; }
 
 export default About;

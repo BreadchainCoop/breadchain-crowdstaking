@@ -1,7 +1,6 @@
-import { useBalance } from "wagmi";
-import { performanceConfig } from "../../config.performance";
-import Elipsis from "../Elipsis/Elipsis";
-import { formatEther } from "ethers/lib/utils";
+import { useBalance } from 'wagmi';
+import { formatEther } from 'ethers/lib/utils';
+import Elipsis from '../Elipsis/Elipsis';
 
 interface INativeBalanceProps {
   addressOrName: string;
@@ -14,32 +13,28 @@ interface INativeBalanceOpts {
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
   <>
-    Balance: <Elipsis></Elipsis>
+    Balance:
+    {' '}
+    <Elipsis />
   </>
 );
 
-const defaultProps: INativeBalanceOpts = {
-  bigNumberFormat: false,
-};
-
-const formatter = new Intl.NumberFormat("en-US", {
+const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   minimumIntegerDigits: 1,
   useGrouping: false,
 });
 
-export const NativeBalance: React.FC<React.PropsWithChildren<INativeBalanceProps & INativeBalanceOpts>> = (props) => {
-  const { addressOrName, bigNumberFormat } = {
-    ...defaultProps,
-    ...props,
-  };
-
+export function NativeBalance({
+  addressOrName,
+  bigNumberFormat,
+}: INativeBalanceProps & INativeBalanceOpts) {
   const { data, status, error } = useBalance({
     addressOrName,
     watch: true,
   });
 
-  let value = "Unknown";
+  let value = 'Unknown';
   if (data) {
     value = bigNumberFormat
       ? data.value.toString()
@@ -47,14 +42,30 @@ export const NativeBalance: React.FC<React.PropsWithChildren<INativeBalanceProps
   }
 
   switch (status) {
-    case "success":
-      return <>Balance: {value}</>;
-    case "loading":
+    case 'success':
+      return (
+        <>
+          Balance:
+          {value}
+        </>
+      );
+    case 'loading':
       return LOADING_BALANCE;
-    case "error":
-      return <>Balance: {error}</>;
-    case "idle":
+    case 'error':
+      return (
+        <>
+          Balance:
+          {error}
+        </>
+      );
+    case 'idle':
     default:
       return UNKNOWN_BALANCE;
   }
+}
+
+NativeBalance.defaultProps = {
+  bigNumberFormat: false,
 };
+
+export default NativeBalance;

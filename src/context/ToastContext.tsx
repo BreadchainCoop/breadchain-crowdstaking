@@ -1,6 +1,8 @@
-import { createContext, useContext, useReducer } from "react";
+import {
+  createContext, ReactNode, useContext, useMemo, useReducer,
+} from 'react';
 
-export type TToastType = "INFO" | "ERROR" | "SUCCESS";
+export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
 
 export type TToast = null | {
   type: TToastType;
@@ -9,16 +11,17 @@ export type TToast = null | {
 
 export type TToastAction =
   | {
-      type: "SET_TOAST";
+      type: 'SET_TOAST';
       payload: {
         type: TToastType;
         message: string;
       };
     }
   | {
-      type: "CLEAR_TOAST";
+      type: 'CLEAR_TOAST';
     };
 
+/* eslint-disable-next-line no-unused-vars */
 export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
@@ -32,7 +35,8 @@ const ToastContext = createContext<
 const toastReducer = (state: TToast, action: TToastAction) => {
   const { type: actionType } = action;
   switch (actionType) {
-    case "SET_TOAST":
+    case 'SET_TOAST':
+      /* eslint-disable-next-line no-case-declarations */
       const {
         payload: { type: toastType, message },
       } = action;
@@ -40,7 +44,7 @@ const toastReducer = (state: TToast, action: TToastAction) => {
         type: toastType,
         message,
       };
-    case "CLEAR_TOAST":
+    case 'CLEAR_TOAST':
       return null;
     default:
       return state;
@@ -48,23 +52,23 @@ const toastReducer = (state: TToast, action: TToastAction) => {
 };
 
 interface IToastProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const ToastProvider = ({ children }: IToastProviderProps) => {
+function ToastProvider({ children }: IToastProviderProps) {
   const [state, dispatch] = useReducer(toastReducer, null);
 
-  const value = { state, dispatch };
+  const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   return (
     <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
   );
-};
+}
 
 const useToast = () => {
   const context = useContext(ToastContext);
   if (context === undefined) {
-    throw new Error("useToast must be used within a ToastProvider");
+    throw new Error('useToast must be used within a ToastProvider');
   }
   return context;
 };

@@ -1,9 +1,9 @@
-import { ethers, providers } from "ethers";
+import { ethers, providers } from 'ethers';
 
-const MULTISIG_ADDRESS = "0x6A148b997e6651237F2fCfc9E30330a6480519f0";
+const MULTISIG_ADDRESS = '0x6A148b997e6651237F2fCfc9E30330a6480519f0';
 
 export const getMultisigEtherBalance = async (
-  provider: providers.BaseProvider
+  provider: providers.BaseProvider,
 ): // account: string,
 // network: ENetwork
 Promise<null | {

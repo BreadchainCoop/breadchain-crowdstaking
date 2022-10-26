@@ -1,28 +1,29 @@
-import React from "react";
-import { useNetwork } from "wagmi";
-import { ETransactionStatus } from "../../features/transaction/transactionSlice";
-import { useAppSelector } from "../../store/hooks";
-import Elipsis from "../Elipsis/Elipsis";
+import React from 'react';
+import { useNetwork } from 'wagmi';
+import { ETransactionStatus } from '../../features/transaction/transactionSlice';
+import { useAppSelector } from '../../store/hooks';
+import Elipsis from '../Elipsis/Elipsis';
 
-const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
+function Transaction() {
   const {
     transaction: { status, hash },
   } = useAppSelector((state) => state);
 
   const { chain: activeChain } = useNetwork();
 
-  if (!activeChain) return <></>;
+  if (!activeChain) return null;
 
   let endpoint: string;
 
   switch (activeChain.id) {
     case 137:
-      endpoint = "https://polygonscan.com";
+      endpoint = 'https://polygonscan.com';
+      break;
     case 80001:
-      endpoint = "https://mumbai.polygonscan.com";
+      endpoint = 'https://mumbai.polygonscan.com';
       break;
     default:
-      return <></>;
+      throw new Error('NO ENDPOINT SET');
   }
 
   return (
@@ -44,10 +45,10 @@ const Transaction: React.FC<React.PropsWithChildren<unknown>> = () => {
             <Elipsis />
           </>
         )}
-        {status === ETransactionStatus.COMPLETE && "transaction complete!"}
+        {status === ETransactionStatus.COMPLETE && 'transaction complete!'}
       </div>
     </div>
   );
-};
+}
 
 export default Transaction;

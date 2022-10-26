@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 
-import markdown from "../../info";
+import markdown from '../../info';
 
-const BreadchainInfo: React.FC<React.PropsWithChildren<unknown>> = () => {
+function BreadchainInfo() {
   return (
     <section className="prose prose-sm prose-pink md:prose md:prose-pink prose-invert  m-auto px-4 py-16 sm:px-4 md:px-6">
       <ReactMarkdown>{markdown}</ReactMarkdown>
@@ -54,10 +54,9 @@ const BreadchainInfo: React.FC<React.PropsWithChildren<unknown>> = () => {
             </div>
           </div>
         </div>
-        
+
       </div> */}
     </section>
   );
-};
-
+}
 export default BreadchainInfo;

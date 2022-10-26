@@ -1,8 +1,5 @@
-import React from "react";
-import { Pantry } from "../components/Pantry";
+import { Pantry } from '../components/Pantry';
 
-const pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
-  return <Pantry />;
-};
+function pantry() { return <Pantry />; }
 
 export default pantry;

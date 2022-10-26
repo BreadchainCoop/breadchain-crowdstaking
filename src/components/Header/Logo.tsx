@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-export const Logo: React.FC<React.PropsWithChildren<unknown>> = () => {
+export function Logo() {
   return (
     <div className="flex items-center">
       <Link to="/">
@@ -13,6 +12,6 @@ export const Logo: React.FC<React.PropsWithChildren<unknown>> = () => {
       </Link>
     </div>
   );
-};
+}
 
 export default Logo;

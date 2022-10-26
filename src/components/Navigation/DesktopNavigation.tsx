@@ -1,54 +1,55 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { ReactNode } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface IDesktopNavLinkProps {
+
   to: string;
   isCurrentPage: boolean;
+  children: ReactNode
 }
 
-const DesktopNavLink: React.FC<React.PropsWithChildren<IDesktopNavLinkProps>> = (props) => {
+function DesktopNavLink({ isCurrentPage, to, children }: IDesktopNavLinkProps) {
   return (
     <Link
       className={
-        props.isCurrentPage
-          ? "px-5 text-sm text-neutral-200 hover:text-neutral-200"
-          : "px-5 text-sm text-neutral-400 hover:text-neutral-200"
+        isCurrentPage
+          ? 'px-5 text-sm text-neutral-200 hover:text-neutral-200'
+          : 'px-5 text-sm text-neutral-400 hover:text-neutral-200'
       }
-      to={props.to}
+      to={to}
     >
-      {props.children}
+      {children}
     </Link>
   );
-};
-
+}
 interface IDesktopNavExternalLinkProps {
   href: string;
+  children: ReactNode
 }
 
-const DesktopNavExternalLink: React.FC<React.PropsWithChildren<IDesktopNavExternalLinkProps>> = (
-  props
-) => {
+function DesktopNavExternalLink(
+  { href, children }: IDesktopNavExternalLinkProps,
+) {
   return (
     <a
-      href={props.href}
+      href={href}
       rel="noopener noreferrer nofollow"
       target="_blank"
       className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
     >
-      {props.children}
+      {children}
     </a>
   );
-};
-
-const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
+}
+function DesktopNavigation() {
   const location = useLocation();
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
-      <DesktopNavLink isCurrentPage={location.pathname === "/"} to="/">
+      <DesktopNavLink isCurrentPage={location.pathname === '/'} to="/">
         Bake
       </DesktopNavLink>
       <DesktopNavLink
-        isCurrentPage={location.pathname === "/about"}
+        isCurrentPage={location.pathname === '/about'}
         to="/about"
       >
         About
@@ -58,6 +59,6 @@ const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
       </DesktopNavExternalLink>
     </nav>
   );
-};
+}
 
 export default DesktopNavigation;

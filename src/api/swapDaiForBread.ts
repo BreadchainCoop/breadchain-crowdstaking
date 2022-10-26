@@ -1,40 +1,41 @@
-import { BigNumberish, Contract, Signer } from "ethers";
-import store from "../store";
+import {
+  Contract, Signer,
+} from 'ethers';
+import { parseEther } from 'ethers/lib/utils';
+import store from '../store';
 import {
   setTransactionComplete,
   setTransactionPending,
-} from "../features/transaction/transactionSlice";
-import { unlockModal } from "../features/modal/modalSlice";
+} from '../features/transaction/transactionSlice';
+import { unlockModal } from '../features/modal/modalSlice';
 
-import { parseEther } from "ethers/lib/utils";
-import { abi as BreadABI } from "../BreadPolygon.json";
-import { TToastDispatch } from "../context/ToastContext";
-import { IProviderRpcError } from "../metamaskErrorType";
+import { abi as BreadABI } from '../BreadPolygon.json';
+import { TToastDispatch } from '../context/ToastContext';
+import { IProviderRpcError } from '../metamaskErrorType';
 
 export const swapDaiForBread = async (
   signer: Signer,
-  amount: BigNumberish,
+  amount: string,
   breadAddress: string,
   receiverAddress: string,
   dispatch: typeof store.dispatch,
   dispatchToast: TToastDispatch,
-  resetSwapState: () => void
+  resetSwapState: () => void,
 ) => {
-  if (typeof amount === "number") amount = parseEther(amount.toString());
-  if (typeof amount === "string") amount = parseEther(amount);
+  const parsedAmount = parseEther(amount);
 
   const bread = new Contract(breadAddress, BreadABI, signer);
 
   let txn;
 
   try {
-    txn = await bread.mint(amount, receiverAddress);
+    txn = await bread.mint(parsedAmount, receiverAddress);
   } catch (err) {
     const { message } = err as IProviderRpcError;
     dispatchToast({
-      type: "SET_TOAST",
+      type: 'SET_TOAST',
       payload: {
-        type: "ERROR",
+        type: 'ERROR',
         message,
       },
     });
@@ -46,15 +47,15 @@ export const swapDaiForBread = async (
   try {
     await txn.wait();
   } catch (err: any) {
-    console.error(err);
-
     dispatchToast({
-      type: "SET_TOAST",
+      type: 'SET_TOAST',
       payload: {
-        type: "ERROR",
-        message: "bake transaction failed",
+        type: 'ERROR',
+        message: 'bake transaction failed',
       },
     });
   }
   dispatch(setTransactionComplete());
 };
+
+export default swapDaiForBread;

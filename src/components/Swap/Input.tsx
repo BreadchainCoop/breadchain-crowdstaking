@@ -1,13 +1,13 @@
-import React from "react";
+import { ChangeEvent } from 'react';
 
-type Props = {
+type TProps = {
   name: string;
   value: string;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /* eslint-disable-next-line no-unused-vars */
+  handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input: React.FC<React.PropsWithChildren<Props>> = (props) => {
-  const { name, value, handleInputChange } = props;
+function Input({ name, value, handleInputChange }: TProps) {
   return (
     <input
       name={name}
@@ -25,6 +25,6 @@ const Input: React.FC<React.PropsWithChildren<Props>> = (props) => {
       value={value}
     />
   );
-};
+}
 
 export default Input;

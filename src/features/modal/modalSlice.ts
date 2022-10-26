@@ -1,17 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+/* eslint-disable */
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export enum EModalType {
-  CONNECT_WALLET = "CONNECT_WALLET",
-  CHANGE_NETWORK = "CHANGE_NETWORK",
-  CHANGING_NETWORK = "CHANGING_NETWORK",
-  APPROVAL = "APPROVAL",
-  MINTING = "MINTING",
-  BURNING = "BURNING",
+  CONNECT_WALLET = 'CONNECT_WALLET',
+  CHANGE_NETWORK = 'CHANGE_NETWORK',
+  CHANGING_NETWORK = 'CHANGING_NETWORK',
+  APPROVAL = 'APPROVAL',
+  MINTING = 'MINTING',
+  BURNING = 'BURNING',
 }
 
 export enum EModalStatus {
-  LOCKED = "LOCKED",
-  UNLOCKED = "UNLOCKED",
+  LOCKED = 'LOCKED',
+  UNLOCKED = 'UNLOCKED',
 }
 
 export interface IModalState {
@@ -27,12 +29,12 @@ const initialState: IModalState = {
 };
 
 const ModalSlice = createSlice({
-  name: "Modal",
+  name: 'Modal',
   initialState,
   reducers: {
     openModal(
       state,
-      action: PayloadAction<{ type: EModalType; title: string }>
+      action: PayloadAction<{ type: EModalType; title: string }>,
     ) {
       state.type = action.payload.type;
       state.status = EModalStatus.LOCKED;

@@ -1,32 +1,24 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from 'react-router-dom';
 
-import AppContainer from "./ui/AppContainer";
-import Header from "../Header";
-import * as Main from "./ui/Main";
-import Footer from "../Footer";
-import Modal from "../Modal";
-import Logo from "../Header/Logo";
-import * as WalletDisplay from "../Header/WalletDisplay";
+import AppContainer from './ui/AppContainer';
+import Header from '../Header';
+import * as Main from './ui/Main';
+import Footer from '../Footer';
+import Modal from '../Modal';
 
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { formatAddress } from "@/util";
+import { useAppSelector } from '../../store/hooks';
 
-import Toast from "../Toast/Toast";
-import { Pantry } from "../Pantry";
-import Index from "../../routes/Index";
-import DesktopNavigation from "../Navigation/DesktopNavigation";
-import About from "../../routes/Info";
-import MobileNavigationToggle from "../Header/MobileNavigationToggle";
-import SiteTitle from "../SiteTitle/SiteTitle";
-import { useAccount } from "wagmi";
-import { useToast } from "../../context/ToastContext";
+import Toast from '../Toast/Toast';
+import { Pantry } from '../Pantry';
+import Index from '../../routes/Index';
+import About from '../../routes/Info';
+import SiteTitle from '../SiteTitle/SiteTitle';
+import { useToast } from '../../context/ToastContext';
 
-const App: React.FC<React.PropsWithChildren<unknown>> = () => {
+function App() {
   const appState = useAppSelector((state) => state);
 
   const { modal } = appState;
-  const { address: accountAddress } = useAccount();
 
   const { state: toast } = useToast();
 
@@ -34,19 +26,8 @@ const App: React.FC<React.PropsWithChildren<unknown>> = () => {
     <AppContainer>
       {modal.type !== null && <Modal modal={modal} />}
       {toast && <Toast type={toast.type} message={toast.message} />}
-      <Header>
-        <Logo />
-        <DesktopNavigation />
-        <WalletDisplay.Container>
-          {<WalletDisplay.Network />}
-          {accountAddress && (
-            <WalletDisplay.Address>
-              {formatAddress(accountAddress)}
-            </WalletDisplay.Address>
-          )}
-        </WalletDisplay.Container>
-        <MobileNavigationToggle />
-      </Header>
+      <Header />
+
       <SiteTitle />
       <Main.Main>
         <Routes>
@@ -63,6 +44,6 @@ const App: React.FC<React.PropsWithChildren<unknown>> = () => {
       </Footer>
     </AppContainer>
   );
-};
+}
 
 export default App;

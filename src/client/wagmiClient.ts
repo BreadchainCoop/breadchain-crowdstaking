@@ -1,18 +1,18 @@
-import { chain, configureChains } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+import { chain, configureChains } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
 
 import {
   hardhatChains,
   hardhatProvider,
   hardhatWebSocketProvider,
-} from "../../.storybook/decorators";
+} from '../../.storybook/decorators';
 
-import { IViteMode } from "../main";
+import { IViteMode } from '../main';
 
 const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
 
@@ -20,12 +20,12 @@ const supportedChains = [chain.polygonMumbai, chain.polygon];
 
 const { chains, provider, webSocketProvider } = configureChains(
   supportedChains,
-  [alchemyProvider({ apiKey }), publicProvider()]
+  [alchemyProvider({ apiKey }), publicProvider()],
 );
 
 export const getClient = (mode: IViteMode) => {
   switch (mode) {
-    case "production":
+    case 'production':
       return {
         autoConnect: false,
         connectors: [
@@ -39,7 +39,7 @@ export const getClient = (mode: IViteMode) => {
           new CoinbaseWalletConnector({
             chains,
             options: {
-              appName: "wagmi",
+              appName: 'wagmi',
             },
           }),
           new WalletConnectConnector({
@@ -51,7 +51,7 @@ export const getClient = (mode: IViteMode) => {
           new InjectedConnector({
             chains,
             options: {
-              name: "Injected",
+              name: 'Injected',
               shimDisconnect: true,
             },
           }),
@@ -60,7 +60,7 @@ export const getClient = (mode: IViteMode) => {
         webSocketProvider,
       };
 
-    case "development":
+    case 'development':
       return {
         autoConnect: false,
         connectors: [
@@ -74,14 +74,14 @@ export const getClient = (mode: IViteMode) => {
           new InjectedConnector({
             chains: hardhatChains,
             options: {
-              name: "Injected",
+              name: 'Injected',
               shimDisconnect: true,
             },
           }),
           new CoinbaseWalletConnector({
             chains: hardhatChains,
             options: {
-              appName: "wagmi",
+              appName: 'wagmi',
             },
           }),
           new WalletConnectConnector({
@@ -94,7 +94,7 @@ export const getClient = (mode: IViteMode) => {
         provider: hardhatProvider,
         webSocketProvider: hardhatWebSocketProvider,
       };
-    case "testing":
+    case 'testing':
       return {
         autoConnect: false,
         connectors: [
@@ -108,14 +108,14 @@ export const getClient = (mode: IViteMode) => {
           new InjectedConnector({
             chains: hardhatChains,
             options: {
-              name: "Injected",
+              name: 'Injected',
               shimDisconnect: true,
             },
           }),
           new CoinbaseWalletConnector({
             chains: hardhatChains,
             options: {
-              appName: "wagmi",
+              appName: 'wagmi',
             },
           }),
           new WalletConnectConnector({
@@ -129,6 +129,8 @@ export const getClient = (mode: IViteMode) => {
         webSocketProvider: hardhatWebSocketProvider,
       };
     default:
-      throw new Error("no client config available for NODE_ENV");
+      throw new Error('no client config available for NODE_ENV');
   }
 };
+
+export default getClient;

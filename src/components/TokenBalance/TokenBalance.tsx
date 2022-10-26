@@ -1,43 +1,63 @@
-import Elipsis from "../Elipsis/Elipsis";
-import { formatEther } from "ethers/lib/utils";
-import { UseTokenBalanceResult } from "../../hooks/useTokenBalance";
+import { formatEther } from 'ethers/lib/utils';
+import Elipsis from '../Elipsis/Elipsis';
+import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
 
-interface TokenBalanceOpts {
-  bigNumberFormat?: boolean;
-}
+// interface TokenBalanceOpts {
+//   bigNumberFormat: boolean;
+// }
 
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
   <>
-    Balance: <Elipsis></Elipsis>
+    Balance:
+    {' '}
+    <Elipsis />
   </>
 );
 
-const formatter = new Intl.NumberFormat("en-US", {
+const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   minimumIntegerDigits: 1,
   useGrouping: false,
 });
 
-export const TokenBalance: React.FC<React.PropsWithChildren<UseTokenBalanceResult & TokenBalanceOpts>> = (props) => {
-  const { value, status, error, bigNumberFormat } = props;
+// UseTokenBalanceResult & TokenBalanceOpts
 
-  let displayedValue = "Unknown";
+export function TokenBalance(props: {
+  value: UseTokenBalanceResult['value']
+  status: UseTokenBalanceResult['status']
+  error: UseTokenBalanceResult['error']
+}) {
+  const {
+    value, status, error,
+  } = props;
+
+  let displayedValue = 'Unknown';
   if (value) {
-    displayedValue = bigNumberFormat
-      ? value.toString()
-      : formatter.format(parseFloat(formatEther(value.toString())));
+    displayedValue = formatter.format(parseFloat(formatEther(value.toString())));
   }
 
   switch (status) {
-    case "success":
-      return <>Balance: {displayedValue}</>;
-    case "loading":
+    case 'success':
+      return (
+        <>
+          Balance:
+          {displayedValue}
+        </>
+      );
+    case 'loading':
       return LOADING_BALANCE;
-    case "error":
-      return <>Balance: {error}</>;
-    case "idle":
+    case 'error':
+      return (
+        <>
+          Balance:
+          {error}
+        </>
+      );
+    case 'idle':
     default:
       return UNKNOWN_BALANCE;
   }
-};
+}
+
+export default TokenBalance;

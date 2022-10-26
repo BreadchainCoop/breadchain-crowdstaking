@@ -1,11 +1,11 @@
-import { ethers } from "ethers";
-import { BaseProvider } from "@ethersproject/providers";
+import { ethers } from 'ethers';
+import { BaseProvider } from '@ethersproject/providers';
 
-import BREADabi from "../BreadPolygon.json";
-import config from "../config";
+import BREADabi from '../BreadPolygon.json';
+import config from '../config';
 
 export const getBreadSupply = async (
-  provider: BaseProvider
+  provider: BaseProvider,
 ): Promise<null | {
   totalSupply: string;
 }> => {
@@ -14,7 +14,7 @@ export const getBreadSupply = async (
   const BREADcontract = new ethers.Contract(
     BREAD.address,
     BREADabi.abi,
-    provider
+    provider,
   );
 
   let totalSupply = await BREADcontract.totalSupply();

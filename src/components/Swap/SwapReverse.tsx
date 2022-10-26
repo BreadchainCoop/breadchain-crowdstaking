@@ -1,14 +1,15 @@
-import React from "react";
+import React from 'react';
 
-type Props = {
+type TProps = {
   onClick: () => void;
 };
 
-const SwapReverse: React.FC<React.PropsWithChildren<Props>> = (props) => {
+function SwapReverse({ onClick }: TProps) {
   return (
     <button
+      type="button"
       className="inline-block my-4 p-3 rounded-full bg-breadgray-100 text-neutral-600 hover:text-neutral-500"
-      {...props}
+      onClick={onClick}
     >
       <svg className="w-7 h-7" fill="none" viewBox="0 0 123 105">
         <path className="fill-current" d="M37 0h50v60H37z" />
@@ -19,6 +20,6 @@ const SwapReverse: React.FC<React.PropsWithChildren<Props>> = (props) => {
       </svg>
     </button>
   );
-};
+}
 
 export default SwapReverse;

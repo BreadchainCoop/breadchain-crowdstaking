@@ -1,33 +1,35 @@
-import React from "react";
-import { useDisconnect, useNetwork } from "wagmi";
+import React, { ReactNode } from 'react';
+import { useDisconnect, useNetwork } from 'wagmi';
 
-import Button from "../Button";
-import { IconContainer, NetworkIcon } from "../Icons";
+import Button from '../Button';
+import { IconContainer, NetworkIcon } from '../Icons';
 
-export const Container: React.FC<React.PropsWithChildren<unknown>> = (
-  props
-) => {
+export function Container(
+  { children }: { children: ReactNode },
+) {
   return (
     <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
-      {props.children}
+      {children}
     </section>
   );
-};
+}
 
-export const Row: React.FC<React.PropsWithChildren<unknown>> = ({
+export function Row({
   children,
-}) => (
-  <span className="text-xs text-center flex justify-center md:justify-end items-center gap-4">
-    {children}
-  </span>
-);
+}: { children: ReactNode }) {
+  return (
+    <span className="text-xs text-center flex justify-center md:justify-end items-center gap-4">
+      {children}
+    </span>
+  );
+}
 
-export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
+export function Network() {
   const { chain: activeChain } = useNetwork();
 
   const { disconnectAsync } = useDisconnect();
 
-  if (!activeChain) return <></>;
+  if (!activeChain) return null;
 
   return (
     <Row>
@@ -35,7 +37,7 @@ export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
         <NetworkIcon />
       </IconContainer>
       <span>
-        {activeChain.unsupported && "Unsupported network: "}
+        {activeChain.unsupported && 'Unsupported network: '}
         {activeChain.name}
       </span>
 
@@ -44,11 +46,9 @@ export const Network: React.FC<React.PropsWithChildren<unknown>> = () => {
       </Button>
     </Row>
   );
-};
+}
 
-export const Address: React.FC<React.PropsWithChildren<unknown>> = (props) => {
-  const { children } = props;
-
+export function Address({ children }: { children: ReactNode }) {
   return (
     <Row>
       <span className="text-xs w-full flex items-center pt-0.5 justify-center md:justify-start truncate text-ellipsis">
@@ -56,4 +56,4 @@ export const Address: React.FC<React.PropsWithChildren<unknown>> = (props) => {
       </span>
     </Row>
   );
-};
+}
