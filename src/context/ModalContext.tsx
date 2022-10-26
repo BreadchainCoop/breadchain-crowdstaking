@@ -43,7 +43,7 @@ const ModalContext = createContext<
   | undefined
 >(undefined);
 
-function ModalReducer(state: TModalState, action: TModalAction) {
+const modalReducer = (state: TModalState, action: TModalAction): TModalState => {
   const { type: actionType } = action;
   switch (actionType) {
     case 'SET_MODAL':
@@ -54,8 +54,10 @@ function ModalReducer(state: TModalState, action: TModalAction) {
       return {
         type: ModalType,
         title,
+        status: 'LOCKED',
       };
     case 'UNLOCK_MODAL':
+      if (state === null) throw new Error('modal not set');
       return {
         ...state,
         status: 'UNLOCKED',
@@ -65,14 +67,14 @@ function ModalReducer(state: TModalState, action: TModalAction) {
     default:
       return state;
   }
-}
+};
 
 interface IModalProviderProps {
   children: ReactNode;
 }
 
 function ModalProvider({ children }: IModalProviderProps) {
-  const [state, dispatch] = useReducer(ModalReducer, null);
+  const [state, dispatch] = useReducer(modalReducer, null);
 
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
