@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 
-import { useNetwork, useProvider, useSigner } from 'wagmi';
 import BREADabi from '../BreadPolygon.json';
 import config from '../config';
 

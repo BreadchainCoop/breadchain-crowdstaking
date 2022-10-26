@@ -4,10 +4,10 @@ import Button from '../Button';
 function ConnectWalletButton() {
   const { connector: activeConnector, isConnected } = useAccount();
   const {
-    connect, connectors, error, isLoading, pendingConnector,
+    connect, connectors, error,
   } = useConnect();
 
-  if (!!activeConnector && isConnected) return <></>;
+  if (!!activeConnector && isConnected) return <>Error!</>;
 
   return (
     <div className="mt-12">

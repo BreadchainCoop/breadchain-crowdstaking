@@ -1,9 +1,9 @@
 import { useNetwork } from 'wagmi';
 import config from '../config';
 
-export const watchAsset = async (tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE') => {
+export const watchAsset = async (tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE'): Promise<void> => {
   const { chain: activeChain } = useNetwork();
-  if (!activeChain || activeChain.unsupported) return null;
+  if (!activeChain || activeChain.unsupported) return;
 
   const { ethereum } = window as any;
   const { address, symbol, decimals } = config[activeChain.id][tokenKey];
@@ -20,3 +20,5 @@ export const watchAsset = async (tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE') => {
     },
   });
 };
+
+export default watchAsset;

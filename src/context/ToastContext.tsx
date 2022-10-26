@@ -1,4 +1,6 @@
-import { createContext, useContext, useReducer } from 'react';
+import {
+  createContext, ReactNode, useContext, useMemo, useReducer,
+} from 'react';
 
 export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
 
@@ -19,6 +21,7 @@ export type TToastAction =
       type: 'CLEAR_TOAST';
     };
 
+/* eslint-disable-next-line no-unused-vars */
 export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
@@ -33,6 +36,7 @@ const toastReducer = (state: TToast, action: TToastAction) => {
   const { type: actionType } = action;
   switch (actionType) {
     case 'SET_TOAST':
+      /* eslint-disable-next-line no-case-declarations */
       const {
         payload: { type: toastType, message },
       } = action;
@@ -48,13 +52,13 @@ const toastReducer = (state: TToast, action: TToastAction) => {
 };
 
 interface IToastProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 function ToastProvider({ children }: IToastProviderProps) {
   const [state, dispatch] = useReducer(toastReducer, null);
 
-  const value = { state, dispatch };
+  const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
   return (
     <ToastContext.Provider value={value}>{children}</ToastContext.Provider>

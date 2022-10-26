@@ -24,6 +24,7 @@ module.exports = {
     },
   },
   rules: {
+    indent: ['error', 2, { SwitchCase: 1 }],
     'react/react-in-jsx-scope': 'off',
     'linebreak-style': 0,
     'react/jsx-filename-extension': 0,

@@ -21,6 +21,10 @@ export default {
   decorators: [MockWagmiDecorator(demoWallet), ReactRouterDecorator],
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = () => <Header />;
+const Template: ComponentStory<typeof Header> = function HeaderWrapper() {
+  return (
+    <Header />
+  );
+};
 
 export const Default = Template.bind({});

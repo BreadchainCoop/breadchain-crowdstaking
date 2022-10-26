@@ -1,42 +1,47 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface IDesktopNavLinkProps {
+
   to: string;
   isCurrentPage: boolean;
+  children: ReactNode
 }
 
-const DesktopNavLink: React.FC<React.PropsWithChildren<IDesktopNavLinkProps>> = (props) => (
-  <Link
-    className={
-        props.isCurrentPage
+function DesktopNavLink({ isCurrentPage, to, children }: IDesktopNavLinkProps) {
+  return (
+    <Link
+      className={
+        isCurrentPage
           ? 'px-5 text-sm text-neutral-200 hover:text-neutral-200'
           : 'px-5 text-sm text-neutral-400 hover:text-neutral-200'
       }
-    to={props.to}
-  >
-    {props.children}
-  </Link>
-);
-
+      to={to}
+    >
+      {children}
+    </Link>
+  );
+}
 interface IDesktopNavExternalLinkProps {
   href: string;
+  children: ReactNode
 }
 
-const DesktopNavExternalLink: React.FC<React.PropsWithChildren<IDesktopNavExternalLinkProps>> = (
-  props,
-) => (
-  <a
-    href={props.href}
-    rel="noopener noreferrer nofollow"
-    target="_blank"
-    className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
-  >
-    {props.children}
-  </a>
-);
-
-const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
+function DesktopNavExternalLink(
+  { href, children }: IDesktopNavExternalLinkProps,
+) {
+  return (
+    <a
+      href={href}
+      rel="noopener noreferrer nofollow"
+      target="_blank"
+      className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
+    >
+      {children}
+    </a>
+  );
+}
+function DesktopNavigation() {
   const location = useLocation();
   return (
     <nav className="flex-grow hidden md:flex items-center pl-16">
@@ -54,6 +59,6 @@ const DesktopNavigation: React.FC<React.PropsWithChildren<unknown>> = () => {
       </DesktopNavExternalLink>
     </nav>
   );
-};
+}
 
 export default DesktopNavigation;

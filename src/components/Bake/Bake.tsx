@@ -1,11 +1,10 @@
-import React from 'react';
 import { useAccount, useNetwork } from 'wagmi';
 import config from '../../config';
 import * as Main from '../App/ui/Main';
 import ConnectWalletButton from '../ConnectWalletButton';
 import Swap from '../Swap';
 
-export const Bake: React.FC<React.PropsWithChildren<unknown>> = () => {
+export function Bake() {
   const {
     isConnected,
     connector: activeConnector,
@@ -33,6 +32,6 @@ export const Bake: React.FC<React.PropsWithChildren<unknown>> = () => {
       <Swap chainConfig={configuration} accountAddress={accountAddress} />
     </Main.Inner>
   );
-};
+}
 
 export default Bake;

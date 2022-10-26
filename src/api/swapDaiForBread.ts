@@ -1,4 +1,6 @@
-import { BigNumberish, Contract, Signer } from 'ethers';
+import {
+  Contract, Signer,
+} from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import store from '../store';
 import {
@@ -13,22 +15,21 @@ import { IProviderRpcError } from '../metamaskErrorType';
 
 export const swapDaiForBread = async (
   signer: Signer,
-  amount: BigNumberish,
+  amount: string,
   breadAddress: string,
   receiverAddress: string,
   dispatch: typeof store.dispatch,
   dispatchToast: TToastDispatch,
   resetSwapState: () => void,
 ) => {
-  if (typeof amount === 'number') amount = parseEther(amount.toString());
-  if (typeof amount === 'string') amount = parseEther(amount);
+  const parsedAmount = parseEther(amount);
 
   const bread = new Contract(breadAddress, BreadABI, signer);
 
   let txn;
 
   try {
-    txn = await bread.mint(amount, receiverAddress);
+    txn = await bread.mint(parsedAmount, receiverAddress);
   } catch (err) {
     const { message } = err as IProviderRpcError;
     dispatchToast({
@@ -46,8 +47,6 @@ export const swapDaiForBread = async (
   try {
     await txn.wait();
   } catch (err: any) {
-    console.error(err);
-
     dispatchToast({
       type: 'SET_TOAST',
       payload: {
@@ -58,3 +57,5 @@ export const swapDaiForBread = async (
   }
   dispatch(setTransactionComplete());
 };
+
+export default swapDaiForBread;

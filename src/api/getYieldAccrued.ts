@@ -18,7 +18,6 @@ export const getYieldAccrued = async (
   );
 
   const yieldAccrued = await BREADcontract.yieldAccrued();
-  console.log('yieldAccrued raw value: ', yieldAccrued);
 
   const yieldAccruedFormatted = ethers.utils.formatUnits(yieldAccrued);
 

@@ -1,9 +1,8 @@
-import React from 'react';
 import { watchAsset } from '../../api/watchAsset';
 
 import Button from '../Button';
 
-export const AddTokens: React.FC<React.PropsWithChildren<unknown>> = () => {
+export function AddTokens() {
   const handleAddToken = async (token: 'DAI' | 'BREAD') => {
     watchAsset(token);
   };
@@ -21,6 +20,6 @@ export const AddTokens: React.FC<React.PropsWithChildren<unknown>> = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AddTokens;

@@ -1,6 +1,5 @@
 import { useBalance } from 'wagmi';
 import { formatEther } from 'ethers/lib/utils';
-import { performanceConfig } from '../../config.performance';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface INativeBalanceProps {
@@ -20,22 +19,16 @@ const LOADING_BALANCE = (
   </>
 );
 
-const defaultProps: INativeBalanceOpts = {
-  bigNumberFormat: false,
-};
-
 const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   minimumIntegerDigits: 1,
   useGrouping: false,
 });
 
-export const NativeBalance: React.FC<React.PropsWithChildren<INativeBalanceProps & INativeBalanceOpts>> = (props) => {
-  const { addressOrName, bigNumberFormat } = {
-    ...defaultProps,
-    ...props,
-  };
-
+export function NativeBalance({
+  addressOrName,
+  bigNumberFormat,
+}: INativeBalanceProps & INativeBalanceOpts) {
   const { data, status, error } = useBalance({
     addressOrName,
     watch: true,
@@ -69,4 +62,10 @@ export const NativeBalance: React.FC<React.PropsWithChildren<INativeBalanceProps
     default:
       return UNKNOWN_BALANCE;
   }
+}
+
+NativeBalance.defaultProps = {
+  bigNumberFormat: false,
 };
+
+export default NativeBalance;

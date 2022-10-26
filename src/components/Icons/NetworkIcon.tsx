@@ -5,3 +5,5 @@ export function NetworkIcon() {
     </svg>
   );
 }
+
+export default NetworkIcon;

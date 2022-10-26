@@ -1,5 +1,5 @@
-import Button from '@/components/Button';
-import Elipsis from '@/components/Elipsis';
+import Button from '../Button';
+import Elipsis from '../Elipsis';
 
 interface IProps {
   handleClick: () => void;

@@ -2,14 +2,13 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createClient, WagmiConfig } from 'wagmi';
 
-import './shims.ts';
+import './shims';
 
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import store from './store';
 
 import App from './components/App';
-import ErrorBoundary from './components/ErrorBoundary';
 
 import './css/index.css';
 import { getClient } from './client';
@@ -30,16 +29,14 @@ const root = createRoot(container!); // createRoot(container!) if you use TypeSc
 
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <WagmiConfig client={client}>
-        <ToastProvider>
-          <Provider store={store}>
-            <HashRouter>
-              <App />
-            </HashRouter>
-          </Provider>
-        </ToastProvider>
-      </WagmiConfig>
-    </ErrorBoundary>
+    <WagmiConfig client={client}>
+      <ToastProvider>
+        <Provider store={store}>
+          <HashRouter>
+            <App />
+          </HashRouter>
+        </Provider>
+      </ToastProvider>
+    </WagmiConfig>
   </React.StrictMode>,
 );

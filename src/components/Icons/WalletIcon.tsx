@@ -9,3 +9,5 @@ export function WalletIcon() {
     </svg>
   );
 }
+
+export default WalletIcon;

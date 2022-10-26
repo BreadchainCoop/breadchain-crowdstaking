@@ -4,10 +4,6 @@ interface IToken {
   decimals: number;
 }
 
-export interface IConfig {
-  [chainId: number]: ChainConfiguration;
-}
-
 export interface ChainConfiguration {
   NETWORK_STRING: string;
   ALCHEMY_API_KEY?: string;
@@ -18,6 +14,11 @@ export interface ChainConfiguration {
   DERIVATIVE: IToken;
   BREAD: IToken;
 }
+
+export interface IConfig {
+  [chainId: number]: ChainConfiguration;
+}
+
 const config: IConfig = {
   137: {
     NETWORK_STRING: 'polygon',

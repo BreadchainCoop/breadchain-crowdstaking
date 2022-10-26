@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, MouseEvent, ReactNode } from 'react';
+import { classNames } from '../../util';
 
-import { classNames } from '@/util';
+// import { classNames } from '@/util';
 
 interface IProps {
-  onClick: (event: React.MouseEvent) => void;
+  /* eslint-disable-next-line no-unused-vars */
+  onClick: (event: MouseEvent) => void;
   disabled?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: 'small' | 'regular' | 'large';
   fullWidth?: boolean;
   dataTest?: string;
@@ -37,6 +39,7 @@ function Button({
 
   return (
     <button
+      type="button"
       className={classNames(
         'relative flex items-center justify-center button-gradient button-shadow bg-opacity-85 text-neutral-900 hover:bg-opacity-100',
         EVariants[variant],
@@ -54,13 +57,19 @@ function Button({
       <div className="absolute w-full h-1 top-0 left-0 right-0 transform -translate-y-1 bg-button-border" />
       <div
         className={
-          `absolute w-full h-1 bottom-0 left-0 right-0 transform translate-y-1 bg-button-border${
-            mouseIsDown ? ' hidden' : ''}`
+          `absolute w-full h-1 bottom-0 left-0 right-0 transform translate-y-1 bg-button-border${mouseIsDown ? ' hidden' : ''}`
         }
       />
       {children}
     </button>
   );
 }
+
+Button.defaultProps = {
+  disabled: false,
+  variant: 'regular',
+  fullWidth: false,
+  dataTest: null,
+};
 
 export default Button;

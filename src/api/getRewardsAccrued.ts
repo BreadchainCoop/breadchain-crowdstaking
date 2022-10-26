@@ -16,7 +16,6 @@ export const getRewardsAccrued = async (
   );
 
   const rewardsAccrued = await BREADcontract.rewardsAccrued();
-  console.log('rewardsAccrued raw value: ', rewardsAccrued);
 
   return {
     // rewardsAccrued: rewardsAccruedFormatted,

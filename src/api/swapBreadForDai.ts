@@ -1,4 +1,4 @@
-import { BigNumberish, Contract, Signer } from 'ethers';
+import { Contract, Signer } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 import store from '../store';
 import {
@@ -8,24 +8,23 @@ import {
 import { unlockModal } from '../features/modal/modalSlice';
 import { abi as BreadABI } from '../BreadPolygon.json';
 import { IProviderRpcError } from '../metamaskErrorType';
-import { TToastDispatch, useToast } from '../context/ToastContext';
+import { TToastDispatch } from '../context/ToastContext';
 
 export const swapBreadForDai = async (
   signer: Signer,
-  amount: BigNumberish,
+  amount: string,
   breadAddress: string,
   receiverAddress: string,
   dispatch: typeof store.dispatch,
   dispatchToast: TToastDispatch,
   resetSwapState: () => void,
 ) => {
-  if (typeof amount === 'number') amount = parseEther(amount.toString());
-  if (typeof amount === 'string') amount = parseEther(amount);
+  const parsedAmount = parseEther(amount);
 
   const bread = new Contract(breadAddress, BreadABI, signer);
   let txn;
   try {
-    txn = await bread.burn(amount, receiverAddress);
+    txn = await bread.burn(parsedAmount, receiverAddress);
   } catch (err) {
     const { message } = err as IProviderRpcError;
     dispatchToast({
@@ -54,3 +53,5 @@ export const swapBreadForDai = async (
   }
   dispatch(setTransactionComplete());
 };
+
+export default swapBreadForDai;

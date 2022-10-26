@@ -8,7 +8,7 @@ import {
 } from '../../features/modal/modalSlice';
 import { useAppDispatch } from '../../store/hooks';
 
-const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
+function UnsupportedNetwork() {
   const dispatch = useAppDispatch();
 
   const handleSwitchToEthereum = async () => {
@@ -34,7 +34,6 @@ const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
       );
     } catch (err) {
       // !!! handle in ui?
-      console.error('failed switching to ethereum chain!');
       dispatch(closeModal());
     }
   };
@@ -49,6 +48,6 @@ const UnsupportedNetwork: React.FC<React.PropsWithChildren<unknown>> = () => {
       </span>
     </div>
   );
-};
+}
 
 export default UnsupportedNetwork;

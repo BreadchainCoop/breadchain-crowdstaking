@@ -132,3 +132,5 @@ export const getClient = (mode: IViteMode) => {
       throw new Error('no client config available for NODE_ENV');
   }
 };
+
+export default getClient;

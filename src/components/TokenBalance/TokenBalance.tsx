@@ -2,9 +2,9 @@ import { formatEther } from 'ethers/lib/utils';
 import Elipsis from '../Elipsis/Elipsis';
 import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
 
-interface TokenBalanceOpts {
-  bigNumberFormat?: boolean;
-}
+// interface TokenBalanceOpts {
+//   bigNumberFormat: boolean;
+// }
 
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
@@ -21,16 +21,20 @@ const formatter = new Intl.NumberFormat('en-US', {
   useGrouping: false,
 });
 
-export const TokenBalance: React.FC<React.PropsWithChildren<UseTokenBalanceResult & TokenBalanceOpts>> = (props) => {
+// UseTokenBalanceResult & TokenBalanceOpts
+
+export function TokenBalance(props: {
+  value: UseTokenBalanceResult['value']
+  status: UseTokenBalanceResult['status']
+  error: UseTokenBalanceResult['error']
+}) {
   const {
-    value, status, error, bigNumberFormat,
+    value, status, error,
   } = props;
 
   let displayedValue = 'Unknown';
   if (value) {
-    displayedValue = bigNumberFormat
-      ? value.toString()
-      : formatter.format(parseFloat(formatEther(value.toString())));
+    displayedValue = formatter.format(parseFloat(formatEther(value.toString())));
   }
 
   switch (status) {
@@ -54,4 +58,6 @@ export const TokenBalance: React.FC<React.PropsWithChildren<UseTokenBalanceResul
     default:
       return UNKNOWN_BALANCE;
   }
-};
+}
+
+export default TokenBalance;

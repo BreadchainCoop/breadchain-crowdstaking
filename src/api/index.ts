@@ -2,12 +2,12 @@ import { ethers } from 'ethers';
 
 export const requestAccount = async () => {
   const { ethereum } = window as any;
-  return await ethereum.request({ method: 'eth_requestAccounts' });
+  return ethereum.request({ method: 'eth_requestAccounts' });
 };
 
 export const requestPermissions = async () => {
   const { ethereum } = window as any;
-  return await ethereum.request({ method: 'eth_requestPermissions' });
+  return ethereum.request({ method: 'eth_requestPermissions' });
 };
 
 export const getAccount = async () => {

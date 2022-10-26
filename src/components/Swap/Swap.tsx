@@ -11,7 +11,7 @@ import SwapReverse from './SwapReverse';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Transaction from './Transaction';
 import ApproveBreadButton from '../ApproveBreadButton/ApproveBreadButton';
-import { approveBREAD } from '../../api/approveBread';
+import approveBREAD from '../../api/approveBread';
 import Elipsis from '../Elipsis/Elipsis';
 import { sanitizeInputValue } from './swapUtils';
 import { closeModal } from '../../features/modal/modalSlice';
@@ -52,20 +52,17 @@ const initialSwapState: ISwapState = {
   },
 };
 
-const SwapUI: React.FC<
-  React.PropsWithChildren<{
-    chainConfig: ChainConfiguration;
-    accountAddress: string;
-  }>
-> = (props) => {
-  const { chainConfig, accountAddress } = props;
+function SwapUI({ chainConfig, accountAddress }: {
+  chainConfig: ChainConfiguration;
+  accountAddress: string;
+}) {
   const [swapState, setSwapState] = React.useState<ISwapState>(initialSwapState);
 
   const dispatch = useAppDispatch();
   const { DAI, BREAD } = chainConfig;
 
   const { transaction } = useAppSelector((state) => state);
-  const { state: toast, dispatch: dispatchToast } = useToast();
+  const { dispatch: dispatchToast } = useToast();
   const { isConnecting } = useAccount();
 
   const {
@@ -99,12 +96,11 @@ const SwapUI: React.FC<
   const outputTokenReadings = swapState.to.name === 'BREAD' ? breadBalanceReadings : daiBalanceReadings;
 
   if (isLoading) return <Elipsis />;
-  if (error) return <>{error}</>;
+  if (error) return <>Error!</>;
   if (!accountAddress || !signer) return <>Could not connect to wallet</>;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    console.log({ value });
 
     const sanitizedValue = sanitizeInputValue(value);
     const bnValue = parseEther(sanitizedValue || '0');
@@ -148,7 +144,7 @@ const SwapUI: React.FC<
   };
 
   const handleSwapDaiForBread = async () => {
-    if (swapState.from.name != 'DAI') return;
+    if (swapState.from.name !== 'DAI') return;
 
     swapDaiForBread(
       signer,
@@ -172,7 +168,7 @@ const SwapUI: React.FC<
   };
 
   const handleSwapBreadForDai = async () => {
-    if (swapState.from.name != 'BREAD') return;
+    if (swapState.from.name !== 'BREAD') return;
 
     swapBreadForDai(
       signer,
@@ -207,18 +203,22 @@ const SwapUI: React.FC<
       && daiAllowanceReadings.value?.gte(swapState.from.bnValue));
 
   const showApprovalButton = swapState.from.name === 'DAI'
-    && transaction.status != ETransactionStatus.PENDING
+    && transaction.status !== ETransactionStatus.PENDING
     && (daiAllowanceReadings.value?.lt(swapState.from.bnValue)
       || daiAllowanceReadings.value?.eq(0));
 
   return (
     <>
-      <TokenDisplay>
+      <TokenDisplay.Container>
         {swapState ? (
           <>
             <TokenDisplay.Header>
               <TokenDisplay.BalanceButton onClick={handleBalanceClick}>
-                <TokenBalance {...inputTokenReadings} />
+                <TokenBalance
+                  value={inputTokenReadings.value}
+                  status={inputTokenReadings.status}
+                  error={inputTokenReadings.error}
+                />
               </TokenDisplay.BalanceButton>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
@@ -232,16 +232,20 @@ const SwapUI: React.FC<
             </TokenDisplay.Content>
           </>
         ) : (
-          <span>"No SwapState!"</span>
+          <span>No SwapState</span>
         )}
-      </TokenDisplay>
+      </TokenDisplay.Container>
       <SwapReverse onClick={handleSwapReverse} />
-      <TokenDisplay>
+      <TokenDisplay.Container>
         {swapState && (
           <>
             <TokenDisplay.Header>
               <TokenDisplay.Balance>
-                <TokenBalance {...outputTokenReadings} />
+                <TokenBalance
+                  value={outputTokenReadings.value}
+                  status={outputTokenReadings.status}
+                  error={inputTokenReadings.error}
+                />
               </TokenDisplay.Balance>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
@@ -253,7 +257,7 @@ const SwapUI: React.FC<
             </TokenDisplay.Content>
           </>
         )}
-      </TokenDisplay>
+      </TokenDisplay.Container>
       <div className="w-full px-4 pt-8 pb-12 text-xs">
         Matic
         {' '}
@@ -264,7 +268,7 @@ const SwapUI: React.FC<
         <Button
           onClick={handleSubmit}
           disabled={
-            transaction.status == ETransactionStatus.PENDING
+            transaction.status === ETransactionStatus.PENDING
             || parseFloat(swapState.from.value) === 0
             || swapState.from.value === ''
             || daiAllowanceReadings.value?.lt(swapState.from.bnValue)
@@ -278,7 +282,7 @@ const SwapUI: React.FC<
       {showApprovalButton && (
         <div className="py-12 text-xs text-neutral-300">
           <div className="pb-6 text-xs text-neutral-300">
-            You'll need to approve the BREAD contract to mint BREAD
+            You&apos;ll need to approve the BREAD contract to mint BREAD
           </div>
           <ApproveBreadButton
             handleClick={handleApproveBREAD}
@@ -297,6 +301,6 @@ const SwapUI: React.FC<
       {transaction.hash && <Transaction />}
     </>
   );
-};
+}
 
 export default SwapUI;
