@@ -4,7 +4,7 @@ import {
 
 export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
 
-export type TToast = null | {
+export type TToastState = null | {
   type: TToastType;
   message: string;
 };
@@ -26,13 +26,13 @@ export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
   | {
-    state: TToast | null;
+    state: TToastState;
     dispatch: TToastDispatch;
   }
   | undefined
 >(undefined);
 
-const toastReducer = (state: TToast, action: TToastAction) => {
+const toastReducer = (state: TToastState, action: TToastAction) => {
   const { type: actionType } = action;
   switch (actionType) {
     case 'SET_TOAST':
