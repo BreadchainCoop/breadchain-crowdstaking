@@ -11,24 +11,24 @@ export type TToast = null | {
 
 export type TToastAction =
   | {
-      type: 'SET_TOAST';
-      payload: {
-        type: TToastType;
-        message: string;
-      };
-    }
-  | {
-      type: 'CLEAR_TOAST';
+    type: 'SET_TOAST';
+    payload: {
+      type: TToastType;
+      message: string;
     };
+  }
+  | {
+    type: 'CLEAR_TOAST';
+  };
 
 /* eslint-disable-next-line no-unused-vars */
 export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
   | {
-      state: TToast | null;
-      dispatch: TToastDispatch;
-    }
+    state: TToast | null;
+    dispatch: TToastDispatch;
+  }
   | undefined
 >(undefined);
 
