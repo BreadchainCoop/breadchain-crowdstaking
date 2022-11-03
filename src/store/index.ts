@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import modalSlice from '../features/modal/modalSlice';
 import transactionSlice from '../features/transaction/transactionSlice';
 
 const store = configureStore({
   reducer: {
-    modal: modalSlice,
     transaction: transactionSlice,
   },
 });
