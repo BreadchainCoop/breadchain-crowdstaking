@@ -4,35 +4,35 @@ import {
 
 export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
 
-export type TToast = null | {
+export type TToastState = null | {
   type: TToastType;
   message: string;
 };
 
 export type TToastAction =
   | {
-      type: 'SET_TOAST';
-      payload: {
-        type: TToastType;
-        message: string;
-      };
-    }
-  | {
-      type: 'CLEAR_TOAST';
+    type: 'SET_TOAST';
+    payload: {
+      type: TToastType;
+      message: string;
     };
+  }
+  | {
+    type: 'CLEAR_TOAST';
+  };
 
 /* eslint-disable-next-line no-unused-vars */
 export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
   | {
-      state: TToast | null;
-      dispatch: TToastDispatch;
-    }
+    state: TToastState;
+    dispatch: TToastDispatch;
+  }
   | undefined
 >(undefined);
 
-const toastReducer = (state: TToast, action: TToastAction) => {
+const toastReducer = (state: TToastState, action: TToastAction) => {
   const { type: actionType } = action;
   switch (actionType) {
     case 'SET_TOAST':

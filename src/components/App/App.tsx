@@ -6,26 +6,24 @@ import * as Main from './ui/Main';
 import Footer from '../Footer';
 import Modal from '../Modal';
 
-import { useAppSelector } from '../../store/hooks';
-
 import Toast from '../Toast/Toast';
 import { Pantry } from '../Pantry';
 import Index from '../../routes/Index';
 import About from '../../routes/Info';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import { useToast } from '../../context/ToastContext';
+import { useModal } from '../../context/ModalContext';
 
 function App() {
-  const appState = useAppSelector((state) => state);
-
-  const { modal } = appState;
+  const { state: modal } = useModal();
 
   const { state: toast } = useToast();
 
   return (
     <AppContainer>
-      {modal.type !== null && <Modal modal={modal} />}
+      {modal && <Modal type={modal.type} title={modal.title} status={modal.status} />}
       {toast && <Toast type={toast.type} message={toast.message} />}
+
       <Header />
 
       <SiteTitle />

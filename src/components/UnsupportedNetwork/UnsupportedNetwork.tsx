@@ -1,22 +1,14 @@
-import React from 'react';
-
 import Button from '../Button';
-import {
-  openModal,
-  closeModal,
-  EModalType,
-} from '../../features/modal/modalSlice';
-import { useAppDispatch } from '../../store/hooks';
+
+import { useModal } from '../../context/ModalContext';
 
 function UnsupportedNetwork() {
-  const dispatch = useAppDispatch();
+  const { dispatch: modalDispatch } = useModal();
 
   const handleSwitchToEthereum = async () => {
     // const { appState, dispatch } = useAppState();
     try {
-      dispatch(
-        openModal({ type: EModalType.CHANGE_NETWORK, title: 'Switch Network' }),
-      );
+      modalDispatch({ type: 'SET_MODAL', payload: { type: 'CHANGE_NETWORK', title: 'Switch Network' } });
       const { ethereum } = window as any;
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -26,15 +18,10 @@ function UnsupportedNetwork() {
           },
         ],
       });
-      dispatch(
-        openModal({
-          type: EModalType.CHANGING_NETWORK,
-          title: 'Switching Network...',
-        }),
-      );
+      modalDispatch({ type: 'SET_MODAL', payload: { type: 'CHANGING_NETWORK', title: 'Switching Network...' } });
     } catch (err) {
-      // !!! handle in ui?
-      dispatch(closeModal());
+      // !!! error not handled
+      modalDispatch({ type: 'CLEAR_MODAL' });
     }
   };
 
