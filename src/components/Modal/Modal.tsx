@@ -1,30 +1,29 @@
-import React from 'react';
-import {
-  closeModal,
-  EModalStatus,
-  EModalType,
-  IModalState,
-} from '../../features/modal/modalSlice';
-import { useAppDispatch } from '../../store/hooks';
+import { TModalStatus, TModalType, useModal } from '../../context/ModalContext';
+
 import Elipsis from '../Elipsis/Elipsis';
 import AddTokens from './AddTokens';
-import * as Modal from './ui';
+import {
+  Container, Inner, Heading, Message,
+} from './ui';
 
 type TProps = {
-  modal: IModalState;
+  type: TModalType,
+  title: string,
+  status: TModalStatus
 };
 
-function ShowModal({ modal }: TProps) {
-  const dispatch = useAppDispatch();
+function Modal({ type, title, status }: TProps) {
+  const { dispatch: modalDispatch } = useModal();
+
   const handleCloseModal = () => {
-    dispatch(closeModal());
+    modalDispatch({ type: 'CLEAR_MODAL' });
   };
-  switch (modal.type) {
-    case EModalType.MINTING:
+  switch (type) {
+    case 'MINTING':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            {modal.status === EModalStatus.UNLOCKED && (
+        <Container>
+          <Inner>
+            {status === 'UNLOCKED' && (
               <button
                 type="button"
                 className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
@@ -33,28 +32,28 @@ function ShowModal({ modal }: TProps) {
                 X
               </button>
             )}
-            <Modal.Heading>{modal.title}</Modal.Heading>
-            {modal.status === EModalStatus.LOCKED && (
-              <Modal.Message>
+            <Heading>{title}</Heading>
+            {status === 'LOCKED' && (
+              <Message>
                 Awaiting user response
                 <Elipsis />
-              </Modal.Message>
+              </Message>
             )}
 
-            {modal.status === EModalStatus.UNLOCKED && (
+            {status === 'UNLOCKED' && (
               <>
-                <Modal.Message>Transaction in progress!</Modal.Message>
+                <Message>Transaction in progress!</Message>
                 <AddTokens />
               </>
             )}
-          </Modal.Inner>
-        </Modal.Container>
+          </Inner>
+        </Container>
       );
-    case EModalType.BURNING:
+    case 'BURNING':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            {modal.status === EModalStatus.UNLOCKED && (
+        <Container>
+          <Inner>
+            {status === 'UNLOCKED' && (
               <button
                 type="button"
                 className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
@@ -63,71 +62,71 @@ function ShowModal({ modal }: TProps) {
                 X
               </button>
             )}
-            <Modal.Heading>{modal.title}</Modal.Heading>
-            {modal.status === EModalStatus.LOCKED && (
-              <Modal.Message>
+            <Heading>{title}</Heading>
+            {status === 'LOCKED' && (
+              <Message>
                 Awaiting user response
                 <Elipsis />
-              </Modal.Message>
+              </Message>
             )}
 
-            {modal.status === EModalStatus.UNLOCKED && (
+            {status === 'UNLOCKED' && (
               <>
-                <Modal.Message>Transaction in progress!</Modal.Message>
+                <Message>Transaction in progress!</Message>
                 <AddTokens />
               </>
             )}
-          </Modal.Inner>
-        </Modal.Container>
+          </Inner>
+        </Container>
       );
-    case EModalType.CONNECT_WALLET:
+    case 'CONNECT_WALLET':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            <Modal.Heading>Connecting Wallet</Modal.Heading>
-            <Modal.Message>
+        <Container>
+          <Inner>
+            <Heading>Connecting Wallet</Heading>
+            <Message>
               Awaiting user response
               <Elipsis />
-            </Modal.Message>
-          </Modal.Inner>
-        </Modal.Container>
+            </Message>
+          </Inner>
+        </Container>
       );
-    case EModalType.APPROVAL:
+    case 'APPROVAL':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            <Modal.Heading>Approving Contract</Modal.Heading>
-            <Modal.Message>
+        <Container>
+          <Inner>
+            <Heading>Approving Contract</Heading>
+            <Message>
               Awaiting user response
               <Elipsis />
-            </Modal.Message>
-          </Modal.Inner>
-        </Modal.Container>
+            </Message>
+          </Inner>
+        </Container>
       );
-    case EModalType.CHANGE_NETWORK:
+    case 'CHANGE_NETWORK':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            <Modal.Heading>Changing Network</Modal.Heading>
-            <Modal.Message>
+        <Container>
+          <Inner>
+            <Heading>Changing Network</Heading>
+            <Message>
               Awaiting user response
               <Elipsis />
-            </Modal.Message>
-          </Modal.Inner>
-        </Modal.Container>
+            </Message>
+          </Inner>
+        </Container>
       );
-    case EModalType.CHANGING_NETWORK:
+    case 'CHANGING_NETWORK':
       return (
-        <Modal.Container>
-          <Modal.Inner>
-            <Modal.Heading>Changing Network...</Modal.Heading>
-            <Modal.Message>please wait a moment!</Modal.Message>
-          </Modal.Inner>
-        </Modal.Container>
+        <Container>
+          <Inner>
+            <Heading>Changing Network...</Heading>
+            <Message>please wait a moment!</Message>
+          </Inner>
+        </Container>
       );
     default:
       throw new Error('modal type invalid');
   }
 }
 
-export default ShowModal;
+export default Modal;

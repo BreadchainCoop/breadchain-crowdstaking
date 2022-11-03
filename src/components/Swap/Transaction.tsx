@@ -22,12 +22,15 @@ function Transaction() {
     case 80001:
       endpoint = 'https://mumbai.polygonscan.com';
       break;
+    case 1337:
+      endpoint = 'http://localhost:8545';
+      break;
     default:
       throw new Error('NO ENDPOINT SET');
   }
 
   return (
-    <div className="mt-8 text-xs">
+    <div className="w-full mt-8 text-xs">
       <div>
         <a
           className="break-all underline"

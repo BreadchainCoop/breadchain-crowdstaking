@@ -7,11 +7,11 @@ import {
   setTransactionComplete,
   setTransactionPending,
 } from '../features/transaction/transactionSlice';
-import { unlockModal } from '../features/modal/modalSlice';
 
 import { abi as BreadABI } from '../BreadPolygon.json';
 import { TToastDispatch } from '../context/ToastContext';
 import { IProviderRpcError } from '../metamaskErrorType';
+import { TModalDispatch } from '../context/ModalContext';
 
 export const swapDaiForBread = async (
   signer: Signer,
@@ -20,6 +20,7 @@ export const swapDaiForBread = async (
   receiverAddress: string,
   dispatch: typeof store.dispatch,
   dispatchToast: TToastDispatch,
+  dispatchModal: TModalDispatch,
   resetSwapState: () => void,
 ) => {
   const parsedAmount = parseEther(amount);
@@ -42,7 +43,7 @@ export const swapDaiForBread = async (
   }
 
   dispatch(setTransactionPending(txn.hash));
-  dispatch(unlockModal());
+  dispatchModal({ type: 'UNLOCK_MODAL' });
   resetSwapState();
   try {
     await txn.wait();

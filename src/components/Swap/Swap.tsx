@@ -14,7 +14,6 @@ import ApproveBreadButton from '../ApproveBreadButton/ApproveBreadButton';
 import approveBREAD from '../../api/approveBread';
 import Elipsis from '../Elipsis/Elipsis';
 import { sanitizeInputValue } from './swapUtils';
-import { closeModal } from '../../features/modal/modalSlice';
 import Button from '../Button';
 import { ChainConfiguration } from '../../config';
 import TokenBalance from '../TokenBalance';
@@ -25,6 +24,7 @@ import { ETransactionStatus } from '../../features/transaction/transactionSlice'
 import { swapDaiForBread } from '../../api/swapDaiForBread';
 import { swapBreadForDai } from '../../api/swapBreadForDai';
 import { useToast } from '../../context/ToastContext';
+import { useModal } from '../../context/ModalContext';
 
 interface ISwapState {
   from: {
@@ -63,6 +63,7 @@ function SwapUI({ chainConfig, accountAddress }: {
 
   const { transaction } = useAppSelector((state) => state);
   const { dispatch: dispatchToast } = useToast();
+  const { dispatch: dispatchModal } = useModal();
   const { isConnecting } = useAccount();
 
   const {
@@ -140,6 +141,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       BREAD.address,
       dispatch,
       dispatchToast,
+      dispatchModal,
     );
   };
 
@@ -153,6 +155,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       accountAddress,
       dispatch,
       dispatchToast,
+      dispatchModal,
       resetSwapState,
     ).catch((err: any) => {
       const message = err.data ? err.data.message : err.message;
@@ -163,7 +166,7 @@ function SwapUI({ chainConfig, accountAddress }: {
           message,
         },
       });
-      dispatch(closeModal());
+      dispatchModal({ type: 'CLEAR_MODAL' });
     });
   };
 
@@ -177,6 +180,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       accountAddress,
       dispatch,
       dispatchToast,
+      dispatchModal,
       resetSwapState,
     ).catch((err: any) => {
       const message = err.data ? err.data.message : err.message;
@@ -187,7 +191,7 @@ function SwapUI({ chainConfig, accountAddress }: {
           message,
         },
       });
-      dispatch(closeModal());
+      dispatchModal({ type: 'CLEAR_MODAL' });
     });
   };
 

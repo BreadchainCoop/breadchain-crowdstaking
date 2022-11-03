@@ -13,6 +13,7 @@ import App from './components/App';
 import './css/index.css';
 import { getClient } from './client';
 import { ToastProvider } from './context/ToastContext';
+import { ModalProvider } from './context/ModalContext';
 
 export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 
@@ -31,11 +32,13 @@ root.render(
   <React.StrictMode>
     <WagmiConfig client={client}>
       <ToastProvider>
-        <Provider store={store}>
-          <HashRouter>
-            <App />
-          </HashRouter>
-        </Provider>
+        <ModalProvider>
+          <Provider store={store}>
+            <HashRouter>
+              <App />
+            </HashRouter>
+          </Provider>
+        </ModalProvider>
       </ToastProvider>
     </WagmiConfig>
   </React.StrictMode>,

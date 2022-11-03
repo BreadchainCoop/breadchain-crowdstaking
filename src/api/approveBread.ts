@@ -3,11 +3,6 @@ import { Contract, ethers, Signer } from 'ethers';
 import { IProviderRpcError } from '../metamaskErrorType';
 
 import store from '../store';
-import {
-  closeModal,
-  EModalType,
-  openModal,
-} from '../features/modal/modalSlice';
 
 import {
   setTransactionComplete,
@@ -15,6 +10,7 @@ import {
 } from '../features/transaction/transactionSlice';
 import ERC20ABI from '../ERC20.json';
 import { TToastDispatch } from '../context/ToastContext';
+import { TModalDispatch } from '../context/ModalContext';
 
 export const approveBREAD = async (
   signer: Signer,
@@ -22,6 +18,7 @@ export const approveBREAD = async (
   breadAddress: string,
   dispatch: typeof store.dispatch,
   dispatchToast: TToastDispatch,
+  dispatchModal: TModalDispatch,
 ): Promise<void> => {
   if (!isAddress(breadAddress)) {
     dispatchToast({
@@ -36,9 +33,13 @@ export const approveBREAD = async (
 
   const dai = new Contract(daiAddress, ERC20ABI, signer);
 
-  dispatch(
-    openModal({ type: EModalType.APPROVAL, title: 'Approving BREAD Contract' }),
-  );
+  dispatchModal({
+    type: 'SET_MODAL',
+    payload: {
+      type: 'APPROVAL', title: 'Approving BREAD Contract',
+    },
+  });
+
   let txn;
   try {
     txn = await dai.approve(breadAddress, ethers.constants.MaxUint256);
@@ -51,10 +52,10 @@ export const approveBREAD = async (
         message,
       },
     });
-    dispatch(closeModal());
+    dispatchModal({ type: 'CLEAR_MODAL' });
     return;
   }
-  dispatch(closeModal());
+  dispatchModal({ type: 'CLEAR_MODAL' });
   dispatch(setTransactionPending(txn.hash));
   try {
     await txn.wait();
