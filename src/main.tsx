@@ -4,9 +4,7 @@ import { createClient, WagmiConfig } from 'wagmi';
 
 import './shims';
 
-import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
-import store from './store';
 
 import App from './components/App';
 
@@ -14,6 +12,7 @@ import './css/index.css';
 import { getClient } from './client';
 import { ToastProvider } from './context/ToastContext';
 import { ModalProvider } from './context/ModalContext';
+import { TransactionDisplayProvider } from './context/TransactionDisplayContext';
 
 export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 
@@ -33,11 +32,11 @@ root.render(
     <WagmiConfig client={client}>
       <ToastProvider>
         <ModalProvider>
-          <Provider store={store}>
+          <TransactionDisplayProvider>
             <HashRouter>
               <App />
             </HashRouter>
-          </Provider>
+          </TransactionDisplayProvider>
         </ModalProvider>
       </ToastProvider>
     </WagmiConfig>

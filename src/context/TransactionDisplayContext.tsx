@@ -2,10 +2,10 @@ import {
   createContext, ReactNode, useContext, useMemo, useReducer,
 } from 'react';
 
-export type ETransactionStatus = 'PENDING' | 'COMPLETE'
+export type TTransactionStatus = 'PENDING' | 'COMPLETE'
 
-interface ITransaction {
-  status: ETransactionStatus;
+export interface ITransaction {
+  status: TTransactionStatus;
   hash: string;
 }
 

@@ -1,14 +1,8 @@
-import React from 'react';
 import { useNetwork } from 'wagmi';
-import { ETransactionStatus } from '../../features/transaction/transactionSlice';
-import { useAppSelector } from '../../store/hooks';
+import { ITransaction } from '../../context/TransactionDisplayContext';
 import Elipsis from '../Elipsis/Elipsis';
 
-function Transaction() {
-  const {
-    transaction: { status, hash },
-  } = useAppSelector((state) => state);
-
+function Transaction({ hash, status }: ITransaction) {
   const { chain: activeChain } = useNetwork();
 
   if (!activeChain) return null;
@@ -38,17 +32,17 @@ function Transaction() {
           rel="noopener noreferrer"
           href={`${endpoint}/tx/${hash}`}
         >
-          {status === ETransactionStatus.COMPLETE && hash}
+          {status === 'COMPLETE' && hash}
         </a>
       </div>
       <div className="mt-4">
-        {status === ETransactionStatus.PENDING && (
+        {status === 'PENDING' && (
           <>
             transaction pending
             <Elipsis />
           </>
         )}
-        {status === ETransactionStatus.COMPLETE && 'transaction complete!'}
+        {status === 'COMPLETE' && 'transaction complete!'}
       </div>
     </div>
   );
