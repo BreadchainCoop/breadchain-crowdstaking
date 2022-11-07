@@ -8,7 +8,6 @@ import Input from './Input';
 import Icon from './Icon';
 import SwapReverse from './SwapReverse';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Transaction from './Transaction';
 import ApproveBreadButton from '../ApproveBreadButton/ApproveBreadButton';
 import approveBREAD from '../../api/approveBread';
@@ -20,11 +19,11 @@ import TokenBalance from '../TokenBalance';
 import NativeBalance from '../NativeBalance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import { useTokenAllowance } from '../../hooks/useTokenAllowance';
-import { ETransactionStatus } from '../../features/transaction/transactionSlice';
 import { swapDaiForBread } from '../../api/swapDaiForBread';
 import { swapBreadForDai } from '../../api/swapBreadForDai';
 import { useToast } from '../../context/ToastContext';
 import { useModal } from '../../context/ModalContext';
+import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
 
 interface ISwapState {
   from: {
@@ -58,10 +57,9 @@ function SwapUI({ chainConfig, accountAddress }: {
 }) {
   const [swapState, setSwapState] = React.useState<ISwapState>(initialSwapState);
 
-  const dispatch = useAppDispatch();
   const { DAI, BREAD } = chainConfig;
 
-  const { transaction } = useAppSelector((state) => state);
+  const { state: transaction, dispatch: dispatchTransactionDisplay } = useTransactionDisplay();
   const { dispatch: dispatchToast } = useToast();
   const { dispatch: dispatchModal } = useModal();
   const { isConnecting } = useAccount();
@@ -139,7 +137,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       signer,
       DAI.address,
       BREAD.address,
-      dispatch,
+      dispatchTransactionDisplay,
       dispatchToast,
       dispatchModal,
     );
@@ -153,7 +151,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       swapState.from.value,
       BREAD.address,
       accountAddress,
-      dispatch,
+      dispatchTransactionDisplay,
       dispatchToast,
       dispatchModal,
       resetSwapState,
@@ -178,7 +176,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       swapState.from.value,
       BREAD.address,
       accountAddress,
-      dispatch,
+      dispatchTransactionDisplay,
       dispatchToast,
       dispatchModal,
       resetSwapState,
@@ -207,7 +205,7 @@ function SwapUI({ chainConfig, accountAddress }: {
       && daiAllowanceReadings.value?.gte(swapState.from.bnValue));
 
   const showApprovalButton = swapState.from.name === 'DAI'
-    && transaction.status !== ETransactionStatus.PENDING
+    && transaction?.status !== 'PENDING'
     && (daiAllowanceReadings.value?.lt(swapState.from.bnValue)
       || daiAllowanceReadings.value?.eq(0));
 
@@ -272,7 +270,7 @@ function SwapUI({ chainConfig, accountAddress }: {
         <Button
           onClick={handleSubmit}
           disabled={
-            transaction.status === ETransactionStatus.PENDING
+            transaction?.status === 'PENDING'
             || parseFloat(swapState.from.value) === 0
             || swapState.from.value === ''
             || daiAllowanceReadings.value?.lt(swapState.from.bnValue)
@@ -302,7 +300,7 @@ function SwapUI({ chainConfig, accountAddress }: {
         </div>
       )}
 
-      {transaction.hash && <Transaction />}
+      {transaction && <Transaction status={transaction.status} hash={transaction.hash} />}
     </>
   );
 }

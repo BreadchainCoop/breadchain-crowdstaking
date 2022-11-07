@@ -2,21 +2,16 @@ import { isAddress } from 'ethers/lib/utils';
 import { Contract, ethers, Signer } from 'ethers';
 import { IProviderRpcError } from '../metamaskErrorType';
 
-import store from '../store';
-
-import {
-  setTransactionComplete,
-  setTransactionPending,
-} from '../features/transaction/transactionSlice';
 import ERC20ABI from '../ERC20.json';
 import { TToastDispatch } from '../context/ToastContext';
 import { TModalDispatch } from '../context/ModalContext';
+import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
 
 export const approveBREAD = async (
   signer: Signer,
   daiAddress: string,
   breadAddress: string,
-  dispatch: typeof store.dispatch,
+  dispatchTransactionDisplay: TTransactionDisplayDispatch,
   dispatchToast: TToastDispatch,
   dispatchModal: TModalDispatch,
 ): Promise<void> => {
@@ -56,10 +51,10 @@ export const approveBREAD = async (
     return;
   }
   dispatchModal({ type: 'CLEAR_MODAL' });
-  dispatch(setTransactionPending(txn.hash));
+  dispatchTransactionDisplay({ type: 'SET_PENDING', payload: { status: 'PENDING', hash: txn.hash } });
   try {
     await txn.wait();
-    dispatch(setTransactionComplete());
+    dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
   } catch (err) {
     dispatchToast({
       type: 'SET_TOAST',

@@ -2,23 +2,19 @@ import {
   Contract, Signer,
 } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
-import store from '../store';
-import {
-  setTransactionComplete,
-  setTransactionPending,
-} from '../features/transaction/transactionSlice';
 
 import { abi as BreadABI } from '../BreadPolygon.json';
 import { TToastDispatch } from '../context/ToastContext';
 import { IProviderRpcError } from '../metamaskErrorType';
 import { TModalDispatch } from '../context/ModalContext';
+import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
 
 export const swapDaiForBread = async (
   signer: Signer,
   amount: string,
   breadAddress: string,
   receiverAddress: string,
-  dispatch: typeof store.dispatch,
+  dispatchTransactionDisplay: TTransactionDisplayDispatch,
   dispatchToast: TToastDispatch,
   dispatchModal: TModalDispatch,
   resetSwapState: () => void,
@@ -42,7 +38,7 @@ export const swapDaiForBread = async (
     });
   }
 
-  dispatch(setTransactionPending(txn.hash));
+  dispatchTransactionDisplay({ type: 'SET_PENDING', payload: { status: 'PENDING', hash: txn.hash } });
   dispatchModal({ type: 'UNLOCK_MODAL' });
   resetSwapState();
   try {
@@ -56,7 +52,7 @@ export const swapDaiForBread = async (
       },
     });
   }
-  dispatch(setTransactionComplete());
+  dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
 };
 
 export default swapDaiForBread;
