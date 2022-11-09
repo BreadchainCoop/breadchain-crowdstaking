@@ -1,4 +1,3 @@
-import { isAddress } from 'ethers/lib/utils';
 import { Contract, ethers, Signer } from 'ethers';
 import { IProviderRpcError } from '../metamaskErrorType';
 
@@ -15,17 +14,6 @@ export const approveBREAD = async (
   dispatchToast: TToastDispatch,
   dispatchModal: TModalDispatch,
 ): Promise<void> => {
-  if (!isAddress(breadAddress)) {
-    dispatchToast({
-      type: 'SET_TOAST',
-      payload: {
-        type: 'ERROR',
-        message: `Invalid spender address: ${breadAddress}`,
-      },
-    });
-    return;
-  }
-
   const dai = new Contract(daiAddress, ERC20ABI, signer);
 
   dispatchModal({

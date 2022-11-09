@@ -19,7 +19,7 @@ function Modal({ type, title, status }: TProps) {
     modalDispatch({ type: 'CLEAR_MODAL' });
   };
   switch (type) {
-    case 'MINTING':
+    case 'BAKING':
       return (
         <Container>
           <Inner>
@@ -119,7 +119,7 @@ function Modal({ type, title, status }: TProps) {
       return (
         <Container>
           <Inner>
-            <Heading>Changing Network...</Heading>
+            <Heading>Changing Network</Heading>
             <Message>please wait a moment!</Message>
           </Inner>
         </Container>

@@ -7,7 +7,7 @@ export type TModalType =
   'CHANGE_NETWORK' |
   'CHANGING_NETWORK' |
   'APPROVAL' |
-  'MINTING' |
+  'BAKING' |
   'BURNING'
 
 export type TModalStatus = 'LOCKED' | 'UNLOCKED'
@@ -49,20 +49,22 @@ const modalReducer = (state: TModalState, action: TModalAction): TModalState => 
     case 'SET_MODAL':
       /* eslint-disable-next-line no-case-declarations */
       const {
-        payload: { type: ModalType, title },
+        payload: { type, title },
       } = action;
       return {
-        type: ModalType,
+        type,
         title,
         status: 'LOCKED',
       };
     case 'UNLOCK_MODAL':
       if (state === null) throw new Error('modal not set');
+      if (state.type !== 'BAKING' && state.type !== 'BURNING') throw new Error('modal type cannot be unlocked');
       return {
         ...state,
         status: 'UNLOCKED',
       };
     case 'CLEAR_MODAL':
+      if (state === null) throw new Error('modal not set');
       return null;
     default:
       return state;

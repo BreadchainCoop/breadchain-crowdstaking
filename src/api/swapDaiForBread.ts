@@ -19,6 +19,8 @@ export const swapDaiForBread = async (
   dispatchModal: TModalDispatch,
   resetSwapState: () => void,
 ) => {
+  dispatchModal({ type: 'SET_MODAL', payload: { type: 'BAKING', title: `Baking ${amount} BREAD` } });
+
   const parsedAmount = parseEther(amount);
 
   const bread = new Contract(breadAddress, BreadABI, signer);
@@ -29,6 +31,7 @@ export const swapDaiForBread = async (
     txn = await bread.mint(parsedAmount, receiverAddress);
   } catch (err) {
     const { message } = err as IProviderRpcError;
+    dispatchModal({ type: 'CLEAR_MODAL' });
     dispatchToast({
       type: 'SET_TOAST',
       payload: {
@@ -36,6 +39,7 @@ export const swapDaiForBread = async (
         message,
       },
     });
+    return;
   }
 
   dispatchTransactionDisplay({ type: 'SET_PENDING', payload: { status: 'PENDING', hash: txn.hash } });
