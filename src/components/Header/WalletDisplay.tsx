@@ -1,14 +1,13 @@
-import React, { ReactNode } from 'react';
-import { useDisconnect, useNetwork } from 'wagmi';
+import { ReactNode } from 'react';
 
-import Button from '../Button';
 import { IconContainer, NetworkIcon } from '../Icons';
+import { formatAddress } from '../../util';
 
 export function Container(
   { children }: { children: ReactNode },
 ) {
   return (
-    <section className="flex flex-col justify-center grow md:grow-0 mr-6 md:mr-0 gap-2">
+    <section className="flex-col items-end justify-center gap-2 hidden md:flex">
       {children}
     </section>
   );
@@ -24,36 +23,32 @@ export function Row({
   );
 }
 
-export function Network() {
-  const { chain: activeChain } = useNetwork();
-
-  const { disconnectAsync } = useDisconnect();
-
-  if (!activeChain) return null;
-
+function WalletDisplay({
+  accountAddress,
+  chainString,
+}: {
+  accountAddress: string | undefined,
+  chainString: string
+}) {
   return (
-    <Row>
-      <IconContainer>
-        <NetworkIcon />
-      </IconContainer>
-      <span>
-        {activeChain.unsupported && 'Unsupported network: '}
-        {activeChain.name}
-      </span>
-
-      <Button variant="small" onClick={() => disconnectAsync()}>
-        Disconnect
-      </Button>
-    </Row>
+    <Container>
+      <Row>
+        <IconContainer>
+          <NetworkIcon />
+        </IconContainer>
+        <span>
+          {chainString}
+        </span>
+      </Row>
+      {accountAddress && (
+        <Row>
+          <span className="text-xs w-full flex items-center pt-0.5 justify-center md:justify-end truncate text-ellipsis">
+            {formatAddress(accountAddress)}
+          </span>
+        </Row>
+      )}
+    </Container>
   );
 }
 
-export function Address({ children }: { children: ReactNode }) {
-  return (
-    <Row>
-      <span className="text-xs w-full flex items-center pt-0.5 justify-center md:justify-start truncate text-ellipsis">
-        {children}
-      </span>
-    </Row>
-  );
-}
+export default WalletDisplay;
