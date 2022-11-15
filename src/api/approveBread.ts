@@ -1,5 +1,4 @@
 import { Contract, ethers, Signer } from 'ethers';
-import { IProviderRpcError } from '../metamaskErrorType';
 
 import ERC20ABI from '../ERC20.json';
 import { TToastDispatch } from '../context/ToastContext';
@@ -26,8 +25,8 @@ export const approveBREAD = async (
   let txn;
   try {
     txn = await dai.approve(breadAddress, ethers.constants.MaxUint256);
-  } catch (err) {
-    const { message } = err as IProviderRpcError;
+  } catch (err: any) {
+    const message = err.reason ? err.reason : err.message;
     dispatchToast({
       type: 'SET_TOAST',
       payload: {
