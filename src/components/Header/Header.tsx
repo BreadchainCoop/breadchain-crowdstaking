@@ -9,7 +9,7 @@ import MobileNavigationToggle from './MobileNavigationToggle';
 function Container({ children }: { children: ReactNode }) {
   return (
     <header className="bg-breadgray-100">
-      <div className="max-w-6xl m-0 mx-auto px-6 py-4 md:py-5 md:px-8 flex justify-between">
+      <div className="max-w-6xl m-0 mx-auto px-6 py-4 md:py-5 md:px-8 md:h-24 flex justify-between">
         {children}
       </div>
     </header>
