@@ -14,7 +14,7 @@ export function AddTokens() {
 
   return (
     <div className="mt-16">
-      <div className="text-xs mb-8">Add tokens to MetaMask</div>
+      <div className="text-xs mb-8">Add tokens to wallet</div>
       <div className="flex gap-4">
         <Button onClick={() => handleAddToken('BREAD')} disabled={false}>
           BREAD
