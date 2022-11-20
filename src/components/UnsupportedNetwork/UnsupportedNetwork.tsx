@@ -6,7 +6,6 @@ function UnsupportedNetwork() {
   const { dispatch: modalDispatch } = useModal();
 
   const handleSwitchToEthereum = async () => {
-    // const { appState, dispatch } = useAppState();
     try {
       modalDispatch({ type: 'SET_MODAL', payload: { type: 'CHANGE_NETWORK', title: 'Switch Network' } });
       const { ethereum } = window as any;
@@ -18,7 +17,7 @@ function UnsupportedNetwork() {
           },
         ],
       });
-      modalDispatch({ type: 'SET_MODAL', payload: { type: 'CHANGING_NETWORK', title: 'Switching Network...' } });
+      modalDispatch({ type: 'CLEAR_MODAL' });
     } catch (err) {
       // !!! error not handled
       modalDispatch({ type: 'CLEAR_MODAL' });
@@ -26,7 +25,7 @@ function UnsupportedNetwork() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col px-4">
       <span className="mb-12 text-xs sm:text-base text-center">
         You are not connected to a supported chain!
       </span>

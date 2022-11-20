@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 
-export function Title({ children }: {children: ReactNode}) {
+export function Title({ children }: { children: ReactNode }) {
   return (
-    <div className="pt-16 sm:pt-32 sm:pb-16 flex flex-col text-center">
+    <div className="pt-16 sm:pt-32 pb-16 flex flex-col text-center">
       {children}
     </div>
   );
 }
 
-export function H1({ children }: {children: ReactNode}) {
+export function H1({ children }: { children: ReactNode }) {
   return (
     <h1 className="uppercase text-2xl sm:text-5xl mb-1 md:mb-2">
       {children}
@@ -16,7 +16,7 @@ export function H1({ children }: {children: ReactNode}) {
   );
 }
 
-export function H2({ children }: {children: ReactNode}) {
+export function H2({ children }: { children: ReactNode }) {
   return (
     <h2 className="uppercase text-1xl sm:text-2xl">{children}</h2>
   );

@@ -3,6 +3,7 @@ import config from '../../config';
 import * as Main from '../App/ui/Main';
 import ConnectWalletButton from '../ConnectWalletButton';
 import Swap from '../Swap';
+import UnsupportedNetwork from '../UnsupportedNetwork/UnsupportedNetwork';
 
 export function Bake() {
   const {
@@ -24,7 +25,7 @@ export function Bake() {
     );
   }
 
-  if (activeChain.unsupported) return <>Unsupported network, please switch to a supported chain</>;
+  if (activeChain.unsupported) return <UnsupportedNetwork />;
   if (!configuration) throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
 
   return (
