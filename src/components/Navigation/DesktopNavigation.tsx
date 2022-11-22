@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface IDesktopNavLinkProps {
-
   to: string;
   isCurrentPage: boolean;
   children: ReactNode
@@ -44,7 +43,7 @@ function DesktopNavExternalLink(
 function DesktopNavigation() {
   const location = useLocation();
   return (
-    <nav className="flex-grow hidden md:flex items-center pl-16">
+    <nav className="flex-grow hidden md:flex items-center pl-8">
       <DesktopNavLink isCurrentPage={location.pathname === '/'} to="/">
         Bake
       </DesktopNavLink>
@@ -57,6 +56,7 @@ function DesktopNavigation() {
       <DesktopNavExternalLink href="https://breadchain.mirror.xyz/">
         Blog
       </DesktopNavExternalLink>
+      <DesktopNavExternalLink href="https://guild.xyz/breadchain">Guild</DesktopNavExternalLink>
     </nav>
   );
 }
