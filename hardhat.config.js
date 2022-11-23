@@ -10,11 +10,11 @@ module.exports = {
     hardhat: {
       chainId: 1337,
       forking: {
-        url: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_ID}`,
+        url: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.VITE_ALCHEMY_ID}`,
         blockNumber: 34005554,
       },
       mining: {
-        auto: false,
+        auto: true,
         interval: 2000,
       },
     },

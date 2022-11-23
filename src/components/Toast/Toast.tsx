@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { TToastType, useToast } from '../../context/ToastContext';
 
-function ToastContainer({ children }: {children: ReactNode}) {
+function ToastContainer({ children }: { children: ReactNode }) {
   return (
     <div className="p-4 w-full">
       <div className="px-6 py-8 md:px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
@@ -54,7 +54,7 @@ function Toast({ type, message }: TProps) {
           <ToastContainer>
             <CloseButton onClick={handleCloseToast} />
             <h1 className="text-red-500 text-xl">Error</h1>
-            <p className="text-xs leading-6 mt-4">{message}</p>
+            <p className="mt-4 text-xs leading-6 break-words">{message}</p>
           </ToastContainer>
         </div>
       );

@@ -46,6 +46,7 @@ export function NativeBalance({
       return (
         <>
           Balance:
+          {' '}
           {value}
         </>
       );
@@ -55,6 +56,8 @@ export function NativeBalance({
       return (
         <>
           Balance:
+          {' '}
+          {' '}
           {error}
         </>
       );

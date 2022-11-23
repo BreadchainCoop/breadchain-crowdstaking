@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 export function Title({ children }: { children: ReactNode }) {
   return (
-    <div className="pt-16 sm:pt-32 pb-16 flex flex-col text-center">
+    <div className="py-16 sm:py-32 flex flex-col text-center">
       {children}
     </div>
   );
