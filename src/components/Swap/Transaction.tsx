@@ -32,7 +32,7 @@ function Transaction({ hash, status }: ITransaction) {
           rel="noopener noreferrer"
           href={`${endpoint}/tx/${hash}`}
         >
-          {status === 'COMPLETE' && hash}
+          {hash}
         </a>
       </div>
       <div className="mt-4">
