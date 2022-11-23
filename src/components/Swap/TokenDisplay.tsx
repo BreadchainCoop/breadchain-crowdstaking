@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-function Header({ children }: { children: ReactNode }) { return <div className="mb-2">{children}</div>; }
+function Header({ children }: { children: ReactNode }) { return <div className="mb-6 sm:mb-8">{children}</div>; }
 
 function Content({ children }: { children: ReactNode }) { return <div className="flex items-center">{children}</div>; }
 
@@ -13,7 +13,7 @@ function BalanceButton({ onClick, children }: TBalanceProps) {
   return (
     <button
       type="button"
-      className="text-xs sm:text-sm p-3 hover:underline hover:text-white"
+      className="text-xs sm:text-sm pb-3 hover:underline hover:text-white"
       onClick={onClick}
     >
       {children}
@@ -23,7 +23,7 @@ function BalanceButton({ onClick, children }: TBalanceProps) {
 
 function Balance({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs sm:text-sm p-3 inline-block">
+    <span className="text-xs sm:text-sm pb-3 inline-block">
       {children}
     </span>
   );
@@ -31,7 +31,7 @@ function Balance({ children }: { children: ReactNode }) {
 
 function Container({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-breadgray-100 text-gray-300 w-full p-2 pr-4 pb-4 sm:p-4 sm:pb-8 sm:pr-8">
+    <div className="bg-breadgray-100 text-gray-300 w-full px-6 py-4 sm:px-8 sm:py-6">
       {children}
     </div>
   );

@@ -120,8 +120,8 @@ function SwapUI({ chainConfig, accountAddress }: {
 
   const handleSwapReverse = () => {
     setSwapState((state) => ({
-      from: { ...state.to, value: '0' },
-      to: { ...state.from, value: '0' },
+      from: { ...state.to, value: '' },
+      to: { ...state.from, value: '' },
     }));
   };
 
@@ -251,7 +251,7 @@ function SwapUI({ chainConfig, accountAddress }: {
               </TokenDisplay.Balance>
             </TokenDisplay.Header>
             <TokenDisplay.Content>
-              <span className="bg-breadgray-100 p-4 mr-8 text-lg sm:text-2xl truncate overflow-ellipsis w-0 flex-auto">
+              <span className="bg-breadgray-100 text-lg sm:text-2xl truncate overflow-ellipsis w-0 flex-auto">
                 {swapState.to.value ? swapState.to.value : '00.00'}
               </span>
               <Icon type={swapState.to.name} />

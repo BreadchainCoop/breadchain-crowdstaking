@@ -2,10 +2,6 @@ import { formatEther } from 'ethers/lib/utils';
 import Elipsis from '../Elipsis/Elipsis';
 import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
 
-// interface TokenBalanceOpts {
-//   bigNumberFormat: boolean;
-// }
-
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
   <>
@@ -20,8 +16,6 @@ const formatter = new Intl.NumberFormat('en-US', {
   minimumIntegerDigits: 1,
   useGrouping: false,
 });
-
-// UseTokenBalanceResult & TokenBalanceOpts
 
 export function TokenBalance(props: {
   value: UseTokenBalanceResult['value']
@@ -42,6 +36,7 @@ export function TokenBalance(props: {
       return (
         <>
           Balance:
+          {' '}
           {displayedValue}
         </>
       );
@@ -51,6 +46,7 @@ export function TokenBalance(props: {
       return (
         <>
           Balance:
+          {' '}
           {error}
         </>
       );
