@@ -1,6 +1,4 @@
-import React from 'react';
-
-export function Icon({ type }: { type: string }) {
+export function Icon({ type }: { type: 'DAI' | 'BREAD' }) {
   return type === 'DAI' ? (
     <div className="w-6 h-6">
       <svg fill="none" viewBox="0 0 350 350">
