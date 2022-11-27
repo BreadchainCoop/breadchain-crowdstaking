@@ -1,9 +1,9 @@
 import { useAccount, useNetwork } from 'wagmi';
-import config from '../../config';
-import * as Main from '../App/ui/Main';
-import ConnectWalletButton from '../ConnectWalletButton';
-import Swap from '../Swap';
-import UnsupportedNetwork from '../UnsupportedNetwork/UnsupportedNetwork';
+import config from '../config';
+import * as Main from '../components/App/ui/Main';
+import ConnectWalletButton from '../components/ConnectWalletButton';
+import Swap from '../components/Swap';
+import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 
 export function Bake() {
   const {

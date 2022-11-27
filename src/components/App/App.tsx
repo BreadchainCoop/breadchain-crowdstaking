@@ -8,11 +8,11 @@ import Modal from '../Modal';
 
 import Toast from '../Toast/Toast';
 import { Pantry } from '../Pantry';
-import Index from '../../routes/Index';
 import About from '../../routes/Info';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import { useToast } from '../../context/ToastContext';
 import { useModal } from '../../context/ModalContext';
+import Bake from '../../routes/bake';
 
 function App() {
   const { state: modal } = useModal();
@@ -29,7 +29,7 @@ function App() {
       <SiteTitle />
       <Main.Main>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Bake />} />
           <Route path="/about" element={<About />} />
           <Route path="/pantry" element={<Pantry />} />
         </Routes>
