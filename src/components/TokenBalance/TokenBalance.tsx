@@ -1,4 +1,3 @@
-import { formatEther } from 'ethers/lib/utils';
 import Elipsis from '../Elipsis/Elipsis';
 import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
 
@@ -17,18 +16,16 @@ const formatter = new Intl.NumberFormat('en-US', {
   useGrouping: false,
 });
 
-export function TokenBalance(props: {
-  value: UseTokenBalanceResult['value']
-  status: UseTokenBalanceResult['status']
-  error: UseTokenBalanceResult['error']
+export function TokenBalance({ readings }: {
+  readings: UseTokenBalanceResult
 }) {
   const {
     value, status, error,
-  } = props;
+  } = readings;
 
   let displayedValue = 'Unknown';
   if (value) {
-    displayedValue = formatter.format(parseFloat(formatEther(value.toString())));
+    displayedValue = formatter.format(parseFloat(value));
   }
 
   switch (status) {
