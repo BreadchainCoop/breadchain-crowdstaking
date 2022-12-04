@@ -4,6 +4,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
 import {
   hardhatChains,
@@ -46,6 +47,12 @@ export const getClient = (mode: IViteMode) => {
             options: {
               name: 'Injected',
               shimDisconnect: true,
+            },
+          }),
+          new WalletConnectConnector({
+            chains,
+            options: {
+              qrcode: true,
             },
           }),
         ],
