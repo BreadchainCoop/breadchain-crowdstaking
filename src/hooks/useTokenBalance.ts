@@ -1,9 +1,10 @@
 import { BigNumber } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils.js';
 import { useContractRead } from 'wagmi';
 import abi from '../ERC20.json';
 
 export interface UseTokenBalanceResult {
-  value?: BigNumber;
+  value?: string;
   status: 'error' | 'idle' | 'loading' | 'success';
   error: Error | null;
 }
@@ -13,12 +14,14 @@ export function useTokenBalance(
   holderAddress: string,
 ): UseTokenBalanceResult {
   const { data, status, error } = useContractRead({
-    addressOrName: tokenAddress,
-    contractInterface: abi,
+    address: tokenAddress,
+    abi,
     functionName: 'balanceOf',
     args: [holderAddress],
     watch: true,
   });
 
-  return { value: data && BigNumber.from(data.toString()), status, error };
+  const value = data ? formatUnits(data as BigNumber, 18) : undefined;
+
+  return { value, status, error };
 }

@@ -3,7 +3,7 @@ import { formatEther } from 'ethers/lib/utils';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface INativeBalanceProps {
-  addressOrName: string;
+  address: `0x${string}`;
 }
 
 interface INativeBalanceOpts {
@@ -26,11 +26,11 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 export function NativeBalance({
-  addressOrName,
+  address,
   bigNumberFormat,
 }: INativeBalanceProps & INativeBalanceOpts) {
   const { data, status, error } = useBalance({
-    addressOrName,
+    address,
     watch: true,
   });
 
