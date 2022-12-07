@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { ethers } from 'ethers';
 
@@ -8,6 +8,14 @@ import ERC20ABI from '../../../ERC20.json';
 import type { ChainConfiguration } from '../../../config';
 import { useModal } from '../../../context/ModalContext';
 import { useToast } from '../../../context/ToastContext';
+import { TTransactionDisplayState, useTransactionDisplay } from '../../../context/TransactionDisplayContext';
+
+function transactionIsPending(transactionDisplay: TTransactionDisplayState): boolean {
+  if (transactionDisplay && transactionDisplay.status === 'PENDING') {
+    return true;
+  }
+  return false;
+}
 
 interface IProps {
   chainConfig: ChainConfiguration;
@@ -16,7 +24,10 @@ interface IProps {
 function ApproveContract({ chainConfig }: IProps) {
   const { state: modalState, dispatch: dispatchModal } = useModal();
   const { dispatch: dispatchToast } = useToast();
-  const [approvalTx, setapprovalTx] = useState<null | `0x${string}`>(null);
+  const {
+    state: transactionDisplay,
+    dispatch: dispatchTransactionDisplay,
+  } = useTransactionDisplay();
 
   const { DAI, BREAD } = chainConfig;
 
@@ -34,7 +45,6 @@ function ApproveContract({ chainConfig }: IProps) {
   useEffect(() => {
     if (error) {
       if (modalState) dispatchModal({ type: 'CLEAR_MODAL' });
-      dispatchModal({ type: 'CLEAR_MODAL' });
       dispatchToast({
         type: 'SET_TOAST',
         payload: {
@@ -45,7 +55,13 @@ function ApproveContract({ chainConfig }: IProps) {
     }
     if (isSuccess && data) {
       dispatchModal({ type: 'CLEAR_MODAL' });
-      setapprovalTx(data.hash);
+      dispatchTransactionDisplay({
+        type: 'SET_PENDING',
+        payload: {
+          status: 'PENDING',
+          hash: data.hash,
+        },
+      });
     }
   }, [isSuccess, data, error]);
 
@@ -60,7 +76,7 @@ function ApproveContract({ chainConfig }: IProps) {
         onClick={handleApproveContract}
         variant="large"
         dataTest="approve-contract-button"
-        disabled={!!approvalTx}
+        disabled={transactionIsPending(transactionDisplay)}
       >
         Approve Contract
       </Button>
