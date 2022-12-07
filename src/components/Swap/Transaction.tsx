@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNetwork, useWaitForTransaction } from 'wagmi';
+import { useToast } from '../../context/ToastContext';
 import { TTransactionStatus, useTransactionDisplay } from '../../context/TransactionDisplayContext';
 import Elipsis from '../Elipsis/Elipsis';
 
@@ -10,6 +11,7 @@ interface IProps {
 
 function Transaction({ hash, status }: IProps) {
   const { dispatch: dispatchTransactionDisplay } = useTransactionDisplay();
+  const { dispatch: dispatchToast } = useToast();
   const { chain: activeChain } = useNetwork();
 
   if (!activeChain) return null;
@@ -21,8 +23,13 @@ function Transaction({ hash, status }: IProps) {
 
   useEffect(() => {
     if (transactionIsError) {
-      console.log('transaction error: ');
-      console.log({ transactionData });
+      dispatchToast({
+        type: 'SET_TOAST',
+        payload: {
+          type: 'ERROR',
+          message: 'transaction failed',
+        },
+      });
     }
     if (transactionData && transactionData!.confirmations >= 1) {
       dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
