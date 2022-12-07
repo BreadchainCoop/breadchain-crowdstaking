@@ -14,7 +14,7 @@ interface IProps {
 }
 
 function ApproveContract({ chainConfig }: IProps) {
-  const { dispatch: dispatchModal } = useModal();
+  const { state: modalState, dispatch: dispatchModal } = useModal();
   const { dispatch: dispatchToast } = useToast();
   const [approvalTx, setapprovalTx] = useState<null | `0x${string}`>(null);
 
@@ -28,12 +28,12 @@ function ApproveContract({ chainConfig }: IProps) {
   });
 
   const {
-    data, error, isLoading, isSuccess, write,
+    data, error, isSuccess, write,
   } = useContractWrite(config);
 
   useEffect(() => {
     if (error) {
-      console.log({ error });
+      if (modalState) dispatchModal({ type: 'CLEAR_MODAL' });
       dispatchModal({ type: 'CLEAR_MODAL' });
       dispatchToast({
         type: 'SET_TOAST',
