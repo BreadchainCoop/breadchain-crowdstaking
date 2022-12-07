@@ -1,5 +1,6 @@
 import Elipsis from '../Elipsis/Elipsis';
 import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
+import { balanceFormatter } from '../../util';
 
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
@@ -10,22 +11,18 @@ const LOADING_BALANCE = (
   </>
 );
 
-const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  minimumIntegerDigits: 1,
-  useGrouping: false,
-});
-
-export function TokenBalance({ readings }: {
+interface IProps {
   readings: UseTokenBalanceResult
-}) {
+}
+
+export function TokenBalance({ readings }: IProps) {
   const {
     value, status, error,
   } = readings;
 
   let displayedValue = 'Unknown';
   if (value) {
-    displayedValue = formatter.format(parseFloat(value));
+    displayedValue = balanceFormatter.format(parseFloat(value));
   }
 
   switch (status) {
