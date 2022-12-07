@@ -25,6 +25,9 @@ import ToPanel from './ToPanel';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
+import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import Transaction from './Transaction';
+import { balanceFormatter } from '../../util';
 
 interface ISwapState {
   mode: 'BAKE' | 'BURN',
@@ -48,16 +51,11 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
 
   const { DAI, BREAD } = chainConfig;
 
-  // const { state: transaction, dispatch: dispatchTransactionDisplay } = useTransactionDisplay();
+  const {
+    state: transactionDisplay,
+    dispatch: dispatchTransactionDisplay,
+  } = useTransactionDisplay();
   const { dispatch: dispatchToast } = useToast();
-  // const { dispatch: dispatchModal } = useModal();
-  // const { isConnecting } = useAccount();
-
-  // const {
-  //   data: signer,
-  //   isFetching: isFetchingSigner,
-  //   error: signerError,
-  // } = useSigner();
 
   const breadBalanceReadings = useTokenBalance(BREAD.address, accountAddress);
   const daiBalanceReadings = useTokenBalance(DAI.address, accountAddress);
@@ -74,6 +72,10 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
 
   const resetSwapState = () => {
     setSwapState(initialSwapState);
+  };
+
+  const clearInputValue = () => {
+    setSwapState((state) => ({ ...state, value: '' }));
   };
 
   useEffect(() => {
@@ -101,6 +103,9 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
   }, [daiAllowanceStatus, daiAllowanceValue]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (transactionDisplay && transactionDisplay.status !== 'PENDING') {
+      dispatchTransactionDisplay({ type: 'CLEAR' });
+    }
     const { value } = event.target;
     const sanitizedValue = sanitizeInputValue(value);
     setSwapState({
@@ -116,8 +121,11 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
     }));
   };
 
-  const handleBalanceClick = () => {
-
+  const handleBalanceClick = (value: string) => {
+    setSwapState((state) => ({
+      ...state,
+      value: balanceFormatter.format(parseFloat(value)),
+    }));
   };
 
   return (
@@ -150,8 +158,10 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
           <BakeOrBurn
             mode={swapState.mode}
             value={swapState.value}
+            balanceReadings={swapState.mode === 'BAKE' ? daiBalanceReadings : breadBalanceReadings}
             accountAddress={accountAddress}
             chainConfig={chainConfig}
+            clearInputValue={clearInputValue}
           />
         )
       }
@@ -160,7 +170,12 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
           <ApproveContract chainConfig={chainConfig} />
         )
       }
-      {/* {transaction && <Transaction status={transaction.status} hash={transaction.hash} />} */}
+      {transactionDisplay && (
+        <Transaction
+          status={transactionDisplay.status}
+          hash={transactionDisplay.hash}
+        />
+      )}
     </>
   );
 }

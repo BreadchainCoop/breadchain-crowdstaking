@@ -6,7 +6,7 @@ export type TTransactionStatus = 'PENDING' | 'COMPLETE'
 
 export interface ITransaction {
   status: TTransactionStatus;
-  hash: string;
+  hash: `0x${string}`;
 }
 
 export type TTransactionDisplayState = null | ITransaction

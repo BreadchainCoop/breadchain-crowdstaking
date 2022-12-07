@@ -12,7 +12,8 @@ interface IProps {
   balanceReadings: UseTokenBalanceResult,
   tokenType: 'DAI' | 'BREAD'
   handleInputChange: ChangeEventHandler<HTMLInputElement>
-  handleBalanceClick: () => void
+  /* eslint-disable-next-line */
+  handleBalanceClick: (balance: string) => void
 }
 function FromPanel({
   inputValue, balanceReadings, tokenType, handleBalanceClick, handleInputChange,
@@ -20,7 +21,7 @@ function FromPanel({
   return (
     <PanelContainer>
       <PanelHeader>
-        <PanelBalanceButton onClick={handleBalanceClick}>
+        <PanelBalanceButton onClick={() => handleBalanceClick(balanceReadings.value || '')}>
           <TokenBalance
             readings={balanceReadings}
           />
