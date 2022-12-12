@@ -2,9 +2,8 @@ import { ReactNode, useState } from 'react';
 import { Chain, useAccount, useNetwork } from 'wagmi';
 import { DesktopNavigation, MobileMenu } from '../Navigation';
 import Logo from './Logo';
-import WalletDisplay from './WalletDisplay';
-
 import MobileNavigationToggle from './MobileNavigationToggle';
+import WalletDisplay from './WalletDisplay';
 
 function Container({ children }: { children: ReactNode }) {
   return (
