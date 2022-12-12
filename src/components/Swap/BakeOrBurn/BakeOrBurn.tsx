@@ -16,6 +16,7 @@ import { useModal } from '../../../context/ModalContext';
 import { useToast } from '../../../context/ToastContext';
 import { useTransactionDisplay } from '../../../context/TransactionDisplayContext';
 import { UseTokenBalanceResult } from '../../../hooks/useTokenBalance';
+import PreparingTransaction from './PreparingTransaction';
 
 const { abi } = BREADABI;
 interface IProps {
@@ -96,19 +97,19 @@ function BakeOrBurn({
   };
 
   return (
-    <Button
-      onClick={handleSubmit}
-      disabled={
-        prepareStatus !== 'success'
-        // || parseFloat(value) === 0
-        // || value === ''
-
-      }
-      variant="large"
-      fullWidth
-    >
-      {mode === 'BURN' ? 'BURN BREAD' : 'BAKE BREAD'}
-    </Button>
+    <>
+      <Button
+        onClick={handleSubmit}
+        disabled={
+          prepareStatus !== 'success'
+        }
+        variant="large"
+        fullWidth
+      >
+        {mode === 'BURN' ? 'BURN BREAD' : 'BAKE BREAD'}
+      </Button>
+      {prepareStatus === 'loading' && <PreparingTransaction />}
+    </>
   );
 }
 
