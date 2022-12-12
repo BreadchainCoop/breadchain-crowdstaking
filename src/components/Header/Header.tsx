@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Chain, useAccount, useNetwork } from 'wagmi';
-import { DesktopNavigation } from '../Navigation';
+import { DesktopNavigation, MobileMenu } from '../Navigation';
 import Logo from './Logo';
 import WalletDisplay from './WalletDisplay';
 
@@ -25,15 +25,21 @@ const getChainString = (chain: (Chain & {
 };
 
 function Header() {
+  const [isMobNavOpen, setIsMobNavOpen] = useState(false);
   const { address: accountAddress } = useAccount();
   const { chain } = useNetwork();
+
+  const handleClick = () => {
+    setIsMobNavOpen(!isMobNavOpen);
+  };
 
   return (
     <Container>
       <Logo />
       <DesktopNavigation />
+      <MobileMenu isOpen={isMobNavOpen} />
       <WalletDisplay accountAddress={accountAddress} chainString={getChainString(chain)} />
-      <MobileNavigationToggle />
+      <MobileNavigationToggle handleClick={handleClick} />
     </Container>
 
   );
