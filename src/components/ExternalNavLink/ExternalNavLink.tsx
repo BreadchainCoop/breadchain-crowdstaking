@@ -13,7 +13,7 @@ function ExternalNavLink(
       href={href}
       rel="noopener noreferrer nofollow"
       target="_blank"
-      className="px-5 text-sm text-neutral-400 hover:text-neutral-200"
+      className="px-3 text-sm text-neutral-400 hover:text-neutral-200"
     >
       {children}
     </a>
