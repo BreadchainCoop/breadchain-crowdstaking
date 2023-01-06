@@ -24,7 +24,14 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-      <button type="button" className="flex items-center pr-6" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      <button
+        type="button"
+        className="flex items-center pr-6"
+        onMouseDown={(event) => {
+          event.stopPropagation();
+          setIsMenuOpen(!isMenuOpen);
+        }}
+      >
         <IconContainer>
           <WalletIcon />
         </IconContainer>
@@ -39,7 +46,15 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
         </IconContainer>
       </button>
 
-      {isMenuOpen && <WalletMenu handleDisconnect={handleDisconnect} chainString={chainString} />}
+      {
+        isMenuOpen && (
+          <WalletMenu
+            handleCloseMenu={() => setIsMenuOpen(false)}
+            handleDisconnect={handleDisconnect}
+            chainString={chainString}
+          />
+        )
+      }
 
     </>
   );
