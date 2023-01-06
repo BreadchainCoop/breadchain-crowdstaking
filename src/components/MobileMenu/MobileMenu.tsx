@@ -1,6 +1,7 @@
-import { classNames } from '../../util';
-import MobileNavigation from '../MobileNavigation';
+import MobileNavigation from './MobileNavigation';
 import MobileWalletDisplay from './MobileWalletDisplay';
+
+import { classNames } from '../../util';
 
 function Overlay({ isOpen }: { isOpen: boolean }) {
   return (
