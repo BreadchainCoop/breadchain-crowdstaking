@@ -23,14 +23,17 @@ function MobileWalletDisplay({
 
       </div>
       {accountAddress && (
-        <>
+        <div className="flex flex-col gap-4">
           <span className="text-xs w-full flex items-right pt-0.5 justify-end md:justify-end truncate text-ellipsis">
             {formatAddress(accountAddress)}
           </span>
-          <div className="flex justify-end pt-2">
+          <div className="flex justify-end">
             <LinkButton handleClick={handleDisconnect}>disconnect</LinkButton>
           </div>
-        </>
+          <div className="flex justify-end">
+            <a className="underline text-neutral-400 hover:text-neutral-300" target="_blank" href={`https://polygonscan.com/address/${accountAddress}`} rel="noreferrer">View account on polygonscan</a>
+          </div>
+        </div>
       )}
     </section>
   );

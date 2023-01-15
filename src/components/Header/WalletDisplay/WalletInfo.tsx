@@ -26,7 +26,7 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
     <>
       <button
         type="button"
-        className="flex items-center pr-6"
+        className="flex items-center"
         onMouseDown={(event) => {
           event.stopPropagation();
           setIsMenuOpen(!isMenuOpen);
@@ -49,6 +49,7 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
       {
         isMenuOpen && (
           <WalletMenu
+            accountAddress={accountAddress}
             handleCloseMenu={() => setIsMenuOpen(false)}
             handleDisconnect={handleDisconnect}
             chainString={chainString}
