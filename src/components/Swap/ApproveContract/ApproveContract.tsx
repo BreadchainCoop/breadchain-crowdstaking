@@ -49,7 +49,7 @@ function ApproveContract({ chainConfig }: IProps) {
         type: 'SET_TOAST',
         payload: {
           type: 'ERROR',
-          message: 'User rejected transaction',
+          message: 'transaction failed',
         },
       });
     }
