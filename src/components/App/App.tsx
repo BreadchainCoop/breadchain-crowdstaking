@@ -5,10 +5,9 @@ import Header from '../Header';
 import * as Main from './ui/Main';
 import Footer from '../Footer';
 import Modal from '../Modal';
-
 import Toast from '../Toast/Toast';
 import { Pantry } from '../Pantry';
-import About from '../../routes/Info';
+import About from '../../routes/about';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import { useToast } from '../../context/ToastContext';
 import { useModal } from '../../context/ModalContext';
