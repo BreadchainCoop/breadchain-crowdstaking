@@ -35,9 +35,7 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
         <IconContainer>
           <WalletIcon />
         </IconContainer>
-        {/* // TODO view account on block explorer */}
-        {/* // TODO split FAQ into new page */}
-        {/* // TODO link BREAD text to token on polygonscan */}
+
         <span className="text-xs w-full flex items-center pt-0.5 pr-2 justify-center md:justify-end truncate text-ellipsis">
           {formatAddress(accountAddress)}
         </span>

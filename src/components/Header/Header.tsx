@@ -50,6 +50,7 @@ function Header() {
         accountAddress={accountAddress}
         chainString={getChainString(chain)}
         handleDisconnect={handleDisconnect}
+        handleNavToggle={handleNavToggle}
       />
       <WalletDisplay
         accountAddress={accountAddress}

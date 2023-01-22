@@ -14,6 +14,7 @@ interface IProps {
   accountAddress: string | undefined,
   chainString: string,
   handleDisconnect: () => void
+  handleNavToggle: () => void
 }
 
 export function MobileMenu({
@@ -21,6 +22,7 @@ export function MobileMenu({
   accountAddress,
   chainString,
   handleDisconnect,
+  handleNavToggle,
 }: IProps) {
   return (
     <>
@@ -31,7 +33,7 @@ export function MobileMenu({
           chainString={chainString}
           handleDisconnect={handleDisconnect}
         />
-        <MobileNavigation />
+        <MobileNavigation handleNavToggle={handleNavToggle} />
       </section>
     </>
   );
