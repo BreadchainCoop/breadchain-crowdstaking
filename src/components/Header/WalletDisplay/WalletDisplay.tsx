@@ -26,14 +26,6 @@ function WalletDisplay({
 }: IProps) {
   return (
     <Container>
-      {/* <Row>
-        <IconContainer>
-          <NetworkIcon />
-        </IconContainer>
-        <span>
-          {chainString}
-        </span>
-      </Row> */}
       {accountAddress ? (
         <WalletInfo
           accountAddress={accountAddress}
