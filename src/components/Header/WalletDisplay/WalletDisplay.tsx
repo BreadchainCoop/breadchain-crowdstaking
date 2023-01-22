@@ -45,7 +45,9 @@ function WalletDisplay({
           <IconContainer>
             <WalletIcon />
           </IconContainer>
-          Not connected
+          <span className="text-xs w-full flex items-center pt-0.5 pr-2 justify-center md:justify-end truncate text-ellipsis">
+            Not connected
+          </span>
         </div>
       )}
     </Container>
