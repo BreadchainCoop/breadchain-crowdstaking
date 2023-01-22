@@ -3,15 +3,20 @@ import { useLocation } from 'react-router-dom';
 import ExternalNavLink from '../ExternalNavLink';
 import NavLink from '../NavLink';
 
-function MobileNavigation() {
+interface IProps {
+  handleNavToggle: () => void
+}
+
+function MobileNavigation({ handleNavToggle }: IProps) {
   const location = useLocation();
 
   return (
     <nav className="flex flex-col gap-4 text-right">
-      <NavLink isCurrentPage={location.pathname === '/'} to="/">Bake</NavLink>
+      <NavLink isCurrentPage={location.pathname === '/'} to="/" handleClick={() => handleNavToggle()}>Bake</NavLink>
       <NavLink
         isCurrentPage={location.pathname === '/about'}
         to="/about"
+        handleClick={() => handleNavToggle()}
       >
         About
       </NavLink>
