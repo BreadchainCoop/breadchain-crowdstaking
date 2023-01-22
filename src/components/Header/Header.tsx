@@ -21,8 +21,8 @@ function Container({ children }: { children: ReactNode }) {
 const getChainString = (chain: (Chain & {
   unsupported?: boolean | undefined;
 }) | undefined) => {
-  if (chain === undefined) return 'no network';
-  if (chain.unsupported) return 'unsupported';
+  if (chain === undefined) return 'No Network';
+  if (chain.unsupported) return 'Unsupported';
   return chain.name;
 };
 

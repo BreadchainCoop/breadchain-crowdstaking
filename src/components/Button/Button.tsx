@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const EVariants = {
-  small: 'px-5 py-2 text-xs sm:text-sm',
+  small: 'px-5 py-2 text-xs',
   regular: 'px-6 py-3 text-xs sm:text-sm',
   large: 'px-7 py-4 text-xl sm:text-2xl',
 };
