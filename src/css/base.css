@@ -32,4 +32,9 @@
     z-index: -10;
     animation: none;
   }
+
+  
+  .prose {
+    font-size: 1.125rem;
+  }
 }

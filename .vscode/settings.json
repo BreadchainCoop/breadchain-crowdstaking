@@ -7,4 +7,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   }
+,
+"tailwindCSS.rootFontSize": 18,
 }
