@@ -16,7 +16,7 @@
     "e2e:local": "yarn build:testing && ts-node tests/scripts/local.ts",
     "test:synpress": "env-cmd -f .env yarn synpress run --config supportFile='tests/e2e/support.js'",
     "lint": "eslint src --ext .ts,.tsx",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "format": "prettier --config .prettierrc 'src/**/*.ts' 'src/**/*.tsx' --write"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
