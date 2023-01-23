@@ -3,7 +3,7 @@ declare module '*.md' {
   const attributes: Record<string, unknown>;
 
   // When "Mode.TOC" is requested
-  const toc: { level: string, content: string }[];
+  const toc: { level: string; content: string }[];
 
   // When "Mode.HTML" is requested
   const html: string;
@@ -13,7 +13,5 @@ declare module '*.md' {
   const ReactComponent: React.VFC;
 
   // Modify below per your usage
-  export {
-    attributes, toc, html, ReactComponent,
-  };
+  export { attributes, toc, html, ReactComponent };
 }

@@ -54,22 +54,22 @@ const config: IConfig = {
       symbol: 'DAI',
       decimals: 18,
       address:
-        import.meta.env.DAI_ADDRESS?.toString()
-        || '0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B',
+        import.meta.env.DAI_ADDRESS?.toString() ||
+        '0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B',
     },
     DERIVATIVE: {
       symbol: 'ADAI',
       decimals: 18,
       address:
-        import.meta.env.ADAI_ADDRESS?.toString()
-        || '0xDD4f3Ee61466C4158D394d57f3D4C397E91fBc51',
+        import.meta.env.ADAI_ADDRESS?.toString() ||
+        '0xDD4f3Ee61466C4158D394d57f3D4C397E91fBc51',
     },
     BREAD: {
       symbol: 'BREAD',
       decimals: 18,
       address:
-        import.meta.env.BREAD_ADDRESS?.toString()
-        || '0x9AEe3dBCaC747bc41BcdFd94885fA6679151A931',
+        import.meta.env.BREAD_ADDRESS?.toString() ||
+        '0x9AEe3dBCaC747bc41BcdFd94885fA6679151A931',
     },
   },
   4: {

@@ -17,9 +17,7 @@ export function useTokenAllowance(
   const args = [holderAddress, spenderAddress];
   const watch = true;
 
-  const {
-    data, status, error,
-  } = useContractRead({
+  const { data, status, error } = useContractRead({
     address: tokenAddress,
     abi,
     functionName: 'allowance',
@@ -30,6 +28,8 @@ export function useTokenAllowance(
   const value = data ? formatUnits(data as BigNumber, 18) : undefined;
 
   return {
-    value, status, error,
+    value,
+    status,
+    error,
   };
 }

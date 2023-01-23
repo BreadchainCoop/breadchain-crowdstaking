@@ -1,10 +1,10 @@
 import { chain, configureChains } from 'wagmi';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
 import {
   hardhatChains,

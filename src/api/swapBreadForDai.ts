@@ -2,10 +2,10 @@ import { Contract, Signer } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 
 import { abi as BreadABI } from '../BreadPolygon.json';
-import { IProviderRpcError } from '../metamaskErrorType';
-import { TToastDispatch } from '../context/ToastContext';
 import { TModalDispatch } from '../context/ModalContext';
+import { TToastDispatch } from '../context/ToastContext';
 import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
+import { IProviderRpcError } from '../metamaskErrorType';
 
 export const swapBreadForDai = async (
   signer: Signer,
@@ -17,7 +17,10 @@ export const swapBreadForDai = async (
   dispatchModal: TModalDispatch,
   resetSwapState: () => void,
 ) => {
-  dispatchModal({ type: 'SET_MODAL', payload: { type: 'BURNING', title: `Burning ${amount} BREAD` } });
+  dispatchModal({
+    type: 'SET_MODAL',
+    payload: { type: 'BURNING', title: `Burning ${amount} BREAD` },
+  });
 
   const parsedAmount = parseEther(amount);
 
@@ -38,7 +41,10 @@ export const swapBreadForDai = async (
     return;
   }
 
-  dispatchTransactionDisplay({ type: 'SET_PENDING', payload: { status: 'PENDING', hash: txn.hash } });
+  dispatchTransactionDisplay({
+    type: 'SET_PENDING',
+    payload: { status: 'PENDING', hash: txn.hash },
+  });
   dispatchModal({ type: 'UNLOCK_MODAL' });
   resetSwapState();
   try {

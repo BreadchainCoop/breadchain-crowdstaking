@@ -1,9 +1,9 @@
 import { Contract, ethers, Signer } from 'ethers';
 
-import ERC20ABI from '../ERC20.json';
-import { TToastDispatch } from '../context/ToastContext';
 import { TModalDispatch } from '../context/ModalContext';
+import { TToastDispatch } from '../context/ToastContext';
 import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
+import ERC20ABI from '../ERC20.json';
 
 export const approveBREAD = async (
   signer: Signer,
@@ -18,7 +18,8 @@ export const approveBREAD = async (
   dispatchModal({
     type: 'SET_MODAL',
     payload: {
-      type: 'APPROVAL', title: 'Approving BREAD Contract',
+      type: 'APPROVAL',
+      title: 'Approving BREAD Contract',
     },
   });
 
@@ -38,7 +39,10 @@ export const approveBREAD = async (
     return;
   }
   dispatchModal({ type: 'CLEAR_MODAL' });
-  dispatchTransactionDisplay({ type: 'SET_PENDING', payload: { status: 'PENDING', hash: txn.hash } });
+  dispatchTransactionDisplay({
+    type: 'SET_PENDING',
+    payload: { status: 'PENDING', hash: txn.hash },
+  });
   try {
     await txn.wait();
     dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
