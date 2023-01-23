@@ -3,20 +3,18 @@ import { ReactNode } from 'react';
 import { IconContainer, WalletIcon } from '../../Icons';
 import WalletInfo from './WalletInfo';
 
-export function Container(
-  { children }: { children: ReactNode },
-) {
+export function Container({ children }: { children: ReactNode }) {
   return (
-    <section className="relative flex-col items-end justify-center gap-2 hidden md:flex">
+    <section className="relative hidden flex-col items-end justify-center gap-2 md:flex">
       {children}
     </section>
   );
 }
 
 interface IProps {
-  accountAddress: string | undefined,
-  chainString: string
-  handleDisconnect: () => void
+  accountAddress: string | undefined;
+  chainString: string;
+  handleDisconnect: () => void;
 }
 
 function WalletDisplay({
@@ -33,11 +31,11 @@ function WalletDisplay({
           handleDisconnect={handleDisconnect}
         />
       ) : (
-        <div className="flex gap-3 text-xs items-center">
+        <div className="flex items-center gap-3 text-xs">
           <IconContainer>
             <WalletIcon />
           </IconContainer>
-          <span className="text-xs w-full flex items-center pt-0.5 pr-2 justify-center md:justify-end truncate text-ellipsis">
+          <span className="flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs md:justify-end">
             Not connected
           </span>
         </div>

@@ -1,24 +1,20 @@
-import Elipsis from '../Elipsis/Elipsis';
 import { UseTokenBalanceResult } from '../../hooks/useTokenBalance';
 import { balanceFormatter } from '../../util';
+import Elipsis from '../Elipsis/Elipsis';
 
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
   <>
-    Balance:
-    {' '}
-    <Elipsis />
+    Balance: <Elipsis />
   </>
 );
 
 interface IProps {
-  readings: UseTokenBalanceResult
+  readings: UseTokenBalanceResult;
 }
 
 export function TokenBalance({ readings }: IProps) {
-  const {
-    value, status, error,
-  } = readings;
+  const { value, status, error } = readings;
 
   let displayedValue = 'Unknown';
   if (value) {
@@ -27,23 +23,11 @@ export function TokenBalance({ readings }: IProps) {
 
   switch (status) {
     case 'success':
-      return (
-        <>
-          Balance:
-          {' '}
-          {displayedValue}
-        </>
-      );
+      return <>Balance: {displayedValue}</>;
     case 'loading':
       return LOADING_BALANCE;
     case 'error':
-      return (
-        <>
-          Balance:
-          {' '}
-          {error}
-        </>
-      );
+      return <>Balance: {error}</>;
     case 'idle':
     default:
       return UNKNOWN_BALANCE;

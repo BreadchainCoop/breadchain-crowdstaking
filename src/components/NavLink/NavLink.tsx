@@ -5,17 +5,17 @@ import { classNames } from '../../util';
 interface INavLinkProps {
   to: string;
   isCurrentPage: boolean;
-  children: ReactNode,
-  handleClick?: () => void
+  children: ReactNode;
+  handleClick?: () => void;
 }
 
-function NavLink({
-  isCurrentPage, to, children, handleClick,
-}: INavLinkProps) {
+function NavLink({ isCurrentPage, to, children, handleClick }: INavLinkProps) {
   return (
     <Link
-      className={classNames('px-3 text-sm text-neutral-400 hover:text-neutral-200', isCurrentPage
-        ? 'text-neutral-200' : '')}
+      className={classNames(
+        'px-3 text-sm text-neutral-400 hover:text-neutral-200',
+        isCurrentPage ? 'text-neutral-200' : '',
+      )}
       to={to}
       onClick={handleClick}
     >
@@ -25,7 +25,7 @@ function NavLink({
 }
 
 NavLink.defaultProps = {
-  handleClick: () => { },
+  handleClick: () => {},
 };
 
 export default NavLink;

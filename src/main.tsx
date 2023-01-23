@@ -8,11 +8,11 @@ import { HashRouter } from 'react-router-dom';
 
 import App from './components/App';
 
-import './css/index.css';
 import { getClient } from './client';
-import { ToastProvider } from './context/ToastContext';
 import { ModalProvider } from './context/ModalContext';
+import { ToastProvider } from './context/ToastContext';
 import { TransactionDisplayProvider } from './context/TransactionDisplayContext';
+import './css/index.css';
 
 export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 

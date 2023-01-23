@@ -2,11 +2,9 @@ import Elipsis from '../../Elipsis';
 
 function PreparingTransaction() {
   return (
-    <div className="w-full mt-8">
+    <div className="mt-8 w-full">
       <p className="text-xs">
-        preparing transaction
-        {' '}
-        <Elipsis />
+        preparing transaction <Elipsis />
       </p>
     </div>
   );

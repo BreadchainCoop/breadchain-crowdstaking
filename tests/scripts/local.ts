@@ -1,5 +1,5 @@
-import { clearLogs, runTests, spawnchildProcess } from "./lib";
-import kill from "kill-port";
+import kill from 'kill-port';
+import { clearLogs, runTests, spawnchildProcess } from './lib';
 
 const main = async () => {
   try {
@@ -9,31 +9,31 @@ const main = async () => {
     try {
       await kill(8545);
     } catch (err) {
-      ("hardhat not currently running");
+      console.log('hardhat not currently running');
     }
 
-    console.log("starting local chain and server");
+    console.log('starting local chain and server');
     const chainProcess = spawnchildProcess({
-      name: "chain",
-      command: "yarn",
-      args: ["hardhat:dev"],
+      name: 'chain',
+      command: 'yarn',
+      args: ['hardhat:dev']
     });
-    const serverProcess = spawnchildProcess({
-      name: "server",
-      command: "yarn",
-      args: ["preview"],
-    });
+    // const serverProcess = spawnchildProcess({
+    //   name: 'server',
+    //   command: 'yarn',
+    //   args: ['preview']
+    // });
 
-    console.log("running e2e tests");
+    console.log('running e2e tests');
     await runTests();
-    console.log("tests complete");
+    console.log('tests complete');
 
     chainProcess.kill();
 
     // only way i could find to kill server for now
     kill(3001)
       .then(() => {
-        console.log("tests complete :)");
+        console.log('tests complete :)');
         process.exit();
       })
       .catch((err) => {

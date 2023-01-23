@@ -3,14 +3,17 @@ import Button from '../../Button';
 import { IconContainer, NetworkIcon } from '../../Icons';
 
 interface IProps {
-  chainString: string,
-  accountAddress: string
-  handleCloseMenu: () => void
-  handleDisconnect: () => void
+  chainString: string;
+  accountAddress: string;
+  handleCloseMenu: () => void;
+  handleDisconnect: () => void;
 }
 
 function WalletMenu({
-  chainString, accountAddress, handleCloseMenu, handleDisconnect,
+  chainString,
+  accountAddress,
+  handleCloseMenu,
+  handleDisconnect,
 }: IProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -26,8 +29,11 @@ function WalletMenu({
   }, []);
 
   return (
-    <div ref={menuRef} className="absolute -bottom-10 right-0 transform translate-y-full whitespace-nowrap text-xs p-6 bg-breadgray-100 flex flex-col gap-4 items-end">
-      <div className="flex gap-4 items-center">
+    <div
+      ref={menuRef}
+      className="absolute -bottom-10 right-0 flex translate-y-full transform flex-col items-end gap-4 whitespace-nowrap bg-breadgray-100 p-6 text-xs"
+    >
+      <div className="flex items-center gap-4">
         <IconContainer>
           <NetworkIcon />
         </IconContainer>
@@ -35,9 +41,18 @@ function WalletMenu({
         {chainString}
       </div>
       <div className="pb-3">
-        <a className="underline text-neutral-400 hover:text-neutral-300" target="_blank" href={`https://polygonscan.com/address/${accountAddress}`} rel="noreferrer">View Account</a>
+        <a
+          className="text-neutral-400 underline hover:text-neutral-300"
+          target="_blank"
+          href={`https://polygonscan.com/address/${accountAddress}`}
+          rel="noreferrer"
+        >
+          View Account
+        </a>
       </div>
-      <Button variant="small" onClick={handleDisconnect}>Disconnect</Button>
+      <Button variant="small" onClick={handleDisconnect}>
+        Disconnect
+      </Button>
     </div>
   );
 }

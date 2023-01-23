@@ -4,8 +4,8 @@ import { TToastType, useToast } from '../../context/ToastContext';
 
 function ToastContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="p-4 w-full">
-      <div className="px-6 py-8 md:px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
+    <div className="w-full p-4">
+      <div className="relative m-auto max-w-2xl bg-breadgray-100 px-6 py-8 text-white md:px-12">
         {children}
       </div>
     </div>
@@ -20,7 +20,7 @@ function CloseButton({ onClick }: TCloseProps) {
   return (
     <button
       type="button"
-      className="absolute right-0 top-0 w-12 h-12 p-2 text-neutral-700 hover:text-neutral-500"
+      className="absolute right-0 top-0 h-12 w-12 p-2 text-neutral-700 hover:text-neutral-500"
       onClick={onClick}
     >
       <svg viewBox="0 0 24 24">
@@ -50,11 +50,11 @@ function Toast({ type, message }: TProps) {
   switch (type) {
     case 'ERROR':
       return (
-        <div ref={ref} className="fixed z-10 bottom-0 w-full">
+        <div ref={ref} className="fixed bottom-0 z-10 w-full">
           <ToastContainer>
             <CloseButton onClick={handleCloseToast} />
-            <h1 className="text-red-500 text-xl">Error</h1>
-            <p className="mt-4 text-xs leading-6 break-words">{message}</p>
+            <h1 className="text-xl text-red-500">Error</h1>
+            <p className="mt-4 break-words text-xs leading-6">{message}</p>
           </ToastContainer>
         </div>
       );

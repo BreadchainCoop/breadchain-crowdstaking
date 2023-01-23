@@ -4,20 +4,18 @@ import { IconContainer, WalletIcon } from '../../Icons';
 import CaretIcon from '../../Icons/CaretIcon';
 import WalletMenu from './WalletMenu';
 
-export function Row({
-  children,
-}: { children: ReactNode }) {
+export function Row({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs text-center flex justify-center md:justify-end items-center gap-4">
+    <span className="flex items-center justify-center gap-4 text-center text-xs md:justify-end">
       {children}
     </span>
   );
 }
 
 interface IProps {
-  accountAddress: string
-  chainString: string
-  handleDisconnect: () => void
+  accountAddress: string;
+  chainString: string;
+  handleDisconnect: () => void;
 }
 
 function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
@@ -36,7 +34,7 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
           <WalletIcon />
         </IconContainer>
 
-        <span className="text-xs w-full flex items-center pt-0.5 pr-2 justify-center md:justify-end truncate text-ellipsis">
+        <span className="flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs md:justify-end">
           {formatAddress(accountAddress)}
         </span>
         <IconContainer>
@@ -44,17 +42,14 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
         </IconContainer>
       </button>
 
-      {
-        isMenuOpen && (
-          <WalletMenu
-            accountAddress={accountAddress}
-            handleCloseMenu={() => setIsMenuOpen(false)}
-            handleDisconnect={handleDisconnect}
-            chainString={chainString}
-          />
-        )
-      }
-
+      {isMenuOpen && (
+        <WalletMenu
+          accountAddress={accountAddress}
+          handleCloseMenu={() => setIsMenuOpen(false)}
+          handleDisconnect={handleDisconnect}
+          chainString={chainString}
+        />
+      )}
     </>
   );
 }

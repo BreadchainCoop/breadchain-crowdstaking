@@ -1,16 +1,21 @@
+import { ethers } from 'ethers';
 import { useEffect } from 'react';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
-import { ethers } from 'ethers';
 
 import Button from '../../Button';
 
-import ERC20ABI from '../../../ERC20.json';
 import type { ChainConfiguration } from '../../../config';
 import { useModal } from '../../../context/ModalContext';
 import { useToast } from '../../../context/ToastContext';
-import { TTransactionDisplayState, useTransactionDisplay } from '../../../context/TransactionDisplayContext';
+import {
+  TTransactionDisplayState,
+  useTransactionDisplay,
+} from '../../../context/TransactionDisplayContext';
+import ERC20ABI from '../../../ERC20.json';
 
-function transactionIsPending(transactionDisplay: TTransactionDisplayState): boolean {
+function transactionIsPending(
+  transactionDisplay: TTransactionDisplayState,
+): boolean {
   if (transactionDisplay && transactionDisplay.status === 'PENDING') {
     return true;
   }
@@ -24,10 +29,8 @@ interface IProps {
 function ApproveContract({ chainConfig }: IProps) {
   const { state: modalState, dispatch: dispatchModal } = useModal();
   const { dispatch: dispatchToast } = useToast();
-  const {
-    state: transactionDisplay,
-    dispatch: dispatchTransactionDisplay,
-  } = useTransactionDisplay();
+  const { state: transactionDisplay, dispatch: dispatchTransactionDisplay } =
+    useTransactionDisplay();
 
   const { DAI, BREAD } = chainConfig;
 
@@ -38,9 +41,7 @@ function ApproveContract({ chainConfig }: IProps) {
     args: [BREAD.address, ethers.constants.MaxUint256],
   });
 
-  const {
-    data, error, isSuccess, write,
-  } = useContractWrite(config);
+  const { data, error, isSuccess, write } = useContractWrite(config);
 
   useEffect(() => {
     if (error) {
@@ -66,7 +67,10 @@ function ApproveContract({ chainConfig }: IProps) {
   }, [isSuccess, data, error]);
 
   const handleApproveContract = async () => {
-    dispatchModal({ type: 'SET_MODAL', payload: { type: 'APPROVAL', title: 'Approving BREAD Contract' } });
+    dispatchModal({
+      type: 'SET_MODAL',
+      payload: { type: 'APPROVAL', title: 'Approving BREAD Contract' },
+    });
     write?.();
   };
 

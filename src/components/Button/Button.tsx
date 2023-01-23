@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 import { classNames } from '../../util';
 
 // import { classNames } from '@/util';
@@ -41,10 +41,10 @@ function Button({
     <button
       type="button"
       className={classNames(
-        'relative flex items-center justify-center button-gradient button-shadow bg-opacity-85 text-neutral-900 hover:bg-opacity-100',
+        'button-gradient button-shadow bg-opacity-85 relative flex items-center justify-center text-neutral-900 hover:bg-opacity-100',
         EVariants[variant],
         fullWidth ? 'w-full' : '',
-        mouseIsDown ? 'transform translate-y-1' : '',
+        mouseIsDown ? 'translate-y-1 transform' : '',
       )}
       onClick={onClick}
       disabled={disabled}
@@ -52,13 +52,13 @@ function Button({
       onMouseUp={handleMouseUp}
       data-test={dataTest || ''}
     >
-      <div className="absolute w-1 h-full left-0 transform -translate-x-1 bg-button-border" />
-      <div className="absolute w-1 h-full right-0 transform translate-x-1 bg-button-border" />
-      <div className="absolute w-full h-1 top-0 left-0 right-0 transform -translate-y-1 bg-button-border" />
+      <div className="absolute left-0 h-full w-1 -translate-x-1 transform bg-button-border" />
+      <div className="absolute right-0 h-full w-1 translate-x-1 transform bg-button-border" />
+      <div className="absolute top-0 left-0 right-0 h-1 w-full -translate-y-1 transform bg-button-border" />
       <div
-        className={
-          `absolute w-full h-1 bottom-0 left-0 right-0 transform translate-y-1 bg-button-border${mouseIsDown ? ' hidden' : ''}`
-        }
+        className={`absolute bottom-0 left-0 right-0 h-1 w-full translate-y-1 transform bg-button-border${
+          mouseIsDown ? ' hidden' : ''
+        }`}
       />
       {children}
     </button>

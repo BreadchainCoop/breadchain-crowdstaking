@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ModalProvider } from '../../context/ModalContext';
 import Modal from './Modal';
 
@@ -16,16 +16,16 @@ export default {
 const Template: ComponentStory<typeof Modal> = function ModalWrapper(args) {
   return (
     <ModalProvider>
-      <div style={{
-        transform: 'scale(1)',
-        height: '100vh',
-      }}
+      <div
+        style={{
+          transform: 'scale(1)',
+          height: '100vh',
+        }}
       >
         <Modal
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           {...args}
         />
-
       </div>
     </ModalProvider>
   );

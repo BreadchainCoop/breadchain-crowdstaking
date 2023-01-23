@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import { useNetwork, useWaitForTransaction } from 'wagmi';
 import { useToast } from '../../context/ToastContext';
-import { TTransactionStatus, useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import {
+  TTransactionStatus,
+  useTransactionDisplay,
+} from '../../context/TransactionDisplayContext';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface IProps {
-  hash: `0x${string}`,
-  status: TTransactionStatus
+  hash: `0x${string}`;
+  status: TTransactionStatus;
 }
 
 function Transaction({ hash, status }: IProps) {
@@ -16,10 +19,8 @@ function Transaction({ hash, status }: IProps) {
 
   if (!activeChain) return null;
 
-  const {
-    data: transactionData,
-    isError: transactionIsError,
-  } = useWaitForTransaction({ chainId: activeChain.id, hash });
+  const { data: transactionData, isError: transactionIsError } =
+    useWaitForTransaction({ chainId: activeChain.id, hash });
 
   useEffect(() => {
     if (transactionIsError) {
@@ -53,7 +54,7 @@ function Transaction({ hash, status }: IProps) {
   }
 
   return (
-    <div className="w-full mt-8 text-xs">
+    <div className="mt-8 w-full text-xs">
       <div>
         <a
           className="break-all underline"

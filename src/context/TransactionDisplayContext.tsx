@@ -1,35 +1,42 @@
 import {
-  createContext, ReactNode, useContext, useMemo, useReducer,
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react';
 
-export type TTransactionStatus = 'PENDING' | 'COMPLETE'
+export type TTransactionStatus = 'PENDING' | 'COMPLETE';
 
 export interface ITransaction {
   status: TTransactionStatus;
   hash: `0x${string}`;
 }
 
-export type TTransactionDisplayState = null | ITransaction
+export type TTransactionDisplayState = null | ITransaction;
 
 export type TTransactionDisplayAction =
   | {
-    type: 'SET_PENDING';
-    payload: ITransaction;
-  } | {
-    type: 'SET_COMPLETE'
-  }
+      type: 'SET_PENDING';
+      payload: ITransaction;
+    }
   | {
-    type: 'CLEAR';
-  };
+      type: 'SET_COMPLETE';
+    }
+  | {
+      type: 'CLEAR';
+    };
 
 /* eslint-disable-next-line no-unused-vars */
-export type TTransactionDisplayDispatch = (action: TTransactionDisplayAction) => void;
+export type TTransactionDisplayDispatch = (
+  action: TTransactionDisplayAction,
+) => void;
 
 const TransactionDisplayContext = createContext<
   | {
-    state: TTransactionDisplayState;
-    dispatch: TTransactionDisplayDispatch;
-  }
+      state: TTransactionDisplayState;
+      dispatch: TTransactionDisplayDispatch;
+    }
   | undefined
 >(undefined);
 
@@ -65,7 +72,9 @@ interface ITransactionDisplayProviderProps {
   children: ReactNode;
 }
 
-function TransactionDisplayProvider({ children }: ITransactionDisplayProviderProps) {
+function TransactionDisplayProvider({
+  children,
+}: ITransactionDisplayProviderProps) {
   const [state, dispatch] = useReducer(TransactionDisplayReducer, null);
 
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
@@ -80,7 +89,9 @@ function TransactionDisplayProvider({ children }: ITransactionDisplayProviderPro
 const useTransactionDisplay = () => {
   const context = useContext(TransactionDisplayContext);
   if (context === undefined) {
-    throw new Error('useTransactionDisplay must be used within a TransactionDisplayProvider');
+    throw new Error(
+      'useTransactionDisplay must be used within a TransactionDisplayProvider',
+    );
   }
   return context;
 };

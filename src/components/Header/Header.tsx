@@ -1,7 +1,5 @@
 import { ReactNode, useState } from 'react';
-import {
-  Chain, useAccount, useDisconnect, useNetwork,
-} from 'wagmi';
+import { Chain, useAccount, useDisconnect, useNetwork } from 'wagmi';
 import MobileMenu from '../MobileMenu';
 import DesktopNavigation from './DesktopNavigation';
 import Logo from './Logo';
@@ -11,16 +9,20 @@ import WalletDisplay from './WalletDisplay';
 function Container({ children }: { children: ReactNode }) {
   return (
     <header className="bg-breadgray-100">
-      <div className="max-w-6xl m-0 mx-auto px-6 py-4 md:py-6 md:px-8 flex justify-between">
+      <div className="m-0 mx-auto flex max-w-6xl justify-between px-6 py-4 md:py-6 md:px-8">
         {children}
       </div>
     </header>
   );
 }
 
-const getChainString = (chain: (Chain & {
-  unsupported?: boolean | undefined;
-}) | undefined) => {
+const getChainString = (
+  chain:
+    | (Chain & {
+        unsupported?: boolean | undefined;
+      })
+    | undefined,
+) => {
   if (chain === undefined) return 'No Network';
   if (chain.unsupported) return 'Unsupported';
   return chain.name;
@@ -59,7 +61,6 @@ function Header() {
       />
       <MobileNavigationToggle handleClick={handleNavToggle} />
     </Container>
-
   );
 }
 
