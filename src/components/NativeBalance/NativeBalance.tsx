@@ -1,5 +1,5 @@
-import { useBalance } from 'wagmi';
 import { formatEther } from 'ethers/lib/utils';
+import { useBalance } from 'wagmi';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface INativeBalanceProps {
@@ -13,9 +13,7 @@ interface INativeBalanceOpts {
 const UNKNOWN_BALANCE = <>Balance: unknown</>;
 const LOADING_BALANCE = (
   <>
-    Balance:
-    {' '}
-    <Elipsis />
+    Balance: <Elipsis />
   </>
 );
 
@@ -43,24 +41,11 @@ export function NativeBalance({
 
   switch (status) {
     case 'success':
-      return (
-        <>
-          Balance:
-          {' '}
-          {value}
-        </>
-      );
+      return <>Balance: {value}</>;
     case 'loading':
       return LOADING_BALANCE;
     case 'error':
-      return (
-        <>
-          Balance:
-          {' '}
-          {' '}
-          {error}
-        </>
-      );
+      return <>Balance: {error}</>;
     case 'idle':
     default:
       return UNKNOWN_BALANCE;

@@ -31,5 +31,6 @@ dist-ssr
 cache/
 
 /tests/e2e/videos/*
+/tests/e2e/screenshots/*
 
 dev.sh

@@ -7,7 +7,10 @@ function UnsupportedNetwork() {
 
   const handleSwitchToEthereum = async () => {
     try {
-      modalDispatch({ type: 'SET_MODAL', payload: { type: 'CHANGE_NETWORK', title: 'Switch Network' } });
+      modalDispatch({
+        type: 'SET_MODAL',
+        payload: { type: 'CHANGE_NETWORK', title: 'Switch Network' },
+      });
       const { ethereum } = window as any;
       await ethereum.request({
         method: 'wallet_switchEthereumChain',
@@ -26,7 +29,7 @@ function UnsupportedNetwork() {
 
   return (
     <div className="flex flex-col px-4">
-      <span className="mb-12 text-xs sm:text-base text-center">
+      <span className="mb-12 text-center text-xs sm:text-base">
         You are not connected to a supported chain!
       </span>
       <span className="flex justify-center">

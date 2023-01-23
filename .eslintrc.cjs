@@ -1,27 +1,27 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended', 'airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'import'],
+  plugins: ['react', '@typescript-eslint', 'import', 'prettier'],
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
       },
       typescript: {
-        project: './tsconfig.json',
-      },
-    },
+        project: './tsconfig.json'
+      }
+    }
   },
   rules: {
     indent: ['error', 2, { SwitchCase: 1 }],
@@ -33,8 +33,8 @@ module.exports = {
       'ignorePackages',
       {
         tsx: 'never',
-        ts: 'never',
-      },
-    ],
-  },
+        ts: 'never'
+      }
+    ]
+  }
 };

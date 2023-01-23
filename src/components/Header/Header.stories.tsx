@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Wallet } from 'ethers';
 import {
   MockWagmiDecorator,
@@ -22,9 +22,7 @@ export default {
 } as ComponentMeta<typeof Header>;
 
 const Template: ComponentStory<typeof Header> = function HeaderWrapper() {
-  return (
-    <Header />
-  );
+  return <Header />;
 };
 
 export const Default = Template.bind({});

@@ -1,17 +1,17 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 
-import AppContainer from './ui/AppContainer';
-import Header from '../Header';
-import * as Main from './ui/Main';
-import Footer from '../Footer';
-import Modal from '../Modal';
-import Toast from '../Toast/Toast';
-import { Pantry } from '../Pantry';
-import About from '../../routes/about';
-import SiteTitle from '../SiteTitle/SiteTitle';
-import { useToast } from '../../context/ToastContext';
 import { useModal } from '../../context/ModalContext';
+import { useToast } from '../../context/ToastContext';
+import About from '../../routes/about';
 import Bake from '../../routes/bake';
+import Footer from '../Footer';
+import Header from '../Header';
+import Modal from '../Modal';
+import { Pantry } from '../Pantry';
+import SiteTitle from '../SiteTitle/SiteTitle';
+import Toast from '../Toast/Toast';
+import AppContainer from './ui/AppContainer';
+import * as Main from './ui/Main';
 
 function App() {
   const { state: modal } = useModal();
@@ -20,7 +20,9 @@ function App() {
 
   return (
     <AppContainer>
-      {modal && <Modal type={modal.type} title={modal.title} status={modal.status} />}
+      {modal && (
+        <Modal type={modal.type} title={modal.title} status={modal.status} />
+      )}
       {toast && <Toast type={toast.type} message={toast.message} />}
 
       <Header />
@@ -35,7 +37,7 @@ function App() {
       </Main.Main>
 
       <Footer>
-        <Link to="/pantry" className="opacity-0 hover:opacity-100 px-4 py-2">
+        <Link to="/pantry" className="px-4 py-2 opacity-0 hover:opacity-100">
           pantry
         </Link>
       </Footer>

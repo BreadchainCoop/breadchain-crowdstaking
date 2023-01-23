@@ -14,6 +14,7 @@ module.exports = {
         'button-border': '#2E2E2E',
       },
       fontFamily: {
+        pressstart: ['"Press Start 2P"', 'sans-serif'],
         redhat: ['"Red Hat Text"', 'sans-serif'],
       },
       typography: ({ theme }) => ({

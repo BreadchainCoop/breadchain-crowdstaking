@@ -4,27 +4,34 @@ import TokenBalance from '../TokenBalance';
 import Icon from './Icon';
 import Input from './Input';
 import {
-  PanelBalanceButton, PanelContainer, PanelContent, PanelHeader,
+  PanelBalanceButton,
+  PanelContainer,
+  PanelContent,
+  PanelHeader,
 } from './TokenDisplay';
 
 interface IProps {
-  inputValue: string
-  balanceReadings: UseTokenBalanceResult,
-  tokenType: 'DAI' | 'BREAD'
-  handleInputChange: ChangeEventHandler<HTMLInputElement>
+  inputValue: string;
+  balanceReadings: UseTokenBalanceResult;
+  tokenType: 'DAI' | 'BREAD';
+  handleInputChange: ChangeEventHandler<HTMLInputElement>;
   /* eslint-disable-next-line */
-  handleBalanceClick: (balance: string) => void
+  handleBalanceClick: (balance: string) => void;
 }
 function FromPanel({
-  inputValue, balanceReadings, tokenType, handleBalanceClick, handleInputChange,
+  inputValue,
+  balanceReadings,
+  tokenType,
+  handleBalanceClick,
+  handleInputChange,
 }: IProps) {
   return (
     <PanelContainer>
       <PanelHeader>
-        <PanelBalanceButton onClick={() => handleBalanceClick(balanceReadings.value || '')}>
-          <TokenBalance
-            readings={balanceReadings}
-          />
+        <PanelBalanceButton
+          onClick={() => handleBalanceClick(balanceReadings.value || '')}
+        >
+          <TokenBalance readings={balanceReadings} />
         </PanelBalanceButton>
       </PanelHeader>
       <PanelContent>

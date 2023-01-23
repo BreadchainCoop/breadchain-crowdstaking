@@ -1,25 +1,19 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export function Title({ children }: { children: ReactNode }) {
   return (
-    <div className="py-16 sm:py-32 flex flex-col text-center">
-      {children}
-    </div>
+    <div className="flex flex-col py-16 text-center sm:py-32">{children}</div>
   );
 }
 
 export function H1({ children }: { children: ReactNode }) {
   return (
-    <h1 className="uppercase text-2xl sm:text-5xl mb-1 md:mb-2">
-      {children}
-    </h1>
+    <h1 className="mb-1 text-2xl uppercase sm:text-5xl md:mb-2">{children}</h1>
   );
 }
 
 export function H2({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="uppercase text-1xl sm:text-2xl">{children}</h2>
-  );
+  return <h2 className="text-1xl uppercase sm:text-2xl">{children}</h2>;
 }
 function SiteTitle() {
   return (

@@ -2,13 +2,15 @@ import { ReactNode } from 'react';
 
 interface IExternalNavLinkProps {
   href: string;
-  children: ReactNode
-  handleClick?: () => void
+  children: ReactNode;
+  handleClick?: () => void;
 }
 
-function ExternalNavLink(
-  { href, children, handleClick }: IExternalNavLinkProps,
-) {
+function ExternalNavLink({
+  href,
+  children,
+  handleClick,
+}: IExternalNavLinkProps) {
   return (
     <a
       href={href}
@@ -23,7 +25,7 @@ function ExternalNavLink(
 }
 
 ExternalNavLink.defaultProps = {
-  handleClick: () => { },
+  handleClick: () => {},
 };
 
 export default ExternalNavLink;

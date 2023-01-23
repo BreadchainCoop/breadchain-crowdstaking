@@ -4,7 +4,7 @@ import ExternalNavLink from '../ExternalNavLink';
 import NavLink from '../NavLink';
 
 interface IProps {
-  handleNavToggle: () => void
+  handleNavToggle: () => void;
 }
 
 function MobileNavigation({ handleNavToggle }: IProps) {
@@ -12,7 +12,13 @@ function MobileNavigation({ handleNavToggle }: IProps) {
 
   return (
     <nav className="flex flex-col gap-4 text-right">
-      <NavLink isCurrentPage={location.pathname === '/'} to="/" handleClick={() => handleNavToggle()}>Bake</NavLink>
+      <NavLink
+        isCurrentPage={location.pathname === '/'}
+        to="/"
+        handleClick={() => handleNavToggle()}
+      >
+        Bake
+      </NavLink>
       <NavLink
         isCurrentPage={location.pathname === '/about'}
         to="/about"
@@ -23,7 +29,9 @@ function MobileNavigation({ handleNavToggle }: IProps) {
       <ExternalNavLink href="https://breadchain.mirror.xyz/">
         Blog
       </ExternalNavLink>
-      <ExternalNavLink href="https://guild.xyz/breadchain">Guild</ExternalNavLink>
+      <ExternalNavLink href="https://guild.xyz/breadchain">
+        Guild
+      </ExternalNavLink>
     </nav>
   );
 }

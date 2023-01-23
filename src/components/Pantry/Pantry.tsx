@@ -1,14 +1,12 @@
 /* eslint-disable */
-import React from 'react';
-import {
-  useAccount, useNetwork, useProvider, useSigner,
-} from 'wagmi';
 import { BaseProvider } from '@ethersproject/providers';
+import React from 'react';
+import { useAccount, useNetwork, useProvider, useSigner } from 'wagmi';
 import claimYield from '../../api/claimYield';
 import getBreadSupply from '../../api/getBreadSupply';
+import getMultisigBREADBalance from '../../api/getMultisigBREADBalance';
 import getMultisigDAIBalance from '../../api/getMultisigDAIBalance';
 import getMultisigEtherBalance from '../../api/getMultisigEtherBalance';
-import getMultisigBREADBalance from '../../api/getMultisigBREADBalance';
 import getYieldAccrued from '../../api/getYieldAccrued';
 import Button from '../Button';
 import Elipsis from '../Elipsis/Elipsis';
@@ -40,7 +38,8 @@ export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
   >(null);
 
   React.useEffect(() => {
-    const provider = activeChain?.id === 80001 ? mumbaiProvider : polygonProvider;
+    const provider =
+      activeChain?.id === 80001 ? mumbaiProvider : polygonProvider;
 
     getBreadSupply(provider as BaseProvider).then((res) => {
       if (!res) {
@@ -94,7 +93,8 @@ export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
     if (!activeChain) return;
     if (!signer) return;
 
-    const provider = activeChain.id === 80001 ? mumbaiProvider : polygonProvider;
+    const provider =
+      activeChain.id === 80001 ? mumbaiProvider : polygonProvider;
 
     claimYield(signer, provider)
       .then((tx) => {
@@ -118,9 +118,8 @@ export const Pantry: React.FC<React.PropsWithChildren<unknown>> = () => {
   });
 
   return (
-    <section className="max-w-4xl m-auto p-8 py-16 grid grid-cols-2 gap-8">
-      <span>BREAD in circulation: </span>
-      {' '}
+    <section className="m-auto grid max-w-4xl grid-cols-2 gap-8 p-8 py-16">
+      <span>BREAD in circulation: </span>{' '}
       {breadSupply ? (
         <span>{BREADformatter.format(parseFloat(breadSupply))}</span>
       ) : (

@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
 import { useAccount, useConnect } from 'wagmi';
 
-import Button from '../Button';
 import { useToast } from '../../context/ToastContext';
+import Button from '../Button';
 
 function ConnectWalletButton() {
   const { connector: activeConnector, isConnected } = useAccount();
-  const {
-    connect, connectors, error,
-  } = useConnect();
+  const { connect, connectors, error } = useConnect();
   const { dispatch: toastDispatch } = useToast();
 
   if (!!activeConnector && isConnected) throw new Error('Connector error!');
 
   useEffect(() => {
-    if (error) toastDispatch({ type: 'SET_TOAST', payload: { type: 'ERROR', message: error.message } });
+    if (error)
+      toastDispatch({
+        type: 'SET_TOAST',
+        payload: { type: 'ERROR', message: error.message },
+      });
   }, [error]);
 
   return (

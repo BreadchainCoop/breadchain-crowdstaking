@@ -2,14 +2,12 @@ import { TModalStatus, TModalType, useModal } from '../../context/ModalContext';
 
 import Elipsis from '../Elipsis/Elipsis';
 import AddTokens from './AddTokens';
-import {
-  Container, Inner, Heading, Message,
-} from './ui';
+import { Container, Heading, Inner, Message } from './ui';
 
 type TProps = {
-  type: TModalType,
-  title: string,
-  status: TModalStatus
+  type: TModalType;
+  title: string;
+  status: TModalStatus;
 };
 
 function Modal({ type, title, status }: TProps) {
@@ -26,7 +24,7 @@ function Modal({ type, title, status }: TProps) {
             {status === 'UNLOCKED' && (
               <button
                 type="button"
-                className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
+                className="absolute right-0 top-0 p-4 text-xs text-neutral-500"
                 onClick={handleCloseModal}
               >
                 X
@@ -56,7 +54,7 @@ function Modal({ type, title, status }: TProps) {
             {status === 'UNLOCKED' && (
               <button
                 type="button"
-                className="absolute right-0 top-0 p-4 text-neutral-500 text-xs"
+                className="absolute right-0 top-0 p-4 text-xs text-neutral-500"
                 onClick={handleCloseModal}
               >
                 X

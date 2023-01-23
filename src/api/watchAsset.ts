@@ -1,6 +1,9 @@
 import config from '../config';
 
-export const watchAsset = async (tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE', chainId: number): Promise<void> => {
+export const watchAsset = async (
+  tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE',
+  chainId: number,
+): Promise<void> => {
   const { ethereum } = window as any;
   const { address, symbol, decimals } = config[chainId][tokenKey];
 

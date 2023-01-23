@@ -1,5 +1,9 @@
 import {
-  createContext, ReactNode, useContext, useMemo, useReducer,
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react';
 
 export type TToastType = 'INFO' | 'ERROR' | 'SUCCESS';
@@ -11,24 +15,24 @@ export type TToastState = null | {
 
 export type TToastAction =
   | {
-    type: 'SET_TOAST';
-    payload: {
-      type: TToastType;
-      message: string;
-    };
-  }
+      type: 'SET_TOAST';
+      payload: {
+        type: TToastType;
+        message: string;
+      };
+    }
   | {
-    type: 'CLEAR_TOAST';
-  };
+      type: 'CLEAR_TOAST';
+    };
 
 /* eslint-disable-next-line no-unused-vars */
 export type TToastDispatch = (action: TToastAction) => void;
 
 const ToastContext = createContext<
   | {
-    state: TToastState;
-    dispatch: TToastDispatch;
-  }
+      state: TToastState;
+      dispatch: TToastDispatch;
+    }
   | undefined
 >(undefined);
 

@@ -1,8 +1,7 @@
-import fs from "fs";
-import { promises as fsPromises } from "fs";
-import path from "path";
-import { spawn } from "child_process";
-import chalk from "chalk";
+import chalk from 'chalk';
+import { spawn } from 'child_process';
+import fs, { promises as fsPromises } from 'fs';
+import path from 'path';
 
 export const appendLog = (filepath: string, data: string) =>
   new Promise<void>((resolve, reject) => {
@@ -16,7 +15,7 @@ export const appendLog = (filepath: string, data: string) =>
   });
 
 export const clearLogs = async () => {
-  const logsDir = path.join(__dirname, "logs");
+  const logsDir = path.join(__dirname, 'logs');
   try {
     // throws if directory doesn't exist
     await fsPromises.access(logsDir);
@@ -30,7 +29,7 @@ export const clearLogs = async () => {
 export const spawnchildProcess = ({
   name,
   command,
-  args,
+  args
 }: {
   name: string;
   command: string;
@@ -39,20 +38,20 @@ export const spawnchildProcess = ({
   try {
     const child = spawn(command, args);
 
-    const filepath = path.join(__dirname, `logs`, `${name}.log`);
-    appendLog(filepath, `PID ${child.pid}\n`);
+    const pidFilepath = path.join(__dirname, `logs`, `${name}.log`);
+    appendLog(pidFilepath, `PID ${child.pid}\n`);
 
-    child.stdout.on("data", function (data: string) {
+    child.stdout.on('data', (data: string) => {
       const filepath = path.join(__dirname, `logs`, `${name}.log`);
       appendLog(filepath, data);
     });
 
-    child.stderr.on("data", function (data: any) {
+    child.stderr.on('data', (data: any) => {
       const filepath = path.join(__dirname, `logs`, `${name}.error.log`);
       appendLog(filepath, data);
     });
 
-    child.on("close", function () {
+    child.on('close', () => {
       console.log(`${name} process ended.`);
     });
 
@@ -62,23 +61,23 @@ export const spawnchildProcess = ({
   } catch (err) {
     console.log(err);
   }
+  return null;
 };
 
-export const runTests = () => {
-  return new Promise<void>((resolve) => {
-    console.log(chalk.bgGray.magenta.bold("running tests..."));
-    const test = spawn("yarn", ["test:synpress"]);
+export const runTests = () =>
+  new Promise<void>((resolve) => {
+    console.log(chalk.bgGray.magenta.bold('running tests...'));
+    const test = spawn('yarn', ['test:synpress']);
 
     test.stdout.pipe(process.stdin);
 
-    test.stdout.on("data", (data) => {
+    test.stdout.on('data', (data) => {
       const filepath = path.join(__dirname, `logs`, `test.log`);
       appendLog(filepath, JSON.stringify(data));
     });
 
-    test.on("exit", function (data) {
-      process.stdout.write(chalk.bgGray.greenBright("tests complete"));
+    test.on('exit', () => {
+      process.stdout.write(chalk.bgGray.greenBright('tests complete'));
       resolve();
     });
   });
-};

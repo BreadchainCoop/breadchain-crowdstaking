@@ -15,7 +15,8 @@
     "hardhat:fund": "HARDHAT_NETWORK=localhost node hardhat/fund.js",
     "e2e:local": "yarn build:testing && ts-node tests/scripts/local.ts",
     "test:synpress": "env-cmd -f .env yarn synpress run --config supportFile='tests/e2e/support.js'",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "format": "prettier --config .prettierrc 'src/**/*.ts' 'src/**/*.tsx' --write"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
@@ -35,6 +36,7 @@
     "gsap": "^3.9.1",
     "hardhat-ethernal": "^2.1.0",
     "postcss": "^8.4.6",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
@@ -61,6 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "babel-loader": "^8.2.5",
+    "chalk": "^5.2.0",
     "eslint": "^8.26.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -72,7 +75,8 @@
     "hardhat": "^2.11.2",
     "kill-port": "^2.0.1",
     "postcss-import": "^14.1.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.8.3",
+    "prettier-plugin-organize-imports": "^3.2.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.9.1",

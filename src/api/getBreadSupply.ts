@@ -1,5 +1,5 @@
-import { ethers } from 'ethers';
 import { BaseProvider } from '@ethersproject/providers';
+import { ethers } from 'ethers';
 
 import BREADabi from '../BreadPolygon.json';
 import config from '../config';

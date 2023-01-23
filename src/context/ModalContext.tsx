@@ -1,49 +1,57 @@
 import {
-  createContext, ReactNode, useContext, useMemo, useReducer,
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useReducer,
 } from 'react';
 
 export type TModalType =
-  'CONNECT_WALLET' |
-  'CHANGE_NETWORK' |
-  'CHANGING_NETWORK' |
-  'APPROVAL' |
-  'BAKING' |
-  'BURNING'
+  | 'CONNECT_WALLET'
+  | 'CHANGE_NETWORK'
+  | 'CHANGING_NETWORK'
+  | 'APPROVAL'
+  | 'BAKING'
+  | 'BURNING';
 
-export type TModalStatus = 'LOCKED' | 'UNLOCKED'
+export type TModalStatus = 'LOCKED' | 'UNLOCKED';
 
 export type TModalState = null | {
   type: TModalType;
   status: TModalStatus;
   title: string;
-}
+};
 
 export type TModalAction =
   | {
-    type: 'SET_MODAL';
-    payload: {
-      type: TModalType;
-      title: string;
-    };
-  } | {
-    type: 'UNLOCK_MODAL'
-  }
+      type: 'SET_MODAL';
+      payload: {
+        type: TModalType;
+        title: string;
+      };
+    }
   | {
-    type: 'CLEAR_MODAL';
-  };
+      type: 'UNLOCK_MODAL';
+    }
+  | {
+      type: 'CLEAR_MODAL';
+    };
 
 /* eslint-disable-next-line no-unused-vars */
 export type TModalDispatch = (action: TModalAction) => void;
 
 const ModalContext = createContext<
   | {
-    state: TModalState;
-    dispatch: TModalDispatch;
-  }
+      state: TModalState;
+      dispatch: TModalDispatch;
+    }
   | undefined
 >(undefined);
 
-const modalReducer = (state: TModalState, action: TModalAction): TModalState => {
+const modalReducer = (
+  state: TModalState,
+  action: TModalAction,
+): TModalState => {
   const { type: actionType } = action;
   switch (actionType) {
     case 'SET_MODAL':
@@ -58,7 +66,8 @@ const modalReducer = (state: TModalState, action: TModalAction): TModalState => 
       };
     case 'UNLOCK_MODAL':
       if (state === null) throw new Error('modal not set');
-      if (state.type !== 'BAKING' && state.type !== 'BURNING') throw new Error('modal type cannot be unlocked');
+      if (state.type !== 'BAKING' && state.type !== 'BURNING')
+        throw new Error('modal type cannot be unlocked');
       return {
         ...state,
         status: 'UNLOCKED',
