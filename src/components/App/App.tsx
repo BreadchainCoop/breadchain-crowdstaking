@@ -1,13 +1,15 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { useModal } from '../../context/ModalContext';
 import { useToast } from '../../context/ToastContext';
 import About from '../../routes/about';
 import Bake from '../../routes/bake';
 import Footer from '../Footer';
+import FooterNav from '../FooterNav';
 import Header from '../Header';
 import Modal from '../Modal';
 import { Pantry } from '../Pantry';
+import PantryLink from '../PantryLink/PantryLink';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Toast from '../Toast/Toast';
 import AppContainer from './ui/AppContainer';
@@ -37,9 +39,8 @@ function App() {
       </Main.Main>
 
       <Footer>
-        <Link to="/pantry" className="px-4 py-2 opacity-0 hover:opacity-100">
-          pantry
-        </Link>
+        <PantryLink />
+        <FooterNav />
       </Footer>
     </AppContainer>
   );
