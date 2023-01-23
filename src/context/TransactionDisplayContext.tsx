@@ -27,8 +27,8 @@ export type TTransactionDisplayAction =
       type: 'CLEAR';
     };
 
-/* eslint-disable-next-line no-unused-vars */
 export type TTransactionDisplayDispatch = (
+  /* eslint-disable-next-line no-unused-vars */
   action: TTransactionDisplayAction,
 ) => void;
 

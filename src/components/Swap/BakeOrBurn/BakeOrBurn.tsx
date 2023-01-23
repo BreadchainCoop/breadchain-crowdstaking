@@ -91,17 +91,20 @@ function BakeOrBurn({
   const handleSubmit = async () => {
     dispatchModal({
       type: 'SET_MODAL',
-      payload:
-        mode === 'BAKE'
-          ? {
-              type: 'BAKING',
-              title: `Baking ${value} BREAD`,
-            }
-          : {
-              type: 'BURNING',
-              title: `Burning ${value} BREAD`,
-            },
+      payload: (() => {
+        if (mode === 'BAKE') {
+          return {
+            type: 'BAKING',
+            title: `Baking ${value} BREAD`,
+          };
+        }
+        return {
+          type: 'BURNING',
+          title: `Burning ${value} BREAD`,
+        };
+      })(),
     });
+
     write?.();
   };
 
