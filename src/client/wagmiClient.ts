@@ -2,7 +2,6 @@ import { chain, configureChains } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -49,12 +48,12 @@ export const getClient = (mode: IViteMode) => {
               shimDisconnect: true,
             },
           }),
-          new WalletConnectConnector({
-            chains,
-            options: {
-              qrcode: true,
-            },
-          }),
+          // new WalletConnectConnector({
+          //   chains,
+          //   options: {
+          //     qrcode: true,
+          //   },
+          // }),
         ],
         provider,
         webSocketProvider,
