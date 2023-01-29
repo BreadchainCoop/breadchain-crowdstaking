@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import FooterNav from '../FooterNav';
 import PantryLink from '../PantryLink/PantryLink';
 
 function Container({ children }: { children: ReactNode }) {
@@ -14,7 +13,7 @@ function Footer() {
   return (
     <Container>
       <PantryLink />
-      <FooterNav />
+      {/* <FooterNav /> */}
     </Container>
   );
 }
