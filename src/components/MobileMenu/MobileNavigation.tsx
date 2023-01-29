@@ -26,11 +26,15 @@ function MobileNavigation({ handleNavToggle }: IProps) {
       >
         About
       </NavLink>
+      <NavLink
+        isCurrentPage={location.pathname === '/faq'}
+        to="/faq"
+        handleClick={() => handleNavToggle()}
+      >
+        FAQ
+      </NavLink>
       <ExternalNavLink href="https://breadchain.mirror.xyz/">
         Blog
-      </ExternalNavLink>
-      <ExternalNavLink href="https://guild.xyz/breadchain">
-        Guild
       </ExternalNavLink>
     </nav>
   );
