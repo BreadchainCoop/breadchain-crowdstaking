@@ -29,7 +29,7 @@ function UnsupportedNetwork() {
 
   return (
     <div className="flex flex-col px-4">
-      <span className="mb-12 text-center text-xs sm:text-base">
+      <span className="mb-12 text-center text-xs text-neutral-300 sm:text-base">
         You are not connected to a supported chain!
       </span>
       <span className="flex justify-center">
