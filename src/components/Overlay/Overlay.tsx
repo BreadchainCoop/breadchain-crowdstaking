@@ -11,7 +11,7 @@ function Overlay({
   return (
     <div
       className={classNames(
-        'z-9 fixed top-0 bottom-0 left-0 right-0 h-screen w-screen bg-neutral-900 opacity-0 transition-opacity',
+        'z-9 fixed top-0 bottom-0 left-0 right-0 h-screen w-screen bg-neutral-900 opacity-0 transition-opacity md:hidden',
         isOpen ? 'block opacity-70' : 'hidden',
       )}
     >
