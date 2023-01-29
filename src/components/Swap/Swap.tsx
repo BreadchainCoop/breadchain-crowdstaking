@@ -141,8 +141,8 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
         }
         tokenType={swapState.mode === 'BAKE' ? 'BREAD' : 'DAI'}
       />
-      <div className="w-full px-4 pt-8 pb-12 text-xs">
-        Matic <NativeBalance address={accountAddress} />
+      <div className="w-full px-4 pt-8 pb-12 text-xs text-neutral-300">
+        Matic Balance <NativeBalance address={accountAddress} />
       </div>
       {daiAllowanceStatus === 'loading' && <CheckingApproval />}
       {daiAllowanceStatus === 'success' &&

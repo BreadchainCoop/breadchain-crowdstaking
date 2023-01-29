@@ -57,7 +57,7 @@ function Transaction({ hash, status }: IProps) {
     <div className="mt-8 w-full text-xs">
       <div>
         <a
-          className="break-all underline"
+          className="break-all text-neutral-400 underline"
           target="_blank"
           rel="noopener noreferrer"
           href={`${endpoint}/tx/${hash}`}
@@ -65,7 +65,7 @@ function Transaction({ hash, status }: IProps) {
           {hash}
         </a>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 text-neutral-300">
         {status === 'PENDING' && (
           <>
             transaction pending

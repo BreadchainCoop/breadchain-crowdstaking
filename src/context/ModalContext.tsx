@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 export type TModalType =
+  | 'DISCLAIMER'
   | 'CONNECT_WALLET'
   | 'CHANGE_NETWORK'
   | 'CHANGING_NETWORK'

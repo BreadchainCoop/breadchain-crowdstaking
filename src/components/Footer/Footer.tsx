@@ -1,14 +1,20 @@
 import { ReactNode } from 'react';
+import PantryLink from '../PantryLink/PantryLink';
 
-type TProps = { children: ReactNode };
-
-function Footer({ children }: TProps) {
+function Container({ children }: { children: ReactNode }) {
   return (
-    <footer>
-      <div className="flex items-center justify-between px-2 py-4 text-xs text-neutral-500 md:px-4">
-        {children}
-      </div>
-    </footer>
+    <div className="relative mt-16 flex flex-col items-center justify-center px-2 py-12  md:px-4">
+      {children}
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <Container>
+      <PantryLink />
+      {/* <FooterNav /> */}
+    </Container>
   );
 }
 

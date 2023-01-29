@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { formatAddress } from '../../../util';
+import { classNames, formatAddress } from '../../../util';
 import { IconContainer, WalletIcon } from '../../Icons';
 import CaretIcon from '../../Icons/CaretIcon';
 import WalletMenu from './WalletMenu';
@@ -34,7 +34,12 @@ function WalletInfo({ accountAddress, handleDisconnect, chainString }: IProps) {
           <WalletIcon />
         </IconContainer>
 
-        <span className="flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs md:justify-end">
+        <span
+          className={classNames(
+            'flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs text-neutral-400 hover:text-neutral-300 md:justify-end',
+            isMenuOpen ? 'text-neutral-300' : '',
+          )}
+        >
           {formatAddress(accountAddress)}
         </span>
         <IconContainer>

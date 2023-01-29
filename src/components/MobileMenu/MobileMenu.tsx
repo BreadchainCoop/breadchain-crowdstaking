@@ -2,17 +2,7 @@ import MobileNavigation from './MobileNavigation';
 import MobileWalletDisplay from './MobileWalletDisplay';
 
 import { classNames } from '../../util';
-
-function Overlay({ isOpen }: { isOpen: boolean }) {
-  return (
-    <div
-      className={classNames(
-        'z-9 fixed top-0 bottom-0 left-0 right-0 h-screen w-screen bg-neutral-900 opacity-0 transition-opacity',
-        isOpen ? 'block opacity-70' : 'hidden',
-      )}
-    />
-  );
-}
+import Overlay from '../Overlay';
 
 interface IProps {
   isOpen: boolean;

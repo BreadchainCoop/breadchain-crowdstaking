@@ -1,4 +1,4 @@
-export const classNames = (...classes: String[]) =>
+export const classNames = (...classes: string[]) =>
   classes.filter(Boolean).join(' ');
 
 export const formatAddress = (address: string): string =>
