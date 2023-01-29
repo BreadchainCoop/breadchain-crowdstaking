@@ -1,16 +1,16 @@
 import Prose from '../components/Prose/Prose';
 import * as SiteTitle from '../components/SiteTitle/SiteTitle';
-import { html } from '../markdown/about.md';
+import { html } from '../markdown/faq.md';
 
-function About() {
+function FAQ() {
   return (
     <>
       <SiteTitle.Title>
-        <SiteTitle.H1>About</SiteTitle.H1>
+        <SiteTitle.H1>FAQ</SiteTitle.H1>
       </SiteTitle.Title>
       <Prose html={html} />;
     </>
   );
 }
 
-export default About;
+export default FAQ;

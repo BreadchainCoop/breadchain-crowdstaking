@@ -4,11 +4,11 @@ import { useModal } from '../../context/ModalContext';
 import { useToast } from '../../context/ToastContext';
 import About from '../../routes/about';
 import Bake from '../../routes/bake';
+import FAQ from '../../routes/faq';
 import Footer from '../Footer';
 import Header from '../Header';
 import Modal from '../Modal';
 import { Pantry } from '../Pantry';
-import SiteTitle from '../SiteTitle/SiteTitle';
 import Toast from '../Toast/Toast';
 import AppContainer from './ui/AppContainer';
 import * as Main from './ui/Main';
@@ -27,11 +27,11 @@ function App() {
 
       <Header />
 
-      <SiteTitle />
       <Main.Main>
         <Routes>
           <Route path="/" element={<Bake />} />
           <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/pantry" element={<Pantry />} />
         </Routes>
       </Main.Main>

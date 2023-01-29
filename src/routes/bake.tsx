@@ -1,6 +1,7 @@
 import { useAccount, useNetwork } from 'wagmi';
 import * as Main from '../components/App/ui/Main';
 import ConnectWalletButton from '../components/ConnectWalletButton';
+import SiteTitle from '../components/SiteTitle/SiteTitle';
 import Swap from '../components/Swap';
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 import config from '../config';
@@ -20,20 +21,32 @@ export function Bake() {
 
   if (!activeConnector || !activeChain || !accountAddress || !isConnected) {
     return (
-      <Main.Inner>
-        <ConnectWalletButton />
-      </Main.Inner>
+      <>
+        <SiteTitle />
+        <Main.Inner>
+          <ConnectWalletButton />
+        </Main.Inner>
+      </>
     );
   }
 
-  if (activeChain.unsupported) return <UnsupportedNetwork />;
+  if (activeChain.unsupported)
+    return (
+      <>
+        <SiteTitle />
+        <UnsupportedNetwork />
+      </>
+    );
   if (!configuration)
     throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
 
   return (
-    <Main.Inner>
-      <Swap chainConfig={configuration} accountAddress={accountAddress} />
-    </Main.Inner>
+    <>
+      <SiteTitle />
+      <Main.Inner>
+        <Swap chainConfig={configuration} accountAddress={accountAddress} />
+      </Main.Inner>
+    </>
   );
 }
 
