@@ -17,10 +17,10 @@ Exchanges like Coinbase, Crypto.com, and Binance offer withdrawals directly on t
 **Option 2** - Transak / Moonpay
 With [Transak](https://transak.com/) you can buy crypto with a debit or credit card including MATIC to send to a polygon wallet. [Moonpay](https://www.moonpay.com/buy/matic) is another option for those in the US. You may need to go through KYC.
 
-**Option 3** - [Polygon Bridge] (https://wallet.polygon.technology/polygon/bridge/deposit)
+**Option 3** - [Polygon Bridge](https://wallet.polygon.technology/polygon/bridge/deposit)
 The official Polygon bridge can be used by those who already have assets on the ethereum main chain but there will potentially be a significant gas cost.
 
-**Option 4** - [Hop Exchange] (https://hop.exchange/)
+**Option 4** - [Hop Exchange](https://hop.exchange/)
 Hop Exchange allows asset bridging across several Ethereum layer 2s and Polygon so that you don’t have to pay mainnet transaction fees.
 
 ### Why use Polygon and not another network?
@@ -47,7 +47,7 @@ It disappears! This way, the only amount of BREAD that can be existence is the e
 
 BREAD is essentially a wrapped version of DAI and is always backed by an equivalent amount of DAI so you can use BREAD similarly as you would DAI except by using BREAD, you are expressing your support for the cooperative economy. In the Crypto Leftist discord community, as a BREAD holder you get access to an extra channel only accessible to holders of BREAD. As the Breadchain Network grows, we plan on having more benefits to holding or transacting with BREAD. 
 
-Listeners of [The Blockchain Socialist] (https://theblockchainsocialist.com/) podcast can become members of the TBS DAO by purchasing the TBS NFT monthly subscription in BREAD which gives them access to being able to vote on what happens to a portion of the revenues collected.
+Listeners of [The Blockchain Socialist](https://theblockchainsocialist.com/) podcast can become members of the TBS DAO by purchasing the TBS NFT monthly subscription in BREAD which gives them access to being able to vote on what happens to a portion of the revenues collected.
 
 If you’re interested in partnering up to explore uses of BREAD with your own project, please reach out at breadchaincoop@gmail.com. We are especially interested in attempts to use BREAD as a reserve asset for helping cooperative blockchain projects.
 
