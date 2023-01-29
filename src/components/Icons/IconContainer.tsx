@@ -1,13 +1,29 @@
 import { ReactNode } from 'react';
+import { classNames } from '../../util';
 
-type TProps = { children: ReactNode };
+interface IProps {
+  children: ReactNode;
+  size?: '3' | '4' | '5' | '6';
+}
 
-export function IconContainer({ children }: TProps) {
+export function IconContainer({ children, size }: IProps) {
   return (
-    <span className="flex h-6 w-6 items-center justify-center text-neutral-200">
+    <span
+      className={classNames(
+        `flex items-center justify-center `,
+        'another-class',
+        size === '3' ? 'h-3 w-3' : '',
+        size === '4' ? 'h-4 w-4' : '',
+        size === '5' ? 'h-5 w-5' : '',
+        size === '6' ? 'h-6 w-6' : '',
+      )}
+    >
       {children}
     </span>
   );
 }
+IconContainer.defaultProps = {
+  size: '6',
+};
 
 export default IconContainer;
