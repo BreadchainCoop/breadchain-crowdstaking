@@ -1,6 +1,6 @@
 ### What is Breadchain?
 
-Breadchain is a collective federation of decentralized cooperative projects looking to forge solidarity through tech projects that help us build a truly cooperative, democratic economy. You can read more about us [here](https://breadcha.in/blog/2).
+Breadchain is a collective federation of decentralized cooperative projects looking to forge solidarity through tech projects that help us build a truly cooperative, democratic economy. You can read more about us [here](https://breadchain.mirror.xyz/).
 
 ### What do I need to get some BREAD?
 
@@ -8,24 +8,24 @@ You need to have the [Metamask](https://metamask.io/) browser plugin (or a walle
 
 ### How do I get DAI and MATIC on the Polygon network?
 
-First make sure that your wallet can connect to Polygon. [Here](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) are the instructions for doing so on Metamask. There are then several options for getting DAI and MATIC to your wallet on the Polygon network.
+First make sure that your wallet can connect to Polygon. [Here](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) are the instructions for doing so on Metamask but the same can be applied for many others. There are then several options for getting DAI and MATIC to your wallet on the Polygon network.
 
-#### **Option 1** - [Crypto.com](http://Crypto.com) or Binance
+**Option 1** - Directly from a Centralized Exchange
 
-[Crypto.com](http://Crypto.com), Binance, and MEXC offer direct withdraw of MATIC to the Polygon network.
+Exchanges like Coinbase, Crypto.com, and Binance offer withdrawals directly on to Polygon.
 
 **Option 2** - Transak / Moonpay
 With [Transak](https://transak.com/) you can buy crypto with a debit or credit card including MATIC to send to a polygon wallet. [Moonpay](https://www.moonpay.com/buy/matic) is another option for those in the US. You may need to go through KYC.
 
-**Option 3** - Layerswap
-[Layerswap.io](http://Layerswap.io) offers for many CEXs to withdraw directly to Polygon and several other L2s but does not offer MATIC, only ETH, USDC, or LRC so the user will need MATIC already on a Polygon wallet. If a user does not have MATIC but can use Layerswap, they can also use the MATIC faucet to get the first amount needed to make transactions: [https://matic.supply/](https://matic.supply/) (will need to do several times).
-
-**Option 4** - Polygon Bridge
+**Option 3** - [Polygon Bridge] (https://wallet.polygon.technology/polygon/bridge/deposit)
 The official Polygon bridge can be used by those who already have assets on the ethereum main chain but there will potentially be a significant gas cost.
+
+**Option 4** - [Hop Exchange] (https://hop.exchange/)
+Hop Exchange allows asset bridging across several Ethereum layer 2s and Polygon so that you don’t have to pay mainnet transaction fees.
 
 ### Why use Polygon and not another network?
 
-When we first detailed the application we had the intention of deploying it on the Ethereum main net but we realized that the gas fees were much too high to justify whereas using the app on Polygon consistently costs below $0.02 or even below $0.01 to interact with. We understand that deploying on Polygon is less decentralized than the Ethereum main net, but for the beginning we think this is the right approach. In the future we’d like to consider moving to a proper Ethereum Layer 2 solution but we are waiting to see the ecosystem mature before migrating. At the same time, Polygon usually yields a good APY as it has a thriving DeFi ecosystem for the moment.
+When we first detailed the application we had the intention of deploying it on the Ethereum main net but we realized that the gas fees were much too high to justify whereas using the app on Polygon consistently costs below $0.03 or even below $0.01 to interact with. We understand that deploying on Polygon is less decentralized than the Ethereum main net, but for the beginning we think this is the right approach. In the future we’d like to consider moving to a proper Ethereum Layer 2 solution but we are waiting to see the ecosystem mature before migrating. At the same time, Polygon usually yields a good APY as it has a thriving DeFi ecosystem for the moment.
 
 ### How does me minting BREAD, help the cooperative economy on the blockchain?
 
@@ -45,13 +45,18 @@ It disappears! This way, the only amount of BREAD that can be existence is the e
 
 ### What can I do with BREAD?
 
-BREAD is essentially a wrapped version of DAI and is always backed by an equivalent amount of DAI so you can use BREAD similarly as you would DAI except by using BREAD, you are expressing your support for the cooperative economy. In the Crypto Leftist discord community, as a BREAD holder you get access to an extra channel only accessible to holders of BREAD. As the Breadchain Network grows, we plan on having more benefits to holding or transacting with BREAD. If you’re interested in partnering up to explore uses of BREAD with your own project, please reach out at breadchaincoop@gmail.com. We are especially interested in attempts to use BREAD as a reserve asset for helping cooperative blockchain projects.
+BREAD is essentially a wrapped version of DAI and is always backed by an equivalent amount of DAI so you can use BREAD similarly as you would DAI except by using BREAD, you are expressing your support for the cooperative economy. In the Crypto Leftist discord community, as a BREAD holder you get access to an extra channel only accessible to holders of BREAD. As the Breadchain Network grows, we plan on having more benefits to holding or transacting with BREAD. 
+
+Listeners of [The Blockchain Socialist] (https://theblockchainsocialist.com/) podcast can become members of the TBS DAO by purchasing the TBS NFT monthly subscription in BREAD which gives them access to being able to vote on what happens to a portion of the revenues collected.
+
+If you’re interested in partnering up to explore uses of BREAD with your own project, please reach out at breadchaincoop@gmail.com. We are especially interested in attempts to use BREAD as a reserve asset for helping cooperative blockchain projects.
 
 ### Is this stablecoin risky like what happened with LUNA / UST?
 
-The difference with UST is that DAI, which backs BREAD, is an over-collateralized stablecoin that runs on MakerDAO whereas UST was an algorithmic stablecoin with very little collateralization. Of course there is always a risk in anything financial, but the basics of BREAD token solvency relies ultimately on 2 things:
+The difference with UST is that DAI, which backs BREAD, is an over-collateralized stablecoin that runs on MakerDAO whereas UST was an algorithmic stablecoin with very little or no collateralization. Of course there is always a risk in this space, but the basics of BREAD token solvency relies ultimately on 3 things:
 
 - Solvency of DAI
 - Solvency of the Aave protocol
+- No unforeseen smart contract bugs
 
-Given those two assumptions, BREAD is solvent.
+Given those three assumptions, BREAD is solvent.
