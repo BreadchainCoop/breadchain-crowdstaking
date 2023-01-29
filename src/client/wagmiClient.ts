@@ -1,3 +1,4 @@
+import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { chain, configureChains } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -48,6 +49,7 @@ export const getClient = (mode: IViteMode) => {
               shimDisconnect: true,
             },
           }),
+          new SafeConnector({ chains }),
           // new WalletConnectConnector({
           //   chains,
           //   options: {
@@ -83,6 +85,7 @@ export const getClient = (mode: IViteMode) => {
               shimDisconnect: true,
             },
           }),
+          new SafeConnector({ chains }),
         ],
         provider: hardhatProvider,
         webSocketProvider: hardhatWebSocketProvider,
