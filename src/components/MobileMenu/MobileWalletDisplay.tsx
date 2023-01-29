@@ -1,6 +1,6 @@
 import { formatAddress } from '../../util';
-import { IconContainer, NetworkIcon } from '../Icons';
-import LinkButton from '../LinkButton';
+import Button from '../Button';
+import { IconContainer, NetworkIcon, WalletIcon } from '../Icons';
 
 interface IProps {
   accountAddress: string | undefined;
@@ -14,21 +14,22 @@ function MobileWalletDisplay({
   handleDisconnect,
 }: IProps) {
   return (
-    <section className="flex flex-col gap-2 px-5 text-xs">
-      <div className="flex items-center justify-end gap-4">
-        <IconContainer>
+    <section className="flex flex-col px-5 text-xs text-neutral-400">
+      <div className="flex items-center justify-end gap-4 pb-6">
+        <IconContainer size="6">
           <NetworkIcon />
         </IconContainer>
         {chainString}
       </div>
-      {accountAddress && (
+      {accountAddress ? (
         <div className="flex flex-col gap-4">
-          <span className="items-right flex w-full justify-end truncate text-ellipsis pt-0.5 text-xs md:justify-end">
+          <span className="items-right flex w-full items-center justify-end gap-4 truncate text-ellipsis pt-0.5 text-xs md:justify-end">
+            <IconContainer size="5">
+              <WalletIcon />
+            </IconContainer>
             {formatAddress(accountAddress)}
           </span>
-          <div className="flex justify-end">
-            <LinkButton handleClick={handleDisconnect}>disconnect</LinkButton>
-          </div>
+
           <div className="flex justify-end">
             <a
               className="text-neutral-400 underline hover:text-neutral-300"
@@ -36,9 +37,23 @@ function MobileWalletDisplay({
               href={`https://polygonscan.com/address/${accountAddress}`}
               rel="noreferrer"
             >
-              View account on polygonscan
+              View account
             </a>
           </div>
+          <div className="flex justify-end pt-6">
+            <Button variant="small" onClick={handleDisconnect}>
+              Disconnect
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-end gap-4">
+          <IconContainer>
+            <WalletIcon />
+          </IconContainer>
+          <span className="flex items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs text-neutral-400  md:justify-end ">
+            Not connected
+          </span>
         </div>
       )}
     </section>
