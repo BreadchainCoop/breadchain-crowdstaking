@@ -1,8 +1,16 @@
 {
   "name": "BREADCHAIN Crowdstaking",
   "description": "Bake and Burn BREAD",
-  "iconPath": "https://development.breadchain.xyz/breadlogo.png",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET",
-  "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+  "short_name": "BREADCHAIN",
+  "icons": [
+    {
+      "src": "breadlogo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#bc52c2",
+  "background_color": "#181818"
 }
