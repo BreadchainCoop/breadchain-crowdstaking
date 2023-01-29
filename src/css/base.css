@@ -27,7 +27,7 @@
   }
 
   .button-gradient {
-    background: linear-gradient(270deg, #d367d9, #bc52c2) 0% 0% / 400% 400%;
+    background: linear-gradient(270deg, #d367d9, #bd51c3) 0% 0% / 400% 400%;
     animation: 3s ease 0s infinite normal none running gradient-animation;
   }
   .button-gradient:disabled {
