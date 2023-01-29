@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="fixed z-30 flex h-screen w-screen items-center justify-center bg-breadgray-200 bg-opacity-95 p-4"
+      className="fixed z-30 flex h-screen w-full items-center justify-center overflow-auto bg-breadgray-200 bg-opacity-95 p-3 p-6 sm:p-4"
     >
       {children}
     </section>
@@ -13,7 +13,7 @@ export function Container({ children }: { children: ReactNode }) {
 
 export function Inner({ children }: { children: ReactNode }) {
   return (
-    <section className="relative overflow-y-auto rounded bg-breadgray-100 bg-opacity-100 p-6 py-8 md:p-12 md:py-16">
+    <section className="relative flex flex-col items-start overflow-y-auto rounded bg-breadgray-100 bg-opacity-100 p-6 py-14 sm:p-16">
       {children}
     </section>
   );
@@ -23,7 +23,7 @@ export function CloseModalButton({ handleClick }: { handleClick: () => void }) {
   return (
     <button
       type="button"
-      className="absolute right-0 top-0 p-6 text-sm text-neutral-500 hover:text-neutral-200 md:p-8"
+      className=" absolute right-0 top-0 p-4 text-sm  text-neutral-400 hover:text-neutral-200 md:text-base"
       onClick={handleClick}
     >
       X
@@ -32,9 +32,17 @@ export function CloseModalButton({ handleClick }: { handleClick: () => void }) {
 }
 
 export function Heading({ children }: { children: ReactNode }) {
-  return <h2 className="text-center text-2xl md:text-left">{children}</h2>;
+  return (
+    <h2 className="text-2xl leading-normal text-neutral-300 md:text-left md:text-center">
+      {children}
+    </h2>
+  );
 }
 
 export function Message({ children }: { children: ReactNode }) {
-  return <p className="mt-12 text-center text-sm md:text-left">{children}</p>;
+  return (
+    <p className="mt-12 text-sm leading-normal text-neutral-300 md:text-left md:text-center">
+      {children}
+    </p>
+  );
 }

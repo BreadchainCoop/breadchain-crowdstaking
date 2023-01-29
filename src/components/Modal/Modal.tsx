@@ -2,6 +2,7 @@ import { TModalStatus, TModalType, useModal } from '../../context/ModalContext';
 import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
 
 import Elipsis from '../Elipsis/Elipsis';
+import Prose from '../Prose/Prose';
 import AddTokens from './AddTokens';
 import { CloseModalButton, Container, Heading, Inner, Message } from './ui';
 
@@ -25,8 +26,8 @@ function Modal({ type, title, status }: TProps) {
         <Container>
           <Inner>
             <CloseModalButton handleClick={handleCloseModal} />
-            <article className="prose prose-invert font-redhat text-[18px] prose-h2:mb-8 prose-h2:font-pressstart">
-              <h2>{title}</h2>
+            <Prose
+              html="<h2>{title}</h2>
               <p>
                 The Breadchain Crowdstaking Application is essentially a smart
                 contract on the Polygon network that forwards Crowdstakers’ DAI
@@ -56,8 +57,8 @@ function Modal({ type, title, status }: TProps) {
                 discord group [here](https://discord.gg/ezt7JDjUSW) to stay up
                 to date with the project and share any thoughts or questions you
                 may have.
-              </p>
-            </article>
+              </p>"
+            />
           </Inner>
         </Container>
       );
@@ -66,13 +67,7 @@ function Modal({ type, title, status }: TProps) {
         <Container>
           <Inner>
             {status === 'UNLOCKED' && (
-              <button
-                type="button"
-                className="absolute right-0 top-0 p-4 text-xs text-neutral-500"
-                onClick={handleCloseModal}
-              >
-                X
-              </button>
+              <CloseModalButton handleClick={handleCloseModal} />
             )}
             <Heading>{title}</Heading>
             {status === 'LOCKED' && (
@@ -103,13 +98,7 @@ function Modal({ type, title, status }: TProps) {
         <Container>
           <Inner>
             {status === 'UNLOCKED' && (
-              <button
-                type="button"
-                className="absolute right-0 top-0 p-4 text-xs text-neutral-500"
-                onClick={handleCloseModal}
-              >
-                X
-              </button>
+              <CloseModalButton handleClick={handleCloseModal} />
             )}
             <Heading>{title}</Heading>
             {status === 'LOCKED' && (
