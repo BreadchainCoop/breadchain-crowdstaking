@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="fixed z-10 flex h-screen w-screen items-center justify-center bg-breadgray-200 bg-opacity-95 p-4"
+      className="fixed z-30 flex h-screen w-screen items-center justify-center bg-breadgray-200 bg-opacity-95 p-4"
     >
       {children}
     </section>
@@ -13,9 +13,21 @@ export function Container({ children }: { children: ReactNode }) {
 
 export function Inner({ children }: { children: ReactNode }) {
   return (
-    <section className="relative rounded bg-neutral-900 bg-opacity-100 p-4 pt-14 md:p-16">
+    <section className="relative overflow-y-auto rounded bg-breadgray-100 bg-opacity-100 p-6 py-8 md:p-12 md:py-16">
       {children}
     </section>
+  );
+}
+
+export function CloseModalButton({ handleClick }: { handleClick: () => void }) {
+  return (
+    <button
+      type="button"
+      className="absolute right-0 top-0 p-6 text-sm text-neutral-500 hover:text-neutral-200 md:p-8"
+      onClick={handleClick}
+    >
+      X
+    </button>
   );
 }
 
