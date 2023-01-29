@@ -1,0 +1,8 @@
+{
+  "name": "BREADCHAIN Crowdstaking",
+  "description": "Bake and Burn BREAD",
+  "iconPath": "./bread_favicon.png",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET",
+  "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+}
