@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="fixed z-30 flex h-screen w-full items-center justify-center overflow-auto bg-breadgray-200 bg-opacity-95 p-3 p-6 sm:p-4"
+      className="fixed z-30 flex h-screen w-full items-center justify-center overflow-auto bg-breadgray-200 bg-opacity-95 p-6 sm:p-4"
     >
       {children}
     </section>
@@ -33,7 +33,7 @@ export function CloseModalButton({ handleClick }: { handleClick: () => void }) {
 
 export function Heading({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-2xl leading-normal text-neutral-300 md:text-left md:text-center">
+    <h2 className="text-2xl leading-normal text-neutral-300 md:text-center">
       {children}
     </h2>
   );
@@ -41,7 +41,7 @@ export function Heading({ children }: { children: ReactNode }) {
 
 export function Message({ children }: { children: ReactNode }) {
   return (
-    <p className="mt-12 text-sm leading-normal text-neutral-300 md:text-left md:text-center">
+    <p className="mt-12 text-sm leading-normal text-neutral-300 md:text-center">
       {children}
     </p>
   );
