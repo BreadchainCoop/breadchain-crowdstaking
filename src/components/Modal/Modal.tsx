@@ -25,7 +25,7 @@ function Modal({ type, title, status }: TProps) {
         <Container>
           <Inner>
             <CloseModalButton handleClick={handleCloseModal} />
-            <article className="prose prose-invert prose-pink font-redhat text-[18px] prose-h2:mb-8 prose-h2:font-pressstart">
+            <article className="prose prose-invert font-redhat text-[18px] prose-h2:mb-8 prose-h2:font-pressstart">
               <h2>{title}</h2>
               <p>
                 The Breadchain Crowdstaking Application is essentially a smart

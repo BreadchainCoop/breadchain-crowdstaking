@@ -10,12 +10,8 @@ interface INativeBalanceOpts {
   bigNumberFormat?: boolean;
 }
 
-const UNKNOWN_BALANCE = <>Balance: unknown</>;
-const LOADING_BALANCE = (
-  <>
-    Balance: <Elipsis />
-  </>
-);
+const UNKNOWN_BALANCE = <>unknown</>;
+const LOADING_BALANCE = <Elipsis />;
 
 const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
@@ -41,11 +37,11 @@ export function NativeBalance({
 
   switch (status) {
     case 'success':
-      return <>Balance: {value}</>;
+      return <span>{value}</span>;
     case 'loading':
       return LOADING_BALANCE;
     case 'error':
-      return <>Balance: {error}</>;
+      return <span>{error ? JSON.stringify(error) : 'no error?'}</span>;
     case 'idle':
     default:
       return UNKNOWN_BALANCE;

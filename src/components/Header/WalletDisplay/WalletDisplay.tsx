@@ -5,7 +5,7 @@ import WalletInfo from './WalletInfo';
 
 export function Container({ children }: { children: ReactNode }) {
   return (
-    <section className="relative hidden flex-col items-end justify-center gap-2 md:flex">
+    <section className="hover: relative hidden flex-col items-end justify-center gap-2  md:flex">
       {children}
     </section>
   );
@@ -35,7 +35,7 @@ function WalletDisplay({
           <IconContainer>
             <WalletIcon />
           </IconContainer>
-          <span className="flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs md:justify-end">
+          <span className="flex w-full items-center justify-center truncate text-ellipsis pt-0.5 pr-2 text-xs text-neutral-400  md:justify-end ">
             Not connected
           </span>
         </div>

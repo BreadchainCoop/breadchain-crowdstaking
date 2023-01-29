@@ -6,7 +6,7 @@
 @layer base {
   body {
     font-family: 'Press Start 2P', monospace;
-    @apply bg-breadgray-200 text-gray-200;
+    @apply bg-breadgray-200;
   }
 
   .prose {
