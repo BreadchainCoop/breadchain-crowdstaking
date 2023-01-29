@@ -5,11 +5,9 @@ import { useToast } from '../../context/ToastContext';
 import About from '../../routes/about';
 import Bake from '../../routes/bake';
 import Footer from '../Footer';
-import FooterNav from '../FooterNav';
 import Header from '../Header';
 import Modal from '../Modal';
 import { Pantry } from '../Pantry';
-import PantryLink from '../PantryLink/PantryLink';
 import SiteTitle from '../SiteTitle/SiteTitle';
 import Toast from '../Toast/Toast';
 import AppContainer from './ui/AppContainer';
@@ -38,10 +36,7 @@ function App() {
         </Routes>
       </Main.Main>
 
-      <Footer>
-        <PantryLink />
-        <FooterNav />
-      </Footer>
+      <Footer />
     </AppContainer>
   );
 }
