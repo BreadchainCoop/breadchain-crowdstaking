@@ -4,7 +4,7 @@
   "short_name": "BREADCHAIN",
   "icons": [
     {
-      "src": "breadlogo.png",
+      "src": "breadlogo_square.png",
       "sizes": "any",
       "type": "image/png"
     }
