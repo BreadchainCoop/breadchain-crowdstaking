@@ -4,7 +4,7 @@ Breadchain is a collective federation of decentralized cooperative projects look
 
 ### What do I need to get some BREAD?
 
-You need to have the [Metamask](https://metamask.io/) browser plugin (or a wallet that can inject as Metamask), the amount of DAI to mint into BREAD, and some MATIC cryptocurrency to pay for the transaction fee for the Polygon Network.
+You need to have an Ethereum wallet that can connect to Polygon through one of the methods listed on the app page, the amount of DAI you want to bake into BREAD, and some MATIC cryptocurrency to pay for the transaction fee for the Polygon Network.
 
 ### How do I get DAI and MATIC on the Polygon network?
 
