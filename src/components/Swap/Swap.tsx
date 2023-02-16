@@ -23,7 +23,6 @@ import FromPanel from './FromPanel';
 import ToPanel from './ToPanel';
 // import Button from '../Button';
 import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
-import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
@@ -118,7 +117,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
   const handleBalanceClick = (value: string) => {
     setSwapState((state) => ({
       ...state,
-      value: balanceFormatter.format(parseFloat(value)),
+      value,
     }));
   };
 
