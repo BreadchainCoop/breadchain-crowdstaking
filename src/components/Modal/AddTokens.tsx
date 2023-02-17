@@ -1,31 +1,31 @@
-import React from "react";
-import { watchAsset } from "../../api/watchAsset";
+import { useNetwork } from 'wagmi';
+import { watchAsset } from '../../api/watchAsset';
 
-import { useAppSelector } from "../../store/hooks";
-import Button from "../Button";
+import Button from '../Button';
 
-export const AddTokens: React.FC = () => {
-  const { network } = useAppSelector((state) => state);
+export function AddTokens() {
+  const { chain: activeChain } = useNetwork();
 
-  const handleAddToken = async (token: string) => {
-    if (!network.network) return;
-
-    watchAsset(network.network, token);
+  const handleAddToken = async (token: 'DAI' | 'BREAD') => {
+    if (!activeChain || activeChain.unsupported)
+      throw new Error('Active chain not valid');
+    const { id: chainId } = activeChain;
+    watchAsset(token, chainId);
   };
 
   return (
     <div className="mt-16">
-      <div className="text-xs mb-8">Add tokens to MetaMask</div>
+      <div className="mb-8 text-xs text-neutral-300">Add tokens to wallet</div>
       <div className="flex gap-4">
-        <Button onClick={() => handleAddToken("BREAD")} disabled={false}>
+        <Button onClick={() => handleAddToken('BREAD')} disabled={false}>
           BREAD
         </Button>
-        <Button onClick={() => handleAddToken("DAI")} disabled={false}>
+        <Button onClick={() => handleAddToken('DAI')} disabled={false}>
           DAI
         </Button>
       </div>
     </div>
   );
-};
+}
 
 export default AddTokens;

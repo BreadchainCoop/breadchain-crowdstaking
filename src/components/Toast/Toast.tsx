@@ -1,32 +1,27 @@
-import React from "react";
-import { gsap } from "gsap";
+import React, { ReactNode } from 'react';
 
-import { clearToast, EToastType } from "../../features/toast/toastSlice";
-import { useAppDispatch } from "../../store/hooks";
+import { TToastType, useToast } from '../../context/ToastContext';
 
-type TProps = {
-  type: EToastType;
-  message: string;
-};
-
-const ToastContainer: React.FC = (props) => {
+function ToastContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="p-4 w-full">
-      <div className="px-6 py-8 md:px-12 max-w-2xl m-auto bg-breadgray-100 text-white relative">
-        {props.children}
+    <div className="w-full p-4">
+      <div className="relative m-auto max-w-2xl bg-breadgray-100 px-6 py-8 text-white md:px-12">
+        {children}
       </div>
     </div>
   );
-};
+}
 
 type TCloseProps = {
   onClick: () => void;
 };
-const CloseButton: React.FC<TCloseProps> = (props) => {
+
+function CloseButton({ onClick }: TCloseProps) {
   return (
     <button
-      className="absolute right-0 top-0 w-12 h-12 p-2 text-neutral-700 hover:text-neutral-500"
-      {...props}
+      type="button"
+      className="absolute right-0 top-0 h-12 w-12 p-2 text-neutral-700 hover:text-neutral-500"
+      onClick={onClick}
     >
       <svg viewBox="0 0 24 24">
         <path
@@ -38,46 +33,35 @@ const CloseButton: React.FC<TCloseProps> = (props) => {
       </svg>
     </button>
   );
+}
+
+type TProps = {
+  type: TToastType;
+  message: string;
 };
 
-const Toast: React.FC<TProps> = (props) => {
-  const dispatch = useAppDispatch();
+function Toast({ type, message }: TProps) {
+  const { dispatch: toastDispatch } = useToast();
   const ref = React.useRef(null);
   const handleCloseToast = () => {
-    gsap.to(ref.current, {
-      duration: 0.1,
-      opacity: 0,
-      y: 50,
-      ease: "back.in(1)",
-      onComplete() {
-        dispatch(clearToast());
-      },
-    });
+    toastDispatch({ type: 'CLEAR_TOAST' });
   };
 
-  React.useEffect(() => {
-    gsap.from(ref.current, {
-      duration: 0.4,
-      opacity: 0,
-      y: 50,
-      ease: "back.out(1)",
-    });
-  }, []);
-
-  switch (props.type) {
-    case EToastType.ERROR:
+  switch (type) {
+    case 'ERROR':
       return (
-        <div ref={ref} className="fixed z-10 bottom-0 w-full">
+        <div ref={ref} className="fixed bottom-0 z-10 w-full">
           <ToastContainer>
             <CloseButton onClick={handleCloseToast} />
-            <h1 className="text-red-500 text-xl">Error</h1>
-            <p className="text-xs leading-6 mt-4">{props.message}</p>
+            <h1 className="text-xl text-red-500">Error</h1>
+            <p className="mt-4 break-words text-xs leading-6">{message}</p>
           </ToastContainer>
         </div>
       );
+
     default:
-      throw new Error("Invalid Toast type!");
+      throw new Error('Invalid Toast type!');
   }
-};
+}
 
 export default Toast;

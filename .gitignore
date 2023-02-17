@@ -14,6 +14,7 @@ dist-ssr
 
 # Editor directories and files
 .vscode/*
+!.vscode/settings.json
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -23,4 +24,13 @@ dist-ssr
 *.sln
 *.sw?
 
+
 .env
+
+# hardhat cache
+cache/
+
+/tests/e2e/videos/*
+/tests/e2e/screenshots/*
+
+dev.sh

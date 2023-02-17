@@ -1,52 +1,40 @@
-import React from "react";
+import { ReactNode } from 'react';
 
-const Header: React.FC = ({ children }) => {
-  return <div className="mb-2">{children}</div>;
-};
+export function PanelHeader({ children }: { children: ReactNode }) {
+  return <div className="mb-6 sm:mb-8">{children}</div>;
+}
 
-const Content: React.FC = ({ children }) => {
+export function PanelContent({ children }: { children: ReactNode }) {
   return <div className="flex items-center">{children}</div>;
-};
+}
 
 type TBalanceProps = {
-  onClick?: () => void;
+  children: ReactNode;
+  onClick: () => void;
 };
 
-const BalanceButton: React.FC<TBalanceProps> = (props) => {
+export function PanelBalanceButton({ onClick, children }: TBalanceProps) {
   return (
     <button
-      className="text-xs sm:text-sm p-3 hover:underline hover:text-white"
-      {...props}
+      type="button"
+      className="pb-3 text-xs hover:text-white hover:underline sm:text-sm"
+      onClick={onClick}
     >
-      {props.children}
+      {children}
     </button>
   );
-};
+}
 
-const Balance: React.FC = (props) => {
+export function PanelBalance({ children }: { children: ReactNode }) {
   return (
-    <span className="text-xs sm:text-sm p-3 inline-block" {...props}>
-      {props.children}
-    </span>
+    <span className="inline-block pb-3 text-xs sm:text-sm">{children}</span>
   );
-};
+}
 
-const TokenDisplay: React.FC & {
-  Header: typeof Header;
-  Content: typeof Content;
-  Balance: typeof Balance;
-  BalanceButton: typeof BalanceButton;
-} = (props) => {
+export function PanelContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="bg-breadgray-100 text-gray-300 w-full p-2 pr-4 pb-4 sm:p-4 sm:pb-8 sm:pr-8">
-      {props.children}
+    <div className="w-full bg-breadgray-100 px-6 py-4 text-gray-300 sm:px-8 sm:py-6">
+      {children}
     </div>
   );
-};
-
-TokenDisplay.Header = Header;
-TokenDisplay.Content = Content;
-TokenDisplay.Balance = Balance;
-TokenDisplay.BalanceButton = BalanceButton;
-
-export default TokenDisplay;
+}

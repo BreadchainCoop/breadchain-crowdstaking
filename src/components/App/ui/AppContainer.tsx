@@ -1,7 +1,7 @@
-import React from "react";
+import { ReactNode } from 'react';
 
-const AppContainer: React.FC = ({ children }) => {
-  return <div className="flex flex-col min-h-screen">{children}</div>;
-};
+function AppContainer({ children }: { children: ReactNode }) {
+  return <div className="flex min-h-screen flex-col">{children}</div>;
+}
 
 export default AppContainer;

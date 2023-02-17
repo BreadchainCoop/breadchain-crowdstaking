@@ -1,0 +1,16 @@
+{
+  "name": "BREADCHAIN Crowdstaking",
+  "description": "Bake and Burn BREAD",
+  "short_name": "BREADCHAIN",
+  "icons": [
+    {
+      "src": "breadlogo_square.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#bc52c2",
+  "background_color": "#181818"
+}

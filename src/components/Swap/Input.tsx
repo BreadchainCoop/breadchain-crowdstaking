@@ -1,17 +1,17 @@
-import React from "react";
+import { ChangeEvent } from 'react';
 
-type Props = {
+type TProps = {
   name: string;
   value: string;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /* eslint-disable-next-line no-unused-vars */
+  handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input: React.FC<Props> = (props) => {
-  const { name, value, handleInputChange } = props;
+function Input({ name, value, handleInputChange }: TProps) {
   return (
     <input
       name={name}
-      className="bg-breadgray-100 p-4 mr-8 text-lg sm:text-2xl truncate text-ellipsis  w-0 flex-auto placeholder-gray-200"
+      className="mr-8 w-0 flex-auto truncate text-ellipsis bg-breadgray-100  text-lg placeholder-gray-200 sm:text-2xl"
       placeholder="00.00"
       inputMode="decimal"
       autoComplete="off"
@@ -25,6 +25,6 @@ const Input: React.FC<Props> = (props) => {
       value={value}
     />
   );
-};
+}
 
 export default Input;

@@ -1,57 +1,42 @@
-import React from "react";
+import Button from '../Button';
 
-import Button from "../Button";
-import {
-  openModal,
-  closeModal,
-  EModalType,
-} from "../../features/modal/modalSlice";
-import { useAppDispatch } from "../../store/hooks";
-import TextTransition from "../../transitions/TextTransition";
+import { useModal } from '../../context/ModalContext';
 
-const UnsupportedNetwork: React.FC = () => {
-  const dispatch = useAppDispatch();
+function UnsupportedNetwork() {
+  const { dispatch: modalDispatch } = useModal();
 
   const handleSwitchToEthereum = async () => {
-    // const { appState, dispatch } = useAppState();
     try {
-      dispatch(
-        openModal({ type: EModalType.CHANGE_NETWORK, title: "Switch Network" })
-      );
+      modalDispatch({
+        type: 'SET_MODAL',
+        payload: { type: 'CHANGE_NETWORK', title: 'Switch Network' },
+      });
       const { ethereum } = window as any;
       await ethereum.request({
-        method: "wallet_switchEthereumChain",
+        method: 'wallet_switchEthereumChain',
         params: [
           {
-            chainId: "0x89",
+            chainId: '0x89',
           },
         ],
       });
-      dispatch(
-        openModal({
-          type: EModalType.CHANGING_NETWORK,
-          title: "Switching Network...",
-        })
-      );
+      modalDispatch({ type: 'CLEAR_MODAL' });
     } catch (err) {
-      // !!! handle in ui?
-      console.error("failed switching to ethereum chain!");
-      dispatch(closeModal());
+      // !!! error not handled
+      modalDispatch({ type: 'CLEAR_MODAL' });
     }
   };
 
   return (
-    <div className="flex flex-col">
-      <span className="mb-12 text-xs sm:text-base text-center">
-        <TextTransition>
-          You are not connected to a supported chain!
-        </TextTransition>
+    <div className="flex flex-col px-4">
+      <span className="mb-12 text-center text-xs text-neutral-300 sm:text-base">
+        You are not connected to a supported chain!
       </span>
       <span className="flex justify-center">
         <Button onClick={handleSwitchToEthereum}>Connect to Polygon</Button>
       </span>
     </div>
   );
-};
+}
 
 export default UnsupportedNetwork;

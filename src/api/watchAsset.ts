@@ -1,15 +1,16 @@
-import config from "../config";
-import { unlockModal } from "../features/modal/modalSlice";
-import { ENetwork } from "../features/network/networkSlice";
-import store from "../store";
+import config from '../config';
 
-export const watchAsset = async (network: ENetwork, tokenKey: string) => {
-  const ethereum = (window as any).ethereum;
-  const { address, symbol, decimals } = config[network][tokenKey];
+export const watchAsset = async (
+  tokenKey: 'DAI' | 'BREAD' | 'DERIVATIVE',
+  chainId: number,
+): Promise<void> => {
+  const { ethereum } = window as any;
+  const { address, symbol, decimals } = config[chainId][tokenKey];
+
   ethereum.request({
-    method: "wallet_watchAsset",
+    method: 'wallet_watchAsset',
     params: {
-      type: "ERC20", // Initially only supports ERC20, but eventually more!
+      type: 'ERC20', // Initially only supports ERC20, but eventually more!
       options: {
         address, // The address that the token is at.
         symbol, // A ticker symbol or shorthand, up to 5 chars.
@@ -18,3 +19,5 @@ export const watchAsset = async (network: ENetwork, tokenKey: string) => {
     },
   });
 };
+
+export default watchAsset;

@@ -1,35 +1,27 @@
-import React from "react";
-import TextTransition from "../../transitions/TextTransition";
+import { ReactNode } from 'react';
 
-export const Title: React.FC = (props) => {
+export function Title({ children }: { children: ReactNode }) {
   return (
-    <div className="pt-16 sm:pt-32 sm:pb-16 flex flex-col text-center">
-      {props.children}
+    <div className="flex flex-col py-16 text-center text-neutral-200 sm:py-32">
+      {children}
     </div>
   );
-};
+}
 
-export const H1: React.FC = (props) => (
-  <h1 className="uppercase text-2xl sm:text-5xl mb-1 md:mb-2">
-    {props.children}
-  </h1>
-);
+export function H1({ children }: { children: ReactNode }) {
+  return <h1 className="mb-1 text-3xl sm:text-5xl md:mb-2">{children}</h1>;
+}
 
-export const H2: React.FC = (props) => (
-  <h2 className="uppercase text-1xl sm:text-2xl">{props.children}</h2>
-);
-
-const SiteTitle: React.FC = () => {
+export function H2({ children }: { children: ReactNode }) {
+  return <h2 className="text-1xl sm:text-2xl">{children}</h2>;
+}
+function SiteTitle() {
   return (
     <Title>
-      <H1>
-        <TextTransition>BREADCHAIN</TextTransition>
-      </H1>
-      <H2>
-        <TextTransition>Crowdstaking</TextTransition>
-      </H2>
+      <H1>BREADCHAIN</H1>
+      <H2>CROWDSTAKING</H2>
     </Title>
   );
-};
+}
 
 export default SiteTitle;

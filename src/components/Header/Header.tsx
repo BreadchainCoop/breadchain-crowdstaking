@@ -1,13 +1,67 @@
-import React from "react";
+import { ReactNode, useState } from 'react';
+import { Chain, useAccount, useDisconnect, useNetwork } from 'wagmi';
+import MobileMenu from '../MobileMenu';
+import DesktopNavigation from './DesktopNavigation';
+import Logo from './Logo';
+import MobileNavigationToggle from './MobileNavigationToggle';
+import WalletDisplay from './WalletDisplay';
 
-const Header: React.FC = ({ children }) => {
+function Container({ children }: { children: ReactNode }) {
   return (
     <header className="bg-breadgray-100">
-      <div className="max-w-6xl m-0 mx-auto p-6 md:px-8 flex h-24">
+      <div className="m-0 mx-auto flex max-w-6xl justify-between px-6 py-4 md:py-6 md:px-8">
         {children}
       </div>
     </header>
   );
+}
+
+const getChainString = (
+  chain:
+    | (Chain & {
+        unsupported?: boolean | undefined;
+      })
+    | undefined,
+) => {
+  if (chain === undefined) return 'No Network';
+  if (chain.unsupported) return 'Unsupported';
+  return chain.name;
 };
+
+function Header() {
+  const [isMobNavOpen, setIsMobNavOpen] = useState(false);
+  const { address: accountAddress } = useAccount();
+  const { chain } = useNetwork();
+
+  const { disconnectAsync } = useDisconnect();
+
+  const handleNavToggle = () => {
+    setIsMobNavOpen(!isMobNavOpen);
+  };
+
+  const handleDisconnect = () => {
+    disconnectAsync();
+  };
+
+  return (
+    <Container>
+      <Logo />
+      <DesktopNavigation />
+      <MobileMenu
+        isOpen={isMobNavOpen}
+        accountAddress={accountAddress}
+        chainString={getChainString(chain)}
+        handleDisconnect={handleDisconnect}
+        handleNavToggle={handleNavToggle}
+      />
+      <WalletDisplay
+        accountAddress={accountAddress}
+        chainString={getChainString(chain)}
+        handleDisconnect={handleDisconnect}
+      />
+      <MobileNavigationToggle handleClick={handleNavToggle} />
+    </Container>
+  );
+}
 
 export default Header;

@@ -1,13 +1,21 @@
-import React from "react";
+import { ReactNode } from 'react';
+import PantryLink from '../PantryLink/PantryLink';
 
-const Footer: React.FC = ({ children }) => {
+function Container({ children }: { children: ReactNode }) {
   return (
-    <footer className="">
-      <div className="px-2 py-4 md:px-4 flex justify-between items-center text-xs text-neutral-500">
-        {children}
-      </div>
-    </footer>
+    <div className="relative mt-16 flex flex-col items-center justify-center px-2 py-12  md:px-4">
+      {children}
+    </div>
   );
-};
+}
+
+function Footer() {
+  return (
+    <Container>
+      <PantryLink />
+      {/* <FooterNav /> */}
+    </Container>
+  );
+}
 
 export default Footer;

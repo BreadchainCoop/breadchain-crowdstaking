@@ -1,57 +1,60 @@
-import { ethers } from "ethers";
+import { Contract, ethers, Signer } from 'ethers';
 
-import { ENetwork } from "../features/network/networkSlice";
-import config from "../config";
-import ERC20abi from "../ERC20.json";
-import store from "../store";
-import {
-  closeModal,
-  EModalType,
-  openModal,
-} from "../features/modal/modalSlice";
-import {
-  setApprovalPending,
-  setApproved,
-} from "../features/approval/approvalSlice";
+import { TModalDispatch } from '../context/ModalContext';
+import { TToastDispatch } from '../context/ToastContext';
+import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
+import ERC20ABI from '../ERC20.json';
 
 export const approveBREAD = async (
-  network: ENetwork,
-  dispatch: typeof store.dispatch
-) => {
-  const { ethereum } = window as any;
-  if (!ethereum) return;
+  signer: Signer,
+  daiAddress: string,
+  breadAddress: string,
+  dispatchTransactionDisplay: TTransactionDisplayDispatch,
+  dispatchToast: TToastDispatch,
+  dispatchModal: TModalDispatch,
+): Promise<void> => {
+  const dai = new Contract(daiAddress, ERC20ABI, signer);
 
-  if (network === ENetwork.UNSUPPORTED) {
-    // ??? should this be shown to a user?
-    console.error("Can't get balances on an unsupported network");
-    return null;
-  }
+  dispatchModal({
+    type: 'SET_MODAL',
+    payload: {
+      type: 'APPROVAL',
+      title: 'Approving BREAD Contract',
+    },
+  });
 
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-
-  const { DAI, BREAD } = config[network];
-
-  // const BREADcontract = new ethers.Contract(BREAD.address, ERC20abi, provider);
-  const DAIcontract = new ethers.Contract(DAI.address, ERC20abi, signer);
-
-  dispatch(
-    openModal({ type: EModalType.APPROVAL, title: "Approving BREAD Contract" })
-  );
   let txn;
   try {
-    txn = await DAIcontract.approve(BREAD.address, ethers.constants.MaxUint256);
-  } catch (err) {
-    // !!! handle this error
-    dispatch(closeModal());
+    txn = await dai.approve(breadAddress, ethers.constants.MaxUint256);
+  } catch (err: any) {
+    const message = err.reason ? err.reason : err.message;
+    dispatchToast({
+      type: 'SET_TOAST',
+      payload: {
+        type: 'ERROR',
+        message,
+      },
+    });
+    dispatchModal({ type: 'CLEAR_MODAL' });
     return;
   }
-  dispatch(closeModal());
-  dispatch(setApprovalPending());
+  dispatchModal({ type: 'CLEAR_MODAL' });
+  dispatchTransactionDisplay({
+    type: 'SET_PENDING',
+    payload: { status: 'PENDING', hash: txn.hash },
+  });
   try {
     await txn.wait();
-    dispatch(setApproved());
+    dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
   } catch (err) {
-    // !!! handle this error
+    dispatchToast({
+      type: 'SET_TOAST',
+      payload: {
+        type: 'ERROR',
+        message: 'Approve transaction failed',
+      },
+    });
   }
 };
+
+export default approveBREAD;
