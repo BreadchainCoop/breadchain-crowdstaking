@@ -27,7 +27,7 @@ function Modal({ type, title, status }: TProps) {
           <Inner>
             <CloseModalButton handleClick={handleCloseModal} />
             <Prose
-              html="<h2>{title}</h2>
+              html={`<h2>${title}</h2>
               <p>
                 The Breadchain Crowdstaking Application is essentially a smart
                 contract on the Polygon network that forwards Crowdstakers’ DAI
@@ -57,7 +57,7 @@ function Modal({ type, title, status }: TProps) {
                 discord group [here](https://discord.gg/ezt7JDjUSW) to stay up
                 to date with the project and share any thoughts or questions you
                 may have.
-              </p>"
+              </p>`}
             />
           </Inner>
         </Container>

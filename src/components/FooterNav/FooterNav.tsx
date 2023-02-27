@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
 import { useModal } from '../../context/ModalContext';
 import ExternalNavLink from '../ExternalNavLink';
-import { IconContainer } from '../Icons';
-import InfoIcon from '../Icons/InfoIcon';
-import TwitterIcon from '../Icons/TwitterIcon';
 
 function FooterNavContainer({ children }: { children: ReactNode }) {
   return (
@@ -25,62 +22,59 @@ export default function FooterNav() {
 
   return (
     <FooterNavContainer>
-      <div className="flex flex-col items-start gap-3 md:flex-row">
-        <ExternalNavLink href="breadchain.xyz">
-          <div className="flex flex-row items-center gap-4">
-            <IconContainer size="4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:flex-row md:gap-6 lg:flex">
+        <div className="md:w-1/2">
+          <ExternalNavLink href="http://breadchain.xyz">
+            homepage
+          </ExternalNavLink>
+        </div>
+
+        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
+        <div className="md:w-1/2">
+          <ExternalNavLink href="https://twitter.com">
+            {/* <IconContainer size="4">
               <TwitterIcon />
-            </IconContainer>
-            breadchain.xyz
+            </IconContainer> */}
+            twitter
+          </ExternalNavLink>
+        </div>
+        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
+        <ExternalNavLink href="https://discord.com">
+          <div className="flex flex-row items-center gap-4">
+            {/* <IconContainer size="5">
+              <DiscordIcon />
+            </IconContainer> */}
+            discord
           </div>
         </ExternalNavLink>
-        <span className="hidden px-2 text-neutral-700 md:inline">|</span>
-        <ExternalNavLink href="/twitter.com">
+        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
+        <ExternalNavLink href="https://guild.com">
           <div className="flex flex-row items-center gap-4">
-            <IconContainer size="4">
-              <TwitterIcon />
-            </IconContainer>
-            @breadchain_
+            {/* <IconContainer size="5">
+              <GithubIcon />
+            </IconContainer> */}
+            github
           </div>
         </ExternalNavLink>
-        <span className="hidden px-2 text-neutral-700 md:inline">|</span>
-        <ExternalNavLink href="/discord.com">
+        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
+        <ExternalNavLink href="https://guild.com">
           <div className="flex flex-row items-center gap-4">
-            <IconContainer size="4">
-              <TwitterIcon />
-            </IconContainer>
-            Discord
+            {/* <IconContainer size="4">
+              <GuildIcon />
+            </IconContainer> */}
+            guild
           </div>
         </ExternalNavLink>
-        <span className="hidden px-2 text-neutral-700 md:inline">|</span>
-        <ExternalNavLink href="/guild.com">
-          <div className="flex flex-row items-center gap-4">
-            <IconContainer size="4">
-              <TwitterIcon />
-            </IconContainer>
-            Github
-          </div>
-        </ExternalNavLink>
-        <span className="hidden px-2 text-neutral-700 md:inline">|</span>
-        <ExternalNavLink href="/guild.com">
-          <div className="flex flex-row items-center gap-4">
-            <IconContainer size="4">
-              <TwitterIcon />
-            </IconContainer>
-            Guild
-          </div>
-        </ExternalNavLink>
-      </div>
-      <div>
+        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
         <button
           type="button"
           onClick={handleDisclaimerClick}
-          className="flex flex-row items-center gap-4 px-3 text-neutral-400 hover:text-neutral-200 hover:underline"
+          className="px-3  text-sm text-neutral-400 hover:text-neutral-200 hover:underline"
         >
-          <IconContainer size="5">
+          {/* <IconContainer size="5">
             <InfoIcon />
-          </IconContainer>
-          Disclaimer
+          </IconContainer> */}
+          <div className="flex flex-row items-center">disclaimer</div>
         </button>
       </div>
     </FooterNavContainer>
