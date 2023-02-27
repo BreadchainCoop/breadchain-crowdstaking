@@ -40,7 +40,7 @@ function WalletMenu({
 
         {chainString}
       </div>
-      <div className="pb-3">
+      <div className="pt-2 pb-1">
         <a
           className="text-neutral-400 underline hover:text-neutral-300"
           target="_blank"
@@ -50,7 +50,7 @@ function WalletMenu({
           View Account
         </a>
       </div>
-      <div className="pb-3">
+      <div className="pb-5">
         <a
           className="text-neutral-400 underline hover:text-neutral-300"
           target="_blank"
