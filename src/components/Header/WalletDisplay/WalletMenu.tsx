@@ -40,7 +40,7 @@ function WalletMenu({
 
         {chainString}
       </div>
-      <div className="pb-3">
+      <div className="pt-2 pb-1">
         <a
           className="text-neutral-400 underline hover:text-neutral-300"
           target="_blank"
@@ -48,6 +48,16 @@ function WalletMenu({
           rel="noreferrer"
         >
           View Account
+        </a>
+      </div>
+      <div className="pb-5">
+        <a
+          className="text-neutral-400 underline hover:text-neutral-300"
+          target="_blank"
+          href="https://beta.arrakis.finance/vaults/137/0x3055C602454ddE1BDa3e98B1bCfD2Ed68ab9789E"
+          rel="noreferrer"
+        >
+          Add Liquidity
         </a>
       </div>
       <Button variant="small" onClick={handleDisconnect}>

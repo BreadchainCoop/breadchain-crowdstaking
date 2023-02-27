@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="fixed z-30 flex h-screen w-full items-center justify-center overflow-auto bg-breadgray-200 bg-opacity-95 p-6 sm:p-4"
+      className="absolute z-30 flex min-h-screen w-full items-center justify-center bg-breadgray-200 bg-opacity-95 p-2 sm:p-6"
     >
       {children}
     </section>
@@ -13,7 +13,7 @@ export function Container({ children }: { children: ReactNode }) {
 
 export function Inner({ children }: { children: ReactNode }) {
   return (
-    <section className="relative flex flex-col items-start overflow-y-auto rounded bg-breadgray-100 bg-opacity-100 p-6 py-14 sm:p-16">
+    <section className="relative flex h-full flex-col items-start overflow-y-auto rounded bg-breadgray-100 bg-opacity-100 px-2 py-14 sm:px-4 md:p-16">
       {children}
     </section>
   );
