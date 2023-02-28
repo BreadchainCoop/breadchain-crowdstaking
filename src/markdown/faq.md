@@ -11,6 +11,7 @@ All you need is an Ethereum wallet, the DAI you want to bake into BREAD, and som
 First make sure that your Ethereum wallet can connect to Polygon. [Here](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) are the instructions for doing so with Metamask -  the same methods can be used with many other popular wallets. After your wallet is connected to Polygon, there are then several ways to get some DAI and MATIC into your wallet.
 
 **Option 1** - Directly from a Centralized Exchange
+
 Exchanges like Coinbase, Crypto.com, and Binance offer withdrawals directly into Polygon.
 
 **Option 2** - Transak / Moonpay
