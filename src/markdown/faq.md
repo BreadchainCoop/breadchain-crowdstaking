@@ -20,9 +20,11 @@ With [Transak](https://transak.com/), you can buy cryptocurrencies (including MA
 
 
 **Option 3** - [Polygon Bridge](https://wallet.polygon.technology/polygon/bridge/deposit)
+
 The official Polygon Bridge can be used by those who already have assets on Ethereum Mainnet, but there will potentially be a significant gas cost incurred when using this method.
 
 **Option 4** - [Hop Exchange](https://hop.exchange/)
+
 Hop Exchange allows asset bridging across several Ethereum Layer 2 networks, including Polygon, so that you don’t have to pay for potentially high Ethereum Mainnet transaction fees.
 
 ### Why use Polygon and not another network?
