@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="absolute z-30 flex min-h-screen w-full items-center justify-center bg-breadgray-200 bg-opacity-95 p-2 sm:p-6"
+      className="fixed z-30 flex h-full min-h-screen w-full items-center justify-center bg-breadgray-200 bg-opacity-95 p-2 sm:p-6 md:h-auto"
     >
       {children}
     </section>
