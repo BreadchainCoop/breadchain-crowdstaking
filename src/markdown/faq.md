@@ -14,8 +14,6 @@ First make sure that your Ethereum wallet can connect to Polygon. [Here](https:/
 Exchanges like Coinbase, Crypto.com, and Binance offer withdrawals directly into Polygon.
 
 **Option 2** - Transak / Moonpay
-With [Transak](https://transak.com/) you can buy crypto with a debit or credit card including MATIC to send to a polygon wallet. [Moonpay](https://www.moonpay.com/buy/matic) is another option for those in the US. You may need to go through KYC.
-
 
 With [Transak](https://transak.com/), you can buy cryptocurrencies (including MATIC) with a debit or credit card and send them  directly to a Polygon connected wallet. [Moonpay](https://www.moonpay.com/buy/matic) is another option for those living in the US. KYC, or, “Know-Your-Customer”, legal requirements may apply here. [Mt Pelerin](http://mtpelerin.com/es/join?rfr=6T5E7LV5) may be another option for those who may not want to go through any KYC process.
 
