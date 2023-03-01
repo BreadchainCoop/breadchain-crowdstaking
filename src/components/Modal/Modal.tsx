@@ -29,8 +29,9 @@ function Modal({ type, title, status }: TProps) {
           <Inner>
             <CloseModalButton handleClick={handleCloseModal} />
             <Prose html="<h2>Disclaimer</h2>" />
-
-            <Prose html={disclaimerHtml} />
+            <div className="overflow-y-auto">
+              <Prose html={disclaimerHtml} />
+            </div>
           </Inner>
         </Container>
       );
