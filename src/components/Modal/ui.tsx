@@ -6,14 +6,16 @@ export function Container({ children }: { children: ReactNode }) {
       data-test="modal"
       className="fixed z-30 flex h-full w-full items-center justify-center bg-breadgray-200 bg-opacity-95 p-2 sm:p-6"
     >
-      <div className="flex h-full overflow-auto">{children}</div>
+      {children}
+      {/* <div className="flex h-full overflow-auto ">
+      </div> */}
     </section>
   );
 }
 
 export function Inner({ children }: { children: ReactNode }) {
   return (
-    <section className="relative flex flex-col items-start rounded bg-breadgray-100 bg-opacity-100 px-1 py-14 sm:px-4 md:p-16">
+    <section className="relative flex max-h-full flex-col items-start rounded bg-breadgray-100 bg-opacity-100 px-1 py-14 sm:px-4 md:p-16">
       {children}
     </section>
   );
