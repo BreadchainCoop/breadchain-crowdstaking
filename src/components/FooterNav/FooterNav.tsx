@@ -28,52 +28,25 @@ export default function FooterNav() {
             homepage
           </ExternalNavLink>
         </div>
-
-        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
         <div className="md:w-1/2">
-          <ExternalNavLink href="https://twitter.com">
-            {/* <IconContainer size="4">
-              <TwitterIcon />
-            </IconContainer> */}
+          <ExternalNavLink href="https://twitter.com/breadchain_">
             twitter
           </ExternalNavLink>
         </div>
-        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
-        <ExternalNavLink href="https://discord.com">
-          <div className="flex flex-row items-center gap-4">
-            {/* <IconContainer size="5">
-              <DiscordIcon />
-            </IconContainer> */}
-            discord
-          </div>
+        <ExternalNavLink href="https://cryptoleftists.xyz">
+          <div className="flex flex-row items-center gap-4">discord</div>
         </ExternalNavLink>
-        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
-        <ExternalNavLink href="https://guild.com">
-          <div className="flex flex-row items-center gap-4">
-            {/* <IconContainer size="5">
-              <GithubIcon />
-            </IconContainer> */}
-            github
-          </div>
+        <ExternalNavLink href="https://github.com/BreadchainCoop">
+          <div className="flex flex-row items-center gap-4">github</div>
         </ExternalNavLink>
-        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
-        <ExternalNavLink href="https://guild.com">
-          <div className="flex flex-row items-center gap-4">
-            {/* <IconContainer size="4">
-              <GuildIcon />
-            </IconContainer> */}
-            guild
-          </div>
+        <ExternalNavLink href="https://guild.xyz/breadchain">
+          <div className="flex flex-row items-center gap-4">guild</div>
         </ExternalNavLink>
-        {/* <span className="hidden px-2 text-neutral-700 md:inline">|</span> */}
         <button
           type="button"
           onClick={handleDisclaimerClick}
           className="px-3  text-sm text-neutral-400 hover:text-neutral-200 hover:underline"
         >
-          {/* <IconContainer size="5">
-            <InfoIcon />
-          </IconContainer> */}
           <div className="flex flex-row items-center">disclaimer</div>
         </button>
       </div>
