@@ -38,7 +38,6 @@ export const getClient = (mode: IViteMode) => {
           }),
           new CoinbaseWalletConnector({
             chains,
-            // chains: chains.filter((c) => c.name === 'polygon'),
             options: {
               appName: 'wagmi',
             },
