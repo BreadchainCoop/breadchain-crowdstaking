@@ -3,7 +3,6 @@ import { chain, configureChains } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -17,7 +16,7 @@ import { IViteMode } from '../main';
 
 const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
 
-const supportedChains = [chain.polygonMumbai, chain.polygon];
+const supportedChains = [chain.polygon, chain.polygonMumbai];
 
 const { chains, provider, webSocketProvider } = configureChains(
   supportedChains,
@@ -51,12 +50,12 @@ export const getClient = (mode: IViteMode) => {
             },
           }),
           new SafeConnector({ chains }),
-          new WalletConnectConnector({
-            chains,
-            options: {
-              qrcode: true,
-            },
-          }),
+          // new WalletConnectConnector({
+          //   chains,
+          //   options: {
+          //     qrcode: true,
+          //   },
+          // }),
         ],
         provider,
         webSocketProvider,
