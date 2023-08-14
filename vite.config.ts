@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), viteMarkdown({ mode: [Mode.HTML] })],
   build: {
     target: 'esnext',
-    sourcemap: true,
+    sourcemap: false,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
@@ -18,7 +18,7 @@ export default defineConfig({
       plugins: [
         GlobalPolyFill({
           buffer: true,
-          process: true,
+          process: process.env.MODE !== 'production',
         }),
       ],
     },
@@ -29,7 +29,7 @@ export default defineConfig({
   resolve: {
     alias: {
       process: 'process/browser',
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src/'),
     },
   },
   optimizeDeps: {
