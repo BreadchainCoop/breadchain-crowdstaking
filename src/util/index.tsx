@@ -6,6 +6,6 @@ export const formatAddress = (address: string): string =>
 
 export const balanceFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
-  minimumIntegerDigits: 1,
+  minimumIntegerDigits: 2,
   useGrouping: false,
 });

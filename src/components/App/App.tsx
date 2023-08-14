@@ -8,7 +8,6 @@ import FAQ from '../../routes/faq';
 import Footer from '../Footer';
 import Header from '../Header';
 import Modal from '../Modal';
-import { Pantry } from '../Pantry';
 import Toast from '../Toast/Toast';
 import AppContainer from './ui/AppContainer';
 import * as Main from './ui/Main';
@@ -32,7 +31,7 @@ function App() {
           <Route path="/" element={<Bake />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/pantry" element={<Pantry />} />
+          {/* <Route path="/pantry" element={<Pantry />} /> */}
         </Routes>
       </Main.Main>
 

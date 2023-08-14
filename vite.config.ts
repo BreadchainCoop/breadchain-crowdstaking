@@ -1,15 +1,15 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import GlobalPolyFill from '@esbuild-plugins/node-globals-polyfill';
+import react from '@vitejs/plugin-react';
 import * as path from 'path';
+import { defineConfig } from 'vite';
 import viteMarkdown, { Mode } from 'vite-plugin-markdown';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), viteMarkdown({ mode: [Mode.HTML] })],
   build: {
-    target: 'modules',
-    sourcemap: true,
+    target: 'esnext',
+    sourcemap: false,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
@@ -18,7 +18,7 @@ export default defineConfig({
       plugins: [
         GlobalPolyFill({
           buffer: true,
-          process: true,
+          process: process.env.MODE !== 'production',
         }),
       ],
     },
@@ -29,7 +29,7 @@ export default defineConfig({
   resolve: {
     alias: {
       process: 'process/browser',
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './src/'),
     },
   },
   optimizeDeps: {
