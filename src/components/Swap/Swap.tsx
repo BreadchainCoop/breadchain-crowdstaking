@@ -15,7 +15,6 @@ import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
 import FromPanel from './FromPanel';
 import SwapReverse from './SwapReverse';
-import ToPanel from './ToPanel';
 import Transaction from './Transaction';
 import { sanitizeInputValue } from './swapUtils';
 
@@ -125,13 +124,13 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
         handleInputChange={handleInputChange}
       />
       <SwapReverse onClick={handleSwapReverse} />
-      <ToPanel
+      {/* <ToPanel
         inputValue={swapState.value}
         balanceReadings={
           swapState.mode === 'BAKE' ? breadBalanceReadings : daiBalanceReadings
         }
         tokenType={swapState.mode === 'BAKE' ? 'BREAD' : 'DAI'}
-      />
+      /> */}
       <div className="w-full px-4 pt-8 pb-12 text-xs text-neutral-300">
         Matic Balance <NativeBalance address={accountAddress} />
       </div>
