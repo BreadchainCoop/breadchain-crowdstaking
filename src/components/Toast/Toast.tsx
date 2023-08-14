@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { TToastType, useToast } from '../../context/ToastContext';
+import { TToastType, useToast } from '../../hooks/ToastContext';
 
 function ToastContainer({ children }: { children: ReactNode }) {
   return (

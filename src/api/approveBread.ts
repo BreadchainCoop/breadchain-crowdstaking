@@ -1,9 +1,9 @@
 import { Contract, ethers, Signer } from 'ethers';
 
-import { TModalDispatch } from '../context/ModalContext';
-import { TToastDispatch } from '../context/ToastContext';
-import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
 import ERC20ABI from '../ERC20.json';
+import { TModalDispatch } from '../hooks/ModalContext';
+import { TToastDispatch } from '../hooks/ToastContext';
+import { TTransactionDisplayDispatch } from '../hooks/TransactionDisplayContext';
 
 export const approveBREAD = async (
   signer: Signer,

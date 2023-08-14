@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import SwapReverse from './SwapReverse';
 
 import { ChainConfiguration } from '../../config';
-import { useToast } from '../../context/ToastContext';
+import { useToast } from '../../hooks/ToastContext';
 import { useTokenAllowance } from '../../hooks/useTokenAllowance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
@@ -11,7 +11,7 @@ import NativeBalance from '../NativeBalance';
 import FromPanel from './FromPanel';
 import ToPanel from './ToPanel';
 // import Button from '../Button';
-import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import { useTransactionDisplay } from '../../hooks/TransactionDisplayContext';
 import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';

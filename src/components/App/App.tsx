@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { useModal } from '../../context/ModalContext';
-import { useToast } from '../../context/ToastContext';
+import { useModal } from '../../hooks/ModalContext';
+import { useToast } from '../../hooks/ToastContext';
 import About from '../../routes/about';
 import Bake from '../../routes/bake';
 import FAQ from '../../routes/faq';

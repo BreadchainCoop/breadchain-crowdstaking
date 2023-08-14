@@ -1,5 +1,5 @@
-import { TModalStatus, TModalType, useModal } from '../../context/ModalContext';
-import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import { TModalStatus, TModalType, useModal } from '../../hooks/ModalContext';
+import { useTransactionDisplay } from '../../hooks/TransactionDisplayContext';
 
 import Elipsis from '../Elipsis/Elipsis';
 import Prose from '../Prose/Prose';

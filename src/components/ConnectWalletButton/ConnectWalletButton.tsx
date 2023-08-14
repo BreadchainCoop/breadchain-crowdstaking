@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAccount, useConnect } from 'wagmi';
 
-import { useToast } from '../../context/ToastContext';
+import { useToast } from '../../hooks/ToastContext';
 import Button from '../Button';
 
 function ConnectWalletButton() {

@@ -4,14 +4,14 @@ import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import Button from '../../Button';
 
+import ERC20ABI from '../../../ERC20.json';
 import type { ChainConfiguration } from '../../../config';
-import { useModal } from '../../../context/ModalContext';
-import { useToast } from '../../../context/ToastContext';
+import { useModal } from '../../../hooks/ModalContext';
+import { useToast } from '../../../hooks/ToastContext';
 import {
   TTransactionDisplayState,
   useTransactionDisplay,
-} from '../../../context/TransactionDisplayContext';
-import ERC20ABI from '../../../ERC20.json';
+} from '../../../hooks/TransactionDisplayContext';
 
 function transactionIsPending(
   transactionDisplay: TTransactionDisplayState,

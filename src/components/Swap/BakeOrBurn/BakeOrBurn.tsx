@@ -8,9 +8,9 @@ import Button from '../../Button';
 import type { ChainConfiguration } from '../../../config';
 
 import BREADABI from '../../../BreadPolygon.json';
-import { useModal } from '../../../context/ModalContext';
-import { useToast } from '../../../context/ToastContext';
-import { useTransactionDisplay } from '../../../context/TransactionDisplayContext';
+import { useModal } from '../../../hooks/ModalContext';
+import { useToast } from '../../../hooks/ToastContext';
+import { useTransactionDisplay } from '../../../hooks/TransactionDisplayContext';
 import useDebounce from '../../../hooks/useDebounce';
 import { UseTokenBalanceResult } from '../../../hooks/useTokenBalance';
 import PreparingTransaction from './PreparingTransaction';
