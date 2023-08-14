@@ -41,9 +41,6 @@ function BakeOrBurn({
 
   const { BREAD } = chainConfig;
 
-  console.log(debouncedValue);
-  console.log(debouncedValue);
-  console.log(debouncedValue);
   const parsedValue = parseEther(
     debouncedValue === '.' ? '0' : debouncedValue || '0',
   );

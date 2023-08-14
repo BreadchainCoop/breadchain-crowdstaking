@@ -20,11 +20,6 @@ export function useTokenBalance(
     watch: true,
   });
 
-  console.log({
-    tokenAddress,
-    balance: Number(data),
-  });
-
   const value = data ? formatUnits(data as bigint, 18).toString() : '0';
 
   return { value, status, error };
