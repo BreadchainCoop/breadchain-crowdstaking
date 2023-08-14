@@ -16,10 +16,9 @@ interface IProps {
 export function TokenBalance({ readings }: IProps) {
   const { value, status, error } = readings;
 
-  let displayedValue = 'Unknown';
-  if (value) {
-    displayedValue = balanceFormatter.format(parseFloat(value));
-  }
+  const displayedValue = value
+    ? balanceFormatter.format(parseFloat(value))
+    : 'unknown';
 
   switch (status) {
     case 'success':

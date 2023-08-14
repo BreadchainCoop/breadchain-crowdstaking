@@ -1,6 +1,5 @@
 import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
-import SwapReverse from './SwapReverse';
 
 import { ChainConfiguration } from '../../config';
 import { useToast } from '../../context/ToastContext';
@@ -8,16 +7,17 @@ import { useTokenAllowance } from '../../hooks/useTokenAllowance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
 
-import FromPanel from './FromPanel';
-import ToPanel from './ToPanel';
 // import Button from '../Button';
 import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
 import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
-import { sanitizeInputValue } from './swapUtils';
+import FromPanel from './FromPanel';
+import SwapReverse from './SwapReverse';
+import ToPanel from './ToPanel';
 import Transaction from './Transaction';
+import { sanitizeInputValue } from './swapUtils';
 
 interface ISwapState {
   mode: 'BAKE' | 'BURN';
