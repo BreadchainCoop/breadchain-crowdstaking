@@ -1,11 +1,13 @@
+import React, { Suspense } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
-import * as Main from '../components/App/ui/Main';
 import ConnectWalletButton from '../components/ConnectWalletButton';
-import SiteTitle from '../components/SiteTitle/SiteTitle';
-import Swap from '../components/Swap';
-import config from '../config';
+
+import BakeLayout from '../components/BakeLayout';
 
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
+import config from '../config';
+
+const Swap = React.lazy(() => import('../components/Swap'));
 
 export function Bake() {
   const {
@@ -20,39 +22,30 @@ export function Bake() {
       ? config[activeChain.id]
       : undefined;
 
-  console.log('activeChain');
-  console.log(activeChain);
-  console.log('configuration');
-  console.log(configuration);
-
   if (!activeConnector || !activeChain || !accountAddress || !isConnected) {
     return (
-      <>
-        <SiteTitle />
-        <Main.Inner>
-          <ConnectWalletButton />
-        </Main.Inner>
-      </>
+      <BakeLayout>
+        <ConnectWalletButton />
+      </BakeLayout>
     );
   }
 
   if (activeChain.unsupported)
     return (
-      <>
-        <SiteTitle />
+      <BakeLayout>
         <UnsupportedNetwork />
-      </>
+      </BakeLayout>
     );
+
   if (!configuration)
     throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
 
   return (
-    <>
-      <SiteTitle />
-      <Main.Inner>
+    <BakeLayout>
+      <Suspense>
         <Swap chainConfig={configuration} accountAddress={accountAddress} />
-      </Main.Inner>
-    </>
+      </Suspense>
+    </BakeLayout>
   );
 }
 
