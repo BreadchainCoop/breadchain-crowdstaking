@@ -1,31 +1,22 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-// import { useAccount, useSigner } from 'wagmi';
-// import { formatEther, parseEther } from 'ethers/lib/utils';
-// import { BigNumber } from 'ethers';
+import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import SwapReverse from './SwapReverse';
 
-// import Transaction from './Transaction';
-// import approveBREAD from '../../api/approveBread';
-// import Elipsis from '../Elipsis/Elipsis';
 import { ChainConfiguration } from '../../config';
-import { sanitizeInputValue } from './swapUtils';
-// import TokenBalance from '../TokenBalance';
+import { useToast } from '../../context/ToastContext';
 import { useTokenAllowance } from '../../hooks/useTokenAllowance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
-// import { swapDaiForBread } from '../../api/swapDaiForBread';
-// import { swapBreadForDai } from '../../api/swapBreadForDai';
-import { useToast } from '../../context/ToastContext';
-// import { useModal } from '../../context/ModalContext';
-// import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
 
 import FromPanel from './FromPanel';
 import ToPanel from './ToPanel';
 // import Button from '../Button';
 import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
+import { sanitizeInputValue } from './swapUtils';
 import Transaction from './Transaction';
 
 interface ISwapState {
@@ -100,6 +91,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
       dispatchTransactionDisplay({ type: 'CLEAR' });
     }
     const { value } = event.target;
+
     const sanitizedValue = sanitizeInputValue(value);
     setSwapState({
       ...swapState,
@@ -117,7 +109,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
   const handleBalanceClick = (value: string) => {
     setSwapState((state) => ({
       ...state,
-      value,
+      value: balanceFormatter.format(parseFloat(value)),
     }));
   };
 

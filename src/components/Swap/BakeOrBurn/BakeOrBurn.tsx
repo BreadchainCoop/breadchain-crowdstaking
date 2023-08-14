@@ -41,7 +41,12 @@ function BakeOrBurn({
 
   const { BREAD } = chainConfig;
 
-  const parsedValue = parseEther(debouncedValue || '0');
+  console.log(debouncedValue);
+  console.log(debouncedValue);
+  console.log(debouncedValue);
+  const parsedValue = parseEther(
+    debouncedValue === '.' ? '0' : debouncedValue || '0',
+  );
 
   const prepareResult = usePrepareContractWrite({
     address: BREAD.address,
@@ -58,35 +63,10 @@ function BakeOrBurn({
 
   const {
     error: writeError,
-    data,
+    data: writeData,
     isSuccess,
     write,
   } = useContractWrite(config);
-
-  useEffect(() => {
-    if (writeError) {
-      if (modalState) dispatchModal({ type: 'CLEAR_MODAL' });
-      dispatchToast({
-        type: 'SET_TOAST',
-        payload: {
-          type: 'ERROR',
-          message: 'transaction failed',
-        },
-      });
-      clearInputValue();
-    }
-    if (isSuccess && data) {
-      dispatchModal({ type: 'UNLOCK_MODAL' });
-      dispatchTransactionDisplay({
-        type: 'SET_PENDING',
-        payload: {
-          status: 'PENDING',
-          hash: data.hash,
-        },
-      });
-      clearInputValue();
-    }
-  }, [writeError, isSuccess, data]);
 
   const handleSubmit = async () => {
     dispatchModal({
@@ -107,6 +87,31 @@ function BakeOrBurn({
 
     write?.();
   };
+
+  useEffect(() => {
+    if (writeError) {
+      if (modalState) dispatchModal({ type: 'CLEAR_MODAL' });
+      dispatchToast({
+        type: 'SET_TOAST',
+        payload: {
+          type: 'ERROR',
+          message: 'transaction failed',
+        },
+      });
+      clearInputValue();
+    }
+    if (isSuccess && writeData) {
+      dispatchModal({ type: 'UNLOCK_MODAL' });
+      dispatchTransactionDisplay({
+        type: 'SET_PENDING',
+        payload: {
+          status: 'PENDING',
+          hash: writeData.hash,
+        },
+      });
+      clearInputValue();
+    }
+  }, [writeError, isSuccess, writeData]);
 
   return (
     <>

@@ -32,7 +32,7 @@ function Transaction({ hash, status }: IProps) {
         },
       });
     }
-    if (transactionData && transactionData!.confirmations >= 1) {
+    if (transactionData?.status === 'success') {
       dispatchTransactionDisplay({ type: 'SET_COMPLETE' });
     }
   }, [transactionData, transactionIsError]);

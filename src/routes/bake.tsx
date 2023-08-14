@@ -3,8 +3,9 @@ import * as Main from '../components/App/ui/Main';
 import ConnectWalletButton from '../components/ConnectWalletButton';
 import SiteTitle from '../components/SiteTitle/SiteTitle';
 import Swap from '../components/Swap';
-import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 import config from '../config';
+
+import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 
 export function Bake() {
   const {
@@ -18,6 +19,11 @@ export function Bake() {
     activeChain?.id && config[activeChain.id]
       ? config[activeChain.id]
       : undefined;
+
+  console.log('activeChain');
+  console.log(activeChain);
+  console.log('configuration');
+  console.log(configuration);
 
   if (!activeConnector || !activeChain || !accountAddress || !isConnected) {
     return (

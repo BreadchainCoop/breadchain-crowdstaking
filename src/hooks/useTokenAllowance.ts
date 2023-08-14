@@ -10,7 +10,7 @@ export interface IUseTokenAllowanceResult {
 }
 
 export function useTokenAllowance(
-  tokenAddress: string,
+  tokenAddress: `0x${string}`,
   holderAddress: string,
   spenderAddress: string,
 ): IUseTokenAllowanceResult {
