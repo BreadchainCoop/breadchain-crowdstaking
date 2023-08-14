@@ -2,11 +2,13 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
-} from 'react';
+} from "react";
+import { useWaitForTransaction } from "wagmi";
 
-export type TTransactionStatus = 'PENDING' | 'COMPLETE';
+export type TTransactionStatus = "PENDING" | "COMPLETE";
 
 export interface ITransaction {
   status: TTransactionStatus;
@@ -17,14 +19,14 @@ export type TTransactionDisplayState = null | ITransaction;
 
 export type TTransactionDisplayAction =
   | {
-      type: 'SET_PENDING';
+      type: "SET_PENDING";
       payload: ITransaction;
     }
   | {
-      type: 'SET_COMPLETE';
+      type: "SET_COMPLETE";
     }
   | {
-      type: 'CLEAR';
+      type: "CLEAR";
     };
 
 export type TTransactionDisplayDispatch = (
@@ -46,7 +48,7 @@ function TransactionDisplayReducer(
 ): TTransactionDisplayState {
   const { type: actionType } = action;
   switch (actionType) {
-    case 'SET_PENDING':
+    case "SET_PENDING":
       /* eslint-disable-next-line no-case-declarations */
       const {
         payload: { status, hash },
@@ -55,16 +57,16 @@ function TransactionDisplayReducer(
         status,
         hash,
       };
-    case 'SET_COMPLETE':
-      if (state === null) throw new Error('TransactionDisplay currently null');
+    case "SET_COMPLETE":
+      if (state === null) throw new Error("TransactionDisplay currently null");
       return {
         ...state,
-        status: 'COMPLETE',
+        status: "COMPLETE",
       };
-    case 'CLEAR':
+    case "CLEAR":
       return null;
     default:
-      throw new Error('TransactionDisplay action not recognised');
+      throw new Error("TransactionDisplay action not recognised");
   }
 }
 
@@ -79,6 +81,15 @@ function TransactionDisplayProvider({
 
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
+  const { data } = useWaitForTransaction({ hash: state?.hash });
+
+  useEffect(() => {
+    if (!data) return;
+    if (data.status === "success") {
+      dispatch({ type: "SET_COMPLETE" });
+    }
+  }, [data]);
+
   return (
     <TransactionDisplayContext.Provider value={value}>
       {children}
@@ -90,7 +101,7 @@ const useTransactionDisplay = () => {
   const context = useContext(TransactionDisplayContext);
   if (context === undefined) {
     throw new Error(
-      'useTransactionDisplay must be used within a TransactionDisplayProvider',
+      "useTransactionDisplay must be used within a TransactionDisplayProvider",
     );
   }
   return context;

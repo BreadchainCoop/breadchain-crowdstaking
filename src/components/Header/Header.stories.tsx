@@ -1,5 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { Wallet } from 'ethers';
+import { createWalletClient, http } from 'viem';
+import { hardhat } from 'wagmi/dist/chains';
 import {
   MockWagmiDecorator,
   ReactRouterDecorator,
@@ -7,10 +8,16 @@ import {
 
 import Header from './Header';
 
-// 👇 Components within this story will act as though they are connected to this wallet
-const demoWallet = new Wallet(
-  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80',
-);
+const DEMO_PK_1 =
+  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
+const DEMO_ACCOUNT_1 = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
+
+const demoWallet = createWalletClient({
+  account: DEMO_ACCOUNT_1,
+  key: DEMO_PK_1,
+  chain: hardhat,
+  transport: http('localhost:8545'),
+});
 
 export default {
   title: 'Core/Header',
