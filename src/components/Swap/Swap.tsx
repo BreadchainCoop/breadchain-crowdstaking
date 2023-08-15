@@ -13,7 +13,6 @@ import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
-import FromPanel from './FromPanel';
 import SwapReverse from './SwapReverse';
 import Transaction from './Transaction';
 import { sanitizeInputValue } from './swapUtils';
@@ -114,7 +113,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
 
   return (
     <>
-      <FromPanel
+      {/* <FromPanel
         inputValue={swapState.value}
         balanceReadings={
           swapState.mode === 'BAKE' ? daiBalanceReadings : breadBalanceReadings
@@ -122,7 +121,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
         tokenType={swapState.mode === 'BAKE' ? 'DAI' : 'BREAD'}
         handleBalanceClick={handleBalanceClick}
         handleInputChange={handleInputChange}
-      />
+      /> */}
       <SwapReverse onClick={handleSwapReverse} />
       {/* <ToPanel
         inputValue={swapState.value}
