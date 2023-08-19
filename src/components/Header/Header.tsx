@@ -1,5 +1,8 @@
 import { ReactNode, useState } from 'react';
 import { Chain, useAccount, useDisconnect, useNetwork } from 'wagmi';
+import clsx from 'clsx'
+
+import { WRAPPER_CLASSES } from '../../util';
 import MobileMenu from '../MobileMenu';
 import DesktopNavigation from './DesktopNavigation';
 import Logo from './Logo';
@@ -9,7 +12,7 @@ import WalletDisplay from './WalletDisplay';
 function Container({ children }: { children: ReactNode }) {
   return (
     <header className="bg-breadgray-100">
-      <div className="m-0 mx-auto flex max-w-6xl justify-between px-6 py-4 md:py-6 md:px-8">
+      <div className={clsx(WRAPPER_CLASSES, 'flex justify-between')}>
         {children}
       </div>
     </header>

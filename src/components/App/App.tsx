@@ -4,6 +4,7 @@ import { useModal } from '../../hooks/ModalContext';
 import { useToast } from '../../hooks/ToastContext';
 import About from '../../routes/about';
 import Bake from '../../routes/bake';
+import DashBoard from '../../routes/dashboard';
 import FAQ from '../../routes/faq';
 import Footer from '../Footer';
 import Header from '../Header';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/" element={<Bake />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/dashboard" element={<DashBoard />} />
           {/* <Route path="/pantry" element={<Pantry />} /> */}
         </Routes>
       </Main.Main>

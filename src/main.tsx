@@ -15,6 +15,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import App from './components/App';
 import './css/index.css';
 import { ModalProvider } from './hooks/ModalContext';
+import SubgraphProvider from './hooks/SubgraphContext';
 import { ToastProvider } from './hooks/ToastContext';
 import { TransactionDisplayProvider } from './hooks/TransactionDisplayContext';
 
@@ -62,15 +63,17 @@ const root = createRoot(container!); // createRoot(container!) if you use TypeSc
 root.render(
   <React.StrictMode>
     <WagmiConfig config={config}>
-      <ToastProvider>
-        <ModalProvider>
-          <TransactionDisplayProvider>
-            <HashRouter>
-              <App />
-            </HashRouter>
-          </TransactionDisplayProvider>
-        </ModalProvider>
-      </ToastProvider>
+      <SubgraphProvider>
+        <ToastProvider>
+          <ModalProvider>
+            <TransactionDisplayProvider>
+              <HashRouter>
+                <App />
+              </HashRouter>
+            </TransactionDisplayProvider>
+          </ModalProvider>
+        </ToastProvider>
+      </SubgraphProvider>
     </WagmiConfig>
   </React.StrictMode>,
 );

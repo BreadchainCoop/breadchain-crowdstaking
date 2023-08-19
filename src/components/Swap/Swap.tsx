@@ -8,7 +8,6 @@ import { useTokenAllowance } from '../../hooks/useTokenAllowance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
 
-import FromPanel from './FromPanel';
 import ToPanel from './ToPanel';
 // import Button from '../Button';
 import { useTransactionDisplay } from '../../hooks/TransactionDisplayContext';
@@ -16,8 +15,9 @@ import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
-import { sanitizeInputValue } from './swapUtils';
+import FromPanel from './FromPanel';
 import Transaction from './Transaction';
+import { sanitizeInputValue } from './swapUtils';
 
 interface ISwapState {
   mode: 'BAKE' | 'BURN';
