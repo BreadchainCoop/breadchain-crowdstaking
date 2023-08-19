@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
 import ConnectWalletButton from '../components/ConnectWalletButton';
 
@@ -7,7 +7,7 @@ import BakeLayout from '../components/BakeLayout';
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 import config from '../config';
 
-const Swap = React.lazy(() => import('../components/Swap'));
+const Swap = lazy(() => import('../components/Swap'));
 
 export function Bake() {
   const {
