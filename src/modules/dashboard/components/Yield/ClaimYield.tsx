@@ -86,10 +86,10 @@ export default function ClaimYield({ amount }: IProps) {
   const { user } = useConnectedUser();
 
   return (
-    <section className="flex justify-between">
+    <section className="m-auto flex w-2/3 items-center justify-between p-6">
       {user ? (
         <>
-          Claim Yield
+          <span>Claim Yield</span>
           <ClaimYieldButton amount={amount} config={user.config} />
         </>
       ) : (

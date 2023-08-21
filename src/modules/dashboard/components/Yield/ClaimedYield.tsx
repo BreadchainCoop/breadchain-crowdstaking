@@ -1,4 +1,6 @@
-import { IChartData } from '../hooks/useBread';
+import { useMemo } from 'react';
+import { IChartData } from '../../hooks/useBread';
+import { yieldFormatter } from './Yield';
 
 export default function ClaimedYield({
   data,
@@ -7,8 +9,16 @@ export default function ClaimedYield({
   data: IChartData | null;
   loading: boolean;
 }) {
-  // const { data: boo } = useBread();
-  const amount = data?.totalClaimedYield.toString();
+  const claimed = useMemo(
+    () =>
+      data ? yieldFormatter.format(parseFloat(data.totalClaimedYield)) : '...',
+    [data],
+  );
 
-  return <section>Claimed Yield:{loading ? 'loading...' : amount}</section>;
+  return (
+    <section className="m-auto flex w-2/3 items-center justify-between p-6">
+      <span>Claimed Yield</span>
+      <span>{loading ? 'loading...' : claimed}</span>
+    </section>
+  );
 }

@@ -18,7 +18,7 @@ export default function EconomyDisplay() {
         )}
       >
         {/* <EconomyDisplayHeader /> */}
-        <div className="h-[300px]">
+        <div className="m-auto h-[500px] max-w-2xl">
           {data && <BreadChart chartData={data} />}
         </div>
         <Yield data={data} loading={loading} />

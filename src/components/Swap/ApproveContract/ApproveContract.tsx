@@ -11,7 +11,7 @@ import { useToast } from '../../../hooks/useToast';
 import {
   TTransactionDisplayState,
   useTransactionDisplay,
-} from '../../../hooks/useTransactionDisplay.tsx';
+} from '../../../hooks/useTransactionDisplay';
 
 function transactionIsPending(
   transactionDisplay: TTransactionDisplayState,

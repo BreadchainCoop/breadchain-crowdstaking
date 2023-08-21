@@ -7,6 +7,7 @@
   body {
     font-family: 'Press Start 2P', monospace;
     background-color: #202020;
+    @apply text-neutral-300;
   }
 
   .prose {

@@ -4,9 +4,9 @@ import { IChartData } from '../hooks/useBread';
 
 function Widget({ supply, date }: { supply: number; date: string }) {
   return (
-    <div className="w-auto bg-green-500 p-10 text-gray-700">
+    <div className="flex -translate-y-12 transform flex-col gap-2 bg-breadgray-burnt p-10 text-neutral-300">
       <p>{supply}</p>
-      <p>{date}</p>
+      <p className="text-xs text-neutral-400">{date}</p>
     </div>
   );
 }
@@ -16,7 +16,11 @@ function CustomCursor({ payload }: any) {
 
   if (!data) return null;
 
-  return <Widget supply={data.supply} date={data.date} />;
+  return (
+    <div>
+      <Widget supply={data.supply} date={data.date} />
+    </div>
+  );
 }
 
 function DefaultSupplyDisplay({ supply }: { supply: number }) {
@@ -26,7 +30,7 @@ function DefaultSupplyDisplay({ supply }: { supply: number }) {
   }, []);
 
   return (
-    <div className="absolute left-0 top-0">
+    <div className="absolute left-0">
       <Widget supply={supply} date={date} />
     </div>
   );
@@ -38,10 +42,10 @@ export default function BreadChart({ chartData }: { chartData: IChartData }) {
   const latestSnapshot = tokenDailySnapshots[tokenDailySnapshots.length - 1];
 
   return (
-    <section className="relative h-full w-full">
+    <section className="relative h-full w-full pt-24">
       <DefaultSupplyDisplay supply={latestSnapshot.supply} />
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart className="relative" data={tokenDailySnapshots}>
+        <ComposedChart data={tokenDailySnapshots}>
           <defs>
             {/* <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#E429A6" stopOpacity={0.4} />
