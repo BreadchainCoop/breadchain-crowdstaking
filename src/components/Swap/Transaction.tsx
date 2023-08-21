@@ -4,7 +4,7 @@ import { useToast } from '../../hooks/useToast';
 import {
   TTransactionStatus,
   useTransactionDisplay,
-} from '../../hooks/useTransactionDisplay.tsx';
+} from '../../hooks/useTransactionDisplay';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface IProps {

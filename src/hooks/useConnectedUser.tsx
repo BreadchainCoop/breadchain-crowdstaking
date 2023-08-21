@@ -38,25 +38,9 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
         ? config[activeChain.id]
         : undefined;
 
-    if (!activeConnector) {
-      console.log('no activeConnector!');
-    }
-    if (!activeChain) {
-      console.log('no activeChain!');
-    }
-    if (!accountAddress) {
-      console.log('no accountAddress!');
-    }
-    if (!isConnected) {
-      console.log('no isConnected!');
-    }
-    if (!configuration) {
-      console.log('no configuration!');
-    }
-
     if (
-      // activeConnector &&
-      // activeChain &&
+      activeConnector &&
+      activeChain &&
       accountAddress &&
       isConnected &&
       configuration
@@ -70,10 +54,7 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
     }
   }, [isConnected, activeConnector, accountAddress, activeChain]);
 
-  const value = useMemo(() => {
-    console.log('\n\n\nhjook user', user);
-    return { user };
-  }, [user]);
+  const value = useMemo(() => ({ user }), [user]);
 
   return (
     <ConnectedUserContext.Provider value={value}>

@@ -1,10 +1,10 @@
-import useAAVE from "@/modules/dashboard/hooks/useAAVE";
+import useAAVE from '../hooks/useAAVE';
 
 export default function AAVE() {
-  const { loading, data } = useAAVE();
+  const { data } = useAAVE();
 
   return (
-    <section className="py-8 flex flex-col gap-4">
+    <section className="flex flex-col gap-4 py-8">
       <h2 className="font-bold">AAVE</h2>
       {data && (
         <dl className="grid grid-cols-2">

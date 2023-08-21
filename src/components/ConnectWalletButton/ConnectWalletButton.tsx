@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useAccount, useConnect } from 'wagmi';
+import { useConnect } from 'wagmi';
 
 import { useToast } from '../../hooks/useToast';
 import Button from '../Button';
 
 function ConnectWalletButton() {
-  const { connector: activeConnector, isConnected } = useAccount();
+  // const { connector: activeConnector, isConnected } = useAccount();
   const { connect, connectors, error } = useConnect();
   const { dispatch: toastDispatch } = useToast();
 

@@ -1,11 +1,17 @@
 import { useMemo } from 'react';
 import { Area, ComposedChart, ResponsiveContainer, Tooltip } from 'recharts';
+import Icon from '../../../components/Swap/Icon';
 import { IChartData } from '../hooks/useBread';
 
 function Widget({ supply, date }: { supply: number; date: string }) {
   return (
     <div className="flex -translate-y-12 transform flex-col gap-2 bg-breadgray-burnt p-10 text-neutral-300">
-      <p>{supply}</p>
+      <div className="flex items-center gap-4">
+        <Icon type="BREAD" />
+        <span className="translate-y-0.5 transform text-lg">
+          {Intl.NumberFormat().format(supply)}
+        </span>
+      </div>
       <p className="text-xs text-neutral-400">{date}</p>
     </div>
   );
@@ -47,10 +53,6 @@ export default function BreadChart({ chartData }: { chartData: IChartData }) {
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={tokenDailySnapshots}>
           <defs>
-            {/* <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#E429A6" stopOpacity={0.4} />
-              <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0} />
-            </linearGradient> */}
             <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#A416AD" stopOpacity={1} />
               <stop offset="95%" stopColor="#FF99E2" stopOpacity={0.6} />

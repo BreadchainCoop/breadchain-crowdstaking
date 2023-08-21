@@ -1,5 +1,9 @@
+import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
+import { useMemo } from 'react';
+import { formatUnits } from 'viem';
+
 const SUBGRAPH_URL =
-  "https://api.thegraph.com/subgraphs/name/messari/arrakis-finance-polygon";
+  'https://api.thegraph.com/subgraphs/name/messari/arrakis-finance-polygon';
 
 const arrakisClient = new ApolloClient({
   uri: SUBGRAPH_URL,
@@ -23,10 +27,6 @@ const ARRAKIS_QUERY = gql`
   }
 `;
 
-import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
-import { useMemo } from "react";
-import { formatUnits } from "viem";
-
 export default function useArrakis() {
   const { data: apolloData, loading } = useQuery(ARRAKIS_QUERY, {
     client: arrakisClient,
@@ -45,14 +45,12 @@ export default function useArrakis() {
       },
     } = apolloData;
 
-    const data = {
+    return {
       vaultName: name,
       totalValueLockedUSD,
       token0: { name: token0Name, amount: formatUnits(_token0Amount, 18) },
       token1: { name: token1Name, amount: formatUnits(_token1Amount, 18) },
     };
-
-    return data;
   }, [apolloData]);
 
   return {

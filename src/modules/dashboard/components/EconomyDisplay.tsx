@@ -8,8 +8,6 @@ import Yield from './Yield/Yield';
 export default function EconomyDisplay() {
   const { data, loading } = useBread();
 
-  console.log({ data });
-
   return (
     <div className={clsx(WRAPPER_CLASSES, ' py-8')}>
       <section

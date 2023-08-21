@@ -4,7 +4,7 @@ import { parseEther } from 'ethers/lib/utils';
 import { abi as BreadABI } from '../BreadPolygon.json';
 import { TModalDispatch } from '../hooks/useModal';
 import { TToastDispatch } from '../hooks/useToast';
-import { TTransactionDisplayDispatch } from '../hooks/useTransactionDisplay.tsx';
+import { TTransactionDisplayDispatch } from '../hooks/useTransactionDisplay';
 import { IProviderRpcError } from '../metamaskErrorType';
 
 export const swapDaiForBread = async (

@@ -8,7 +8,7 @@ import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
 
 // import Button from '../Button';
-import { useTransactionDisplay } from '../../hooks/useTransactionDisplay.tsx';
+import { useTransactionDisplay } from '../../hooks/useTransactionDisplay';
 import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';

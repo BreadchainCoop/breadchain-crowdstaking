@@ -14,7 +14,7 @@ const { abi } = BREADABI;
 export const yieldFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 4,
   minimumIntegerDigits: 2,
-  useGrouping: false,
+  useGrouping: true,
 });
 
 export default function Yield({
