@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { formatUnits } from 'ethers/lib/utils';
 import { useEffect, useMemo } from 'react';
 
-export interface IDailySnapshot {
+interface IQueryDailySnapshot {
   timestamp: string;
   dailyTotalSupply: number;
 }
@@ -15,9 +15,15 @@ export interface IToken {
   supply: string;
 }
 
+export interface IDailySnapshot {
+  supply: number;
+  date: string;
+}
+
 export interface IChartData {
   tokenDailySnapshots: IDailySnapshot[];
   tokens: IToken[];
+  totalClaimedYield: string;
 }
 
 const TOKEN_DAILY_QUERY = gql`
@@ -28,6 +34,10 @@ const TOKEN_DAILY_QUERY = gql`
       burned
       transfers
       supply
+    }
+
+    totalClaimedYield(id: "0x11d9efdf4ab4a3bfabf5c7089f56aa4f059aa14c") {
+      amount
     }
 
     tokenDailySnapshots(
@@ -56,12 +66,15 @@ export default function useBread() {
 
   const chartData: null | IChartData = useMemo(() => {
     if (!apolloData) return null;
+
     return {
       tokens: {
         ...(apolloData.tokens as IToken[]),
       },
+      totalClaimedYield: formatUnits(apolloData.totalClaimedYield.amount),
+
       tokenDailySnapshots: apolloData.tokenDailySnapshots
-        .map((day: IDailySnapshot) => {
+        .map((day: IQueryDailySnapshot) => {
           const date = new Date(
             parseInt(day.timestamp, 10) * 1000,
           ).toDateString();

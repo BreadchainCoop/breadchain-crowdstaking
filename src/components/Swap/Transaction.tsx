@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useNetwork, useWaitForTransaction } from 'wagmi';
-import { useToast } from '../../hooks/ToastContext';
+import { useToast } from '../../hooks/useToast';
 import {
   TTransactionStatus,
   useTransactionDisplay,
-} from '../../hooks/TransactionDisplayContext';
+} from '../../hooks/useTransactionDisplay.tsx';
 import Elipsis from '../Elipsis/Elipsis';
 
 interface IProps {

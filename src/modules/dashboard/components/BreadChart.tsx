@@ -1,65 +1,58 @@
-import {
-  Area,
-  ComposedChart,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-} from 'recharts';
-import { IChartData } from '../../hooks/useBread';
+import { useMemo } from 'react';
+import { Area, ComposedChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { IChartData } from '../hooks/useBread';
 
-// interface ITooltipData {
-//   payload: IToken;
-//   // [key: string]: string;
-// }
-// [];
-
-function Widget({ supply }: { supply: number }) {
+function Widget({ supply, date }: { supply: number; date: string }) {
   return (
     <div className="w-auto bg-green-500 p-10 text-gray-700">
       <p>{supply}</p>
+      <p>{date}</p>
     </div>
   );
 }
 
 function CustomCursor({ payload }: any) {
   const data = payload[0]?.payload;
-  // if (!data) throw new Error("no data data in tooltip!");
-  // console.log({ payload });
 
   if (!data) return null;
 
-  return <Widget supply={data.supply} />;
+  return <Widget supply={data.supply} date={data.date} />;
 }
 
 function DefaultSupplyDisplay({ supply }: { supply: number }) {
+  const date = useMemo(() => {
+    const today = new Date(Date.now()).toDateString();
+    return today;
+  }, []);
+
   return (
     <div className="absolute left-0 top-0">
-      <Widget supply={supply} />
+      <Widget supply={supply} date={date} />
     </div>
   );
 }
 
-export default function Chart({ chartData }: { chartData: IChartData }) {
-  console.log({ chartData });
+export default function BreadChart({ chartData }: { chartData: IChartData }) {
+  const { tokenDailySnapshots } = chartData;
+
+  const latestSnapshot = tokenDailySnapshots[tokenDailySnapshots.length - 1];
+
   return (
     <section className="relative h-full w-full">
-      <DefaultSupplyDisplay supply={200} />
+      <DefaultSupplyDisplay supply={latestSnapshot.supply} />
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart
-          className="relative"
-          data={chartData.tokenDailySnapshots}
-        >
+        <ComposedChart className="relative" data={tokenDailySnapshots}>
           <defs>
-            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            {/* <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#E429A6" stopOpacity={0.4} />
               <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0} />
-            </linearGradient>
+            </linearGradient> */}
             <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#A416AD" stopOpacity={1} />
               <stop offset="95%" stopColor="#FF99E2" stopOpacity={0.6} />
             </linearGradient>
           </defs>
-          <Line dot={false} type="natural" dataKey="supply" stroke="#8884d8" />
+          {/* <Line dot={false} type="natural" dataKey="supply" stroke="#8884d8" /> */}
           <Area
             type="monotone"
             dataKey="supply"

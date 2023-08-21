@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 
-import { TToastType, useToast } from '../../hooks/ToastContext';
+import { TToastType, useToast } from '../../hooks/useToast';
 
 function ToastContainer({ children }: { children: ReactNode }) {
   return (
     <div className="w-full p-4">
-      <div className="relative m-auto max-w-2xl bg-breadgray-100 px-6 py-8 text-white md:px-12">
+      <div className="bg-breadgray-100 relative m-auto max-w-2xl px-6 py-8 text-white md:px-12">
         {children}
       </div>
     </div>

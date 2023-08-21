@@ -1,8 +1,8 @@
-import EconomyDisplay from '../modules/dashboard/components/BreadChart/EconomyDisplay';
+import EconomyDisplay from '../modules/dashboard/components/EconomyDisplay';
 
 export default function DashBoard() {
   return (
-    <section>
+    <section className="py-16">
       <EconomyDisplay />
     </section>
   );

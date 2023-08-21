@@ -13,7 +13,8 @@ export type TModalType =
   | 'CHANGING_NETWORK'
   | 'APPROVAL'
   | 'BAKING'
-  | 'BURNING';
+  | 'BURNING'
+  | 'CLAIMING';
 
 export type TModalStatus = 'LOCKED' | 'UNLOCKED';
 
@@ -67,7 +68,11 @@ const modalReducer = (
       };
     case 'UNLOCK_MODAL':
       if (state === null) throw new Error('modal not set');
-      if (state.type !== 'BAKING' && state.type !== 'BURNING')
+      if (
+        state.type !== 'BAKING' &&
+        state.type !== 'BURNING' &&
+        state.type !== 'CLAIMING'
+      )
         throw new Error('modal type cannot be unlocked');
       return {
         ...state,

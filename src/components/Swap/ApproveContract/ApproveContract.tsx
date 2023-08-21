@@ -6,12 +6,12 @@ import Button from '../../Button';
 
 import ERC20ABI from '../../../ERC20.json';
 import type { ChainConfiguration } from '../../../config';
-import { useModal } from '../../../hooks/ModalContext';
-import { useToast } from '../../../hooks/ToastContext';
+import { useModal } from '../../../hooks/useModal';
+import { useToast } from '../../../hooks/useToast';
 import {
   TTransactionDisplayState,
   useTransactionDisplay,
-} from '../../../hooks/TransactionDisplayContext';
+} from '../../../hooks/useTransactionDisplay.tsx';
 
 function transactionIsPending(
   transactionDisplay: TTransactionDisplayState,

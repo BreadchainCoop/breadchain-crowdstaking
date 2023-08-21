@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-// import { ethers } from 'ethers';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import { parseEther } from 'ethers/lib/utils.js';
@@ -8,11 +7,11 @@ import Button from '../../Button';
 import type { ChainConfiguration } from '../../../config';
 
 import BREADABI from '../../../BreadPolygon.json';
-import { useModal } from '../../../hooks/ModalContext';
-import { useToast } from '../../../hooks/ToastContext';
-import { useTransactionDisplay } from '../../../hooks/TransactionDisplayContext';
 import useDebounce from '../../../hooks/useDebounce';
+import { useModal } from '../../../hooks/useModal';
+import { useToast } from '../../../hooks/useToast';
 import { UseTokenBalanceResult } from '../../../hooks/useTokenBalance';
+import { useTransactionDisplay } from '../../../hooks/useTransactionDisplay';
 import PreparingTransaction from './PreparingTransaction';
 
 const { abi } = BREADABI;

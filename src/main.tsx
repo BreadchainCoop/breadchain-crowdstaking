@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 
@@ -14,10 +14,10 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import App from './components/App';
 import './css/index.css';
-import { ModalProvider } from './hooks/ModalContext';
-import SubgraphProvider from './hooks/SubgraphContext';
-import { ToastProvider } from './hooks/ToastContext';
-import { TransactionDisplayProvider } from './hooks/TransactionDisplayContext';
+import SubgraphProvider from './hooks/graphProvider';
+import { ModalProvider } from './hooks/useModal';
+import { ToastProvider } from './hooks/useToast';
+import { TransactionDisplayProvider } from './hooks/useTransactionDisplay';
 
 export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 
@@ -61,7 +61,7 @@ const config = createConfig({
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <WagmiConfig config={config}>
       <SubgraphProvider>
         <ToastProvider>
@@ -75,5 +75,5 @@ root.render(
         </ToastProvider>
       </SubgraphProvider>
     </WagmiConfig>
-  </React.StrictMode>,
+  </StrictMode>,
 );

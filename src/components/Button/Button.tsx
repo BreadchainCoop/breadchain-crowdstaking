@@ -1,7 +1,5 @@
+import clsx from 'clsx';
 import { MouseEvent, ReactNode, useState } from 'react';
-import { classNames } from '../../util';
-
-// import { classNames } from '@/util';
 
 interface IProps {
   /* eslint-disable-next-line no-unused-vars */
@@ -40,7 +38,7 @@ function Button({
   return (
     <button
       type="button"
-      className={classNames(
+      className={clsx(
         'button-gradient button-shadow bg-opacity-85 relative flex items-center justify-center text-neutral-900 hover:bg-opacity-100',
         EVariants[variant],
         fullWidth ? 'w-full' : '',

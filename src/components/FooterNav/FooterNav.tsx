@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useModal } from '../../hooks/ModalContext';
+import { useModal } from '../../hooks/useModal';
 import ExternalNavLink from '../ExternalNavLink';
 
 function FooterNavContainer({ children }: { children: ReactNode }) {
