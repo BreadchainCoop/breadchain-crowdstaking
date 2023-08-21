@@ -1,6 +1,6 @@
 import Button from '../Button';
 
-import { useModal } from '../../context/ModalContext';
+import { useModal } from '../../hooks/useModal';
 
 function UnsupportedNetwork() {
   const { dispatch: modalDispatch } = useModal();

@@ -31,7 +31,7 @@ function WalletMenu({
   return (
     <div
       ref={menuRef}
-      className="absolute -bottom-10 right-0 flex translate-y-full transform flex-col items-end gap-4 whitespace-nowrap bg-breadgray-100 p-6 text-xs"
+      className="absolute -bottom-10 right-0 z-10 flex translate-y-full transform flex-col items-end gap-4 whitespace-nowrap bg-breadgray-og-dark p-6 text-xs"
     >
       <div className="flex items-center gap-4 text-neutral-300">
         <IconContainer>

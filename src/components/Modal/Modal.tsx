@@ -1,5 +1,5 @@
-import { TModalStatus, TModalType, useModal } from '../../context/ModalContext';
-import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
+import { TModalStatus, TModalType, useModal } from '../../hooks/useModal';
+import { useTransactionDisplay } from '../../hooks/useTransactionDisplay';
 
 import Elipsis from '../Elipsis/Elipsis';
 import Prose from '../Prose/Prose';
@@ -92,6 +92,36 @@ function Modal({ type, title, status }: TProps) {
                   <Message>Transaction complete!</Message>
                 )}
                 <AddTokens />
+              </>
+            )}
+          </Inner>
+        </Container>
+      );
+    case 'CLAIMING':
+      return (
+        <Container>
+          <Inner>
+            {status === 'UNLOCKED' && (
+              <CloseModalButton handleClick={handleCloseModal} />
+            )}
+            <Heading>{title}</Heading>
+            {status === 'LOCKED' && (
+              <Message>
+                Awaiting user response
+                <Elipsis />
+              </Message>
+            )}
+
+            {status === 'UNLOCKED' && (
+              <>
+                {txStatus === 'PENDING' && (
+                  <Message>
+                    Transaction in progress <Elipsis />
+                  </Message>
+                )}
+                {txStatus === 'COMPLETE' && (
+                  <Message>Transaction complete!</Message>
+                )}
               </>
             )}
           </Inner>

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { ModalProvider } from '../../context/ModalContext';
+import { ModalProvider } from '../../hooks/useModal';
 import Modal from './Modal';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

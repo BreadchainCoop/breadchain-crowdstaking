@@ -11,7 +11,7 @@ function Input({ name, value, handleInputChange }: TProps) {
   return (
     <input
       name={name}
-      className="mr-8 w-0 flex-auto truncate text-ellipsis bg-breadgray-100  text-lg placeholder-gray-200 sm:text-2xl"
+      className="mr-8 w-0 flex-auto truncate text-ellipsis bg-breadgray-og-dark  text-lg placeholder-gray-200 sm:text-2xl"
       placeholder="00.00"
       inputMode="decimal"
       autoComplete="off"

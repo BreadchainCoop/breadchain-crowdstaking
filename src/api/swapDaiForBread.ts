@@ -2,9 +2,9 @@ import { Contract, Signer } from 'ethers';
 import { parseEther } from 'ethers/lib/utils';
 
 import { abi as BreadABI } from '../BreadPolygon.json';
-import { TModalDispatch } from '../context/ModalContext';
-import { TToastDispatch } from '../context/ToastContext';
-import { TTransactionDisplayDispatch } from '../context/TransactionDisplayContext';
+import { TModalDispatch } from '../hooks/useModal';
+import { TToastDispatch } from '../hooks/useToast';
+import { TTransactionDisplayDispatch } from '../hooks/useTransactionDisplay';
 import { IProviderRpcError } from '../metamaskErrorType';
 
 export const swapDaiForBread = async (
