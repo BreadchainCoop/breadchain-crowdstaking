@@ -24,7 +24,7 @@ export default defineConfig({
     },
   },
   define: {
-    global: 'globalThis',
+    globalThis: 'window',
   },
   resolve: {
     alias: {
