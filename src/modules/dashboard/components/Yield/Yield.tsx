@@ -1,12 +1,12 @@
 import { formatUnits } from 'viem';
-import { useAccount, useContractRead, useNetwork } from 'wagmi';
-import config from '../../../../config';
+import { useContractRead } from 'wagmi';
 import { IChartData } from '../../hooks/useBread';
-import ClaimYield from './ClaimYield';
-import ClaimableYield from './ClaimableYield';
 import ClaimedYield from './ClaimedYield';
 
 import BREADABI from '../../../../BreadPolygon.json';
+import { BREAD_ADDRESS } from '../../../../constants';
+import ClaimableYield from './ClaimableYield';
+import ClaimYield from './ClaimYield';
 
 const { abi } = BREADABI;
 
@@ -23,59 +23,26 @@ export default function Yield({
   data: IChartData | null;
   loading: boolean;
 }) {
-  const { chain: activeChain } = useNetwork();
-  const {
-    isConnected: hookIsConnected,
-    connector: activeConnector,
-    address: accountAddress,
-  } = useAccount();
-
-  const chainConfig =
-    activeChain?.id && config[activeChain.id]
-      ? config[activeChain.id]
-      : undefined;
-
-  const isConnected =
-    hookIsConnected &&
-    activeConnector !== undefined &&
-    accountAddress !== undefined &&
-    chainConfig !== undefined;
-
   const {
     data: yieldData,
     // isError,
     // isLoading,
   } = useContractRead({
-    address: chainConfig?.BREAD.address,
+    address: BREAD_ADDRESS,
     abi,
     functionName: 'yieldAccrued',
     // args: [holderAddress],
     watch: true,
+    cacheTime: 1_000,
   });
 
   const value = data ? formatUnits(yieldData as bigint, 18).toString() : '0';
-
-  console.log({ value });
-  console.log({ value });
-  console.log({ value });
-  console.log({ value });
-  console.log({ value });
 
   return (
     <>
       <ClaimedYield data={data} loading={loading} />
       <ClaimableYield value={value} />
-      <section>
-        {isConnected && value ? (
-          <ClaimYield
-            amount={value}
-            accountAddress={accountAddress}
-            chainConfig={chainConfig}
-          />
-        ) : (
-          <section>connect wallet to claim</section>
-        )}
-      </section>
+      <ClaimYield amount={value} />
     </>
   );
 }

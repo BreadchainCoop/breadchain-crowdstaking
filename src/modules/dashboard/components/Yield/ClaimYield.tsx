@@ -1,61 +1,44 @@
 import { useEffect } from 'react';
 import { parseEther } from 'viem';
 // import { ethers } from 'ethers';
-import { useContractWrite, usePrepareContractWrite } from 'wagmi';
-
-import Button from '../../../../components/Button';
-
-import type { ChainConfiguration } from '../../../../config';
+import { useContractWrite } from 'wagmi';
 
 import BREADABI from '../../../../BreadPolygon.json';
+import Button from '../../../../components/Button';
+import ConnectWalletButton from '../../../../components/ConnectWalletButton';
+import { ChainConfiguration } from '../../../../config';
+import { useConnectedUser } from '../../../../hooks/useConnectedUser';
 import { useModal } from '../../../../hooks/useModal';
 import { useToast } from '../../../../hooks/useToast';
-import { useTransactionDisplay } from '../../../../hooks/useTransactionDisplay.tsx';
+import { useTransactionDisplay } from '../../../../hooks/useTransactionDisplay';
 // import PreparingTransaction from './PreparingTransaction';
 
 const { abi } = BREADABI;
 
-interface IProps {
-  accountAddress: string;
-  chainConfig: ChainConfiguration;
-  amount: string;
-}
-
-export default function ClaimYield({
-  chainConfig,
-  accountAddress,
+function ClaimYieldButton({
   amount,
-}: IProps) {
+  config,
+}: {
+  amount: string;
+  config: ChainConfiguration;
+}) {
   const { state: modalState, dispatch: dispatchModal } = useModal();
   const { dispatch: dispatchToast } = useToast();
   const { dispatch: dispatchTransactionDisplay } = useTransactionDisplay();
 
-  const { BREAD } = chainConfig;
-
   const parsedAmount = parseEther(amount);
-
-  console.log({ parsedAmount });
-  console.log({ parsedAmount });
-  console.log({ parsedAmount });
-  console.log({ parsedAmount });
-  console.log({ parsedAmount });
-
-  const prepareResult = usePrepareContractWrite({
-    address: BREAD.address,
-    abi,
-    functionName: 'claimYield',
-    args: [parsedAmount],
-    enabled: !!(chainConfig && accountAddress),
-  });
-
-  const { config, status: prepareStatus } = prepareResult;
 
   const {
     error: writeError,
     data: writeData,
     isSuccess,
     write,
-  } = useContractWrite(config);
+  } = useContractWrite({
+    address: config.BREAD.address,
+    abi,
+    functionName: 'claimYield',
+    args: [parsedAmount],
+  });
 
   const handleSubmit = async () => {
     dispatchModal({
@@ -92,12 +75,29 @@ export default function ClaimYield({
     }
   }, [writeError, isSuccess, writeData]);
 
+  return <Button onClick={handleSubmit}>Claim</Button>;
+}
+
+interface IProps {
+  amount: string;
+}
+
+export default function ClaimYield({ amount }: IProps) {
+  const { user } = useConnectedUser();
+
   return (
-    <>
-      <Button onClick={handleSubmit} disabled={prepareStatus !== 'success'}>
-        Claim
-      </Button>
-      {/* {prepareStatus === 'loading' && <PreparingTransaction />} */}
-    </>
+    <section className="flex justify-between">
+      {user ? (
+        <>
+          Claim Yield
+          <ClaimYieldButton amount={amount} config={user.config} />
+        </>
+      ) : (
+        <>
+          <span>connect wallet to claim</span>
+          <ConnectWalletButton />
+        </>
+      )}
+    </section>
   );
 }

@@ -1,5 +1,5 @@
 import { TModalStatus, TModalType, useModal } from '../../hooks/useModal';
-import { useTransactionDisplay } from '../../hooks/useTransactionDisplay.tsx';
+import { useTransactionDisplay } from '../../hooks/useTransactionDisplay';
 
 import Elipsis from '../Elipsis/Elipsis';
 import Prose from '../Prose/Prose';
@@ -122,7 +122,6 @@ function Modal({ type, title, status }: TProps) {
                 {txStatus === 'COMPLETE' && (
                   <Message>Transaction complete!</Message>
                 )}
-                <AddTokens />
               </>
             )}
           </Inner>

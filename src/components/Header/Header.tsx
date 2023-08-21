@@ -1,6 +1,6 @@
+import clsx from 'clsx';
 import { ReactNode, useState } from 'react';
 import { Chain, useAccount, useDisconnect, useNetwork } from 'wagmi';
-import clsx from 'clsx'
 
 import { WRAPPER_CLASSES } from '../../util';
 import MobileMenu from '../MobileMenu';
@@ -11,7 +11,7 @@ import WalletDisplay from './WalletDisplay';
 
 function Container({ children }: { children: ReactNode }) {
   return (
-    <header className="bg-breadgray-100">
+    <header className="bg-breadgray-og-dark">
       <div className={clsx(WRAPPER_CLASSES, 'flex justify-between')}>
         {children}
       </div>

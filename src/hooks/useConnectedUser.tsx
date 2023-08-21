@@ -14,19 +14,16 @@ export type TConnectedUserState = null | {
   config: ChainConfiguration;
 };
 
-const ConnectedUserContext = createContext<
-  | {
-      state: TConnectedUserState;
-    }
-  | undefined
->(undefined);
+const ConnectedUserContext = createContext<{
+  user: TConnectedUserState | null;
+}>({ user: null });
 
 interface IConnectedUserProviderProps {
   children: ReactNode;
 }
 
 function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
-  const [state, setState] = useState<TConnectedUserState>(null);
+  const [user, setUser] = useState<TConnectedUserState>(null);
 
   const {
     isConnected,
@@ -40,22 +37,43 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
       activeChain?.id && config[activeChain.id]
         ? config[activeChain.id]
         : undefined;
+
+    if (!activeConnector) {
+      console.log('no activeConnector!');
+    }
+    if (!activeChain) {
+      console.log('no activeChain!');
+    }
+    if (!accountAddress) {
+      console.log('no accountAddress!');
+    }
+    if (!isConnected) {
+      console.log('no isConnected!');
+    }
+    if (!configuration) {
+      console.log('no configuration!');
+    }
+
     if (
-      activeConnector &&
-      activeChain &&
+      // activeConnector &&
+      // activeChain &&
       accountAddress &&
       isConnected &&
       configuration
     ) {
-      setState({
+      setUser({
         address: accountAddress,
         config: configuration,
       });
+    } else {
+      setUser(null);
     }
-    setState(null);
   }, [isConnected, activeConnector, accountAddress, activeChain]);
 
-  const value = useMemo(() => ({ state }), [state]);
+  const value = useMemo(() => {
+    console.log('\n\n\nhjook user', user);
+    return { user };
+  }, [user]);
 
   return (
     <ConnectedUserContext.Provider value={value}>

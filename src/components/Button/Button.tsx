@@ -39,7 +39,7 @@ function Button({
     <button
       type="button"
       className={clsx(
-        'button-gradient button-shadow bg-opacity-85 relative flex items-center justify-center text-neutral-900 hover:bg-opacity-100',
+        'button-gradient button-shadow bg-opacity-85 relative z-20 flex items-center justify-center text-neutral-900 hover:bg-opacity-100',
         EVariants[variant],
         fullWidth ? 'w-full' : '',
         mouseIsDown ? 'translate-y-1 transform' : '',

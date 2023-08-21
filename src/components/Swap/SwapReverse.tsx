@@ -6,7 +6,7 @@ function SwapReverse({ onClick }: TProps) {
   return (
     <button
       type="button"
-      className="my-4 inline-block rounded-full bg-breadgray-100 p-3 text-neutral-600 hover:text-neutral-500"
+      className="my-4 inline-block rounded-full bg-breadgray-og-dark p-3 text-neutral-600 hover:text-neutral-500"
       onClick={onClick}
     >
       <svg className="h-7 w-7" fill="none" viewBox="0 0 123 105">
