@@ -4,7 +4,7 @@ import { useContractWrite } from 'wagmi';
 
 import BREADABI from '../../../../BreadPolygon.json';
 import Button from '../../../../components/Button';
-import ConnectWalletButton from '../../../../components/ConnectWalletButton';
+import ConnectWallet from '../../../../components/ConnectWallet';
 import { ChainConfiguration } from '../../../../config';
 import { useConnectedUser } from '../../../../hooks/useConnectedUser';
 import { useModal } from '../../../../hooks/useModal';
@@ -93,7 +93,7 @@ export default function ClaimYield({ amount }: IProps) {
       ) : (
         <>
           <span>connect wallet to claim</span>
-          <ConnectWalletButton />
+          <ConnectWallet />
         </>
       )}
     </section>

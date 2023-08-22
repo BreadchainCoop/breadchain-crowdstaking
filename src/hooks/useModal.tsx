@@ -14,7 +14,8 @@ export type TModalType =
   | 'APPROVAL'
   | 'BAKING'
   | 'BURNING'
-  | 'CLAIMING';
+  | 'CLAIMING'
+  | 'CONNECTORS';
 
 export type TModalStatus = 'LOCKED' | 'UNLOCKED';
 

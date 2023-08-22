@@ -4,7 +4,7 @@ export function Container({ children }: { children: ReactNode }) {
   return (
     <section
       data-test="modal"
-      className="fixed z-30 flex h-full w-full items-center justify-center bg-breadgray-darkest bg-opacity-95 p-2 sm:p-6"
+      className="fixed z-30 flex h-full w-full items-center justify-center bg-breadgray-darkest bg-opacity-95 p-4"
     >
       {children}
       {/* <div className="flex h-full overflow-auto ">
@@ -15,7 +15,7 @@ export function Container({ children }: { children: ReactNode }) {
 
 export function Inner({ children }: { children: ReactNode }) {
   return (
-    <section className="relative flex max-h-full flex-col items-start rounded bg-breadgray-og-dark bg-opacity-100 px-1 py-14 sm:px-4 md:p-16">
+    <section className="relative flex max-h-full flex-col items-start rounded bg-breadgray-og-dark bg-opacity-100 px-6 py-14 sm:px-8 md:p-16 md:px-12">
       {children}
     </section>
   );
