@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { parseEther } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
-import { parseEther } from 'ethers/lib/utils.js';
 import Button from '../../Button';
 
 import type { ChainConfiguration } from '../../../config';

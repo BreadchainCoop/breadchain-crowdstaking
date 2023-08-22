@@ -9,7 +9,6 @@ import NativeBalance from '../NativeBalance';
 
 // import Button from '../Button';
 import { useTransactionDisplay } from '../../hooks/useTransactionDisplay';
-import { balanceFormatter } from '../../util';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
@@ -109,7 +108,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
   const handleBalanceClick = (value: string) => {
     setSwapState((state) => ({
       ...state,
-      value: balanceFormatter.format(parseFloat(value)),
+      value,
     }));
   };
 

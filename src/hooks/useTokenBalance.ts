@@ -1,4 +1,4 @@
-import { formatUnits } from 'viem';
+import { formatUnits } from 'ethers/lib/utils';
 import { useContractRead } from 'wagmi';
 import abi from '../ERC20.json';
 
