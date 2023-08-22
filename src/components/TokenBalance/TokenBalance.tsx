@@ -13,11 +13,18 @@ interface IProps {
   readings: UseTokenBalanceResult;
 }
 
+function formatBalance(value: string) {
+  if (!value.includes('.')) return value;
+  const [intVal, decVal] = value.split('.');
+  if (decVal && decVal.length <= 2) return value;
+  return `${intVal}.${decVal[0]}${decVal[1]}`;
+}
+
 export function TokenBalance({ readings }: IProps) {
   const { value, status, error } = readings;
 
   const displayedValue = value
-    ? balanceFormatter.format(parseFloat(value))
+    ? balanceFormatter.format(parseFloat(formatBalance(value)))
     : 'unknown';
 
   switch (status) {
