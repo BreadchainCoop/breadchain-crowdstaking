@@ -6,7 +6,7 @@ import BreadChart from './BreadChart';
 import Yield from './Yield/Yield';
 
 export default function EconomyDisplay() {
-  const { data, loading } = useBread();
+  const { data } = useBread();
 
   return (
     <div className={clsx(WRAPPER_CLASSES, ' py-8')}>
@@ -19,7 +19,7 @@ export default function EconomyDisplay() {
         <div className="m-auto h-[500px] max-w-2xl">
           {data && <BreadChart chartData={data} />}
         </div>
-        <Yield data={data} loading={loading} />
+        <Yield />
         {/* <AAVE /> */}
       </section>
     </div>
