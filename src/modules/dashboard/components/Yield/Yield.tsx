@@ -38,7 +38,7 @@ export default function Yield({
 
   const claimable = useMemo(
     () => (yieldData ? formatUnits(yieldData as bigint, 18).toString() : '0'),
-    [data],
+    [yieldData],
   );
 
   return (
