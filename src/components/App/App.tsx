@@ -1,17 +1,19 @@
+import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { useModal } from '../../hooks/useModal';
 import { useToast } from '../../hooks/useToast';
-import About from '../../routes/about';
 import Bake from '../../routes/bake';
 // import DashBoard from '../../routes/dashboard';
-import FAQ from '../../routes/faq';
 import Footer from '../Footer';
 import Header from '../Header';
 import Modal from '../Modal';
 import Toast from '../Toast/Toast';
 import AppContainer from './ui/AppContainer';
 import * as Main from './ui/Main';
+
+const About = lazy(() => import('../../routes/about'));
+const FAQ = lazy(() => import('../../routes/faq'));
 
 function App() {
   const { state: modal } = useModal();
@@ -29,9 +31,15 @@ function App() {
 
       <Main.Main>
         <Routes>
-          <Route path="/" element={<Bake />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/faq" element={<FAQ />} />
+          <Suspense>
+            <Route path="/" element={<Bake />} />
+          </Suspense>
+          <Suspense>
+            <Route path="/about" element={<About />} />
+          </Suspense>
+          <Suspense>
+            <Route path="/faq" element={<FAQ />} />
+          </Suspense>
           {/* <Route path="/dashboard" element={<DashBoard />} /> */}
         </Routes>
       </Main.Main>
