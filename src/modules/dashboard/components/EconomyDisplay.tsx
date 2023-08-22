@@ -2,6 +2,8 @@ import clsx from 'clsx';
 
 import { WRAPPER_CLASSES } from '../../../util';
 import useBread from '../hooks/useBread';
+import AAVE from './AAVE';
+import Arrakis from './Arrakis';
 import BreadChart from './BreadChart';
 import Yield from './Yield/Yield';
 
@@ -20,7 +22,8 @@ export default function EconomyDisplay() {
           {data && <BreadChart chartData={data} />}
         </div>
         <Yield />
-        {/* <AAVE /> */}
+        <AAVE />
+        <Arrakis />
       </section>
     </div>
   );

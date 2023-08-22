@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { useConnect } from 'wagmi';
 
+import { useModal } from '../../hooks/useModal';
 import { useToast } from '../../hooks/useToast';
 import Button from '../Button';
 
-function ConnectWalletButton() {
+export default function Connectors() {
   // const { connector: activeConnector, isConnected } = useAccount();
-  const { connect, connectors, error } = useConnect();
+  const { connect, connectors, error, isSuccess } = useConnect();
   const { dispatch: toastDispatch } = useToast();
+  const { dispatch: modalDispatch } = useModal();
 
   // if (!!activeConnector && isConnected) throw new Error('Connector error!');
 
@@ -19,8 +21,15 @@ function ConnectWalletButton() {
       });
   }, [error]);
 
+  useEffect(() => {
+    if (isSuccess)
+      modalDispatch({
+        type: 'CLEAR_MODAL',
+      });
+  }, [isSuccess]);
+
   return (
-    <div className="md:mt-10">
+    <div>
       <div className="max-w-72 m-auto flex flex-col gap-4">
         {connectors &&
           connectors.map((connector) => (
@@ -38,5 +47,3 @@ function ConnectWalletButton() {
     </div>
   );
 }
-
-export default ConnectWalletButton;

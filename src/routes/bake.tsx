@@ -1,9 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
-import ConnectWalletButton from '../components/ConnectWalletButton';
 
 import BakeLayout from '../components/BakeLayout';
 
+import ConnectWallet from '../components/ConnectWallet';
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 import config from '../config';
 
@@ -25,7 +25,7 @@ export function Bake() {
   if (!activeConnector || !activeChain || !accountAddress || !isConnected) {
     return (
       <BakeLayout>
-        <ConnectWalletButton />
+        <ConnectWallet />
       </BakeLayout>
     );
   }
