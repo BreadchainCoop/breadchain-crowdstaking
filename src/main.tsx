@@ -7,6 +7,7 @@ import './shims';
 
 import { HashRouter } from 'react-router-dom';
 
+import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
@@ -46,7 +47,12 @@ const config = createConfig({
         appName: 'wagmi',
       },
     }),
-
+    new SafeConnector({
+      chains,
+      options: {
+        debug: false,
+      },
+    }),
     new InjectedConnector({
       chains,
       options: {
