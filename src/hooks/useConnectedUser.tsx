@@ -12,6 +12,7 @@ import config, { ChainConfiguration } from '../config';
 export type TConnectedUserState = null | {
   address: `0x${string}`;
   config: ChainConfiguration;
+  isActiveChainSupported: boolean;
 };
 
 const ConnectedUserContext = createContext<{
@@ -48,6 +49,7 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
       setUser({
         address: accountAddress,
         config: configuration,
+        isActiveChainSupported: !activeChain.unsupported,
       });
     } else {
       setUser(null);

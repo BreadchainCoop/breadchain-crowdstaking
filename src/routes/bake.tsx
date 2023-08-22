@@ -1,28 +1,17 @@
 import { Suspense, lazy } from 'react';
-import { useAccount, useNetwork } from 'wagmi';
 
 import BakeLayout from '../components/BakeLayout';
 
 import ConnectWallet from '../components/ConnectWallet';
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
-import config from '../config';
+import { useConnectedUser } from '../hooks/useConnectedUser';
 
 const Swap = lazy(() => import('../components/Swap'));
 
 export function Bake() {
-  const {
-    isConnected,
-    connector: activeConnector,
-    address: accountAddress,
-  } = useAccount();
-  const { chain: activeChain } = useNetwork();
+  const { user } = useConnectedUser();
 
-  const configuration =
-    activeChain?.id && config[activeChain.id]
-      ? config[activeChain.id]
-      : undefined;
-
-  if (!activeConnector || !activeChain || !accountAddress || !isConnected) {
+  if (!user) {
     return (
       <BakeLayout>
         <ConnectWallet />
@@ -30,20 +19,19 @@ export function Bake() {
     );
   }
 
-  if (activeChain.unsupported)
+  if (!user.isActiveChainSupported)
     return (
       <BakeLayout>
         <UnsupportedNetwork />
       </BakeLayout>
     );
 
-  if (!configuration)
-    throw new Error(`Missing chainId ${activeChain.id} at config.ts`);
+  if (!user.config) throw new Error(`Missing chain config!`);
 
   return (
     <BakeLayout>
       <Suspense>
-        <Swap chainConfig={configuration} accountAddress={accountAddress} />
+        <Swap chainConfig={user.config} accountAddress={user.address} />
       </Suspense>
     </BakeLayout>
   );
