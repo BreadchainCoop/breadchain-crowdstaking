@@ -1,17 +1,15 @@
 import { useMemo } from 'react';
-import { IChartData } from '../../hooks/useBread';
 import { yieldFormatter } from './Yield';
 
 export default function ClaimedYield({
   data,
   loading,
 }: {
-  data: IChartData | null;
+  data: { amount: string } | undefined;
   loading: boolean;
 }) {
   const claimed = useMemo(
-    () =>
-      data ? yieldFormatter.format(parseFloat(data.totalClaimedYield)) : '...',
+    () => (data ? yieldFormatter.format(parseFloat(data.amount)) : '...'),
     [data],
   );
 
