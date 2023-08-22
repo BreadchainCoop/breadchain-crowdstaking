@@ -31,15 +31,30 @@ function App() {
 
       <Main.Main>
         <Routes>
-          <Suspense>
-            <Route path="/" element={<Bake />} />
-          </Suspense>
-          <Suspense>
-            <Route path="/about" element={<About />} />
-          </Suspense>
-          <Suspense>
-            <Route path="/faq" element={<FAQ />} />
-          </Suspense>
+          <Route
+            path="/"
+            element={
+              <Suspense>
+                <Bake />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <Suspense>
+                <About />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/faq"
+            element={
+              <Suspense>
+                <FAQ />
+              </Suspense>
+            }
+          />
           {/* <Route path="/dashboard" element={<DashBoard />} /> */}
         </Routes>
       </Main.Main>
