@@ -1,9 +1,15 @@
-import EconomyDisplay from '../modules/dashboard/components/EconomyDisplay';
+import { Suspense, lazy } from 'react';
+
+const EconomyDisplay = lazy(
+  () => import('../modules/dashboard/components/EconomyDisplay'),
+);
 
 export default function DashBoard() {
   return (
     <section className="py-16">
-      <EconomyDisplay />
+      <Suspense>
+        <EconomyDisplay />
+      </Suspense>
     </section>
   );
 }
