@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import { MouseEvent, ReactNode } from 'react';
-import { classNames } from '../../util';
 
 function Overlay({
   isOpen,
@@ -18,7 +18,7 @@ function Overlay({
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     <div
-      className={classNames(
+      className={clsx(
         'z-9 fixed top-0 bottom-0 left-0 right-0 h-screen w-screen bg-neutral-900 opacity-0 transition-opacity md:hidden',
         isOpen ? 'block opacity-70' : 'hidden',
       )}

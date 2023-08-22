@@ -1,18 +1,17 @@
 import { useEffect } from 'react';
-// import { ethers } from 'ethers';
+import { parseEther } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
-import { parseEther } from 'ethers/lib/utils.js';
 import Button from '../../Button';
 
 import type { ChainConfiguration } from '../../../config';
 
 import BREADABI from '../../../BreadPolygon.json';
-import { useModal } from '../../../context/ModalContext';
-import { useToast } from '../../../context/ToastContext';
-import { useTransactionDisplay } from '../../../context/TransactionDisplayContext';
 import useDebounce from '../../../hooks/useDebounce';
+import { useModal } from '../../../hooks/useModal';
+import { useToast } from '../../../hooks/useToast';
 import { UseTokenBalanceResult } from '../../../hooks/useTokenBalance';
+import { useTransactionDisplay } from '../../../hooks/useTransactionDisplay';
 import PreparingTransaction from './PreparingTransaction';
 
 const { abi } = BREADABI;

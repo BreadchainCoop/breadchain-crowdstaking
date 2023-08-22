@@ -2,14 +2,13 @@ import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 
 import { ChainConfiguration } from '../../config';
-import { useToast } from '../../context/ToastContext';
+import { useToast } from '../../hooks/useToast';
 import { useTokenAllowance } from '../../hooks/useTokenAllowance';
 import { useTokenBalance } from '../../hooks/useTokenBalance';
 import NativeBalance from '../NativeBalance';
 
 // import Button from '../Button';
-import { useTransactionDisplay } from '../../context/TransactionDisplayContext';
-import { balanceFormatter } from '../../util';
+import { useTransactionDisplay } from '../../hooks/useTransactionDisplay';
 import ApproveContract from './ApproveContract';
 import BakeOrBurn from './BakeOrBurn/BakeOrBurn';
 import CheckingApproval from './CheckingApproval';
@@ -109,7 +108,7 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
   const handleBalanceClick = (value: string) => {
     setSwapState((state) => ({
       ...state,
-      value: balanceFormatter.format(parseFloat(value)),
+      value,
     }));
   };
 

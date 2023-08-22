@@ -1,31 +1,33 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 
-import { hardhat, polygon } from "wagmi/chains";
-import "./shims";
+import { hardhat, polygon } from 'wagmi/chains';
+import './shims';
 
-import { HashRouter } from "react-router-dom";
+import { HashRouter } from 'react-router-dom';
 
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import App from "./components/App";
-import { ModalProvider } from "./context/ModalContext";
-import { ToastProvider } from "./context/ToastContext";
-import { TransactionDisplayProvider } from "./context/TransactionDisplayContext";
-import "./css/index.css";
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import App from './components/App';
+import './css/index.css';
+import SubgraphProvider from './hooks/graphProvider';
+import { ConnectedUserProvider } from './hooks/useConnectedUser';
+import { ModalProvider } from './hooks/useModal';
+import { ToastProvider } from './hooks/useToast';
+import { TransactionDisplayProvider } from './hooks/useTransactionDisplay';
 
-export type IViteMode = "production" | "development" | "testing" | undefined;
+export type IViteMode = 'production' | 'development' | 'testing' | undefined;
 
 const env = import.meta.env.MODE as IViteMode;
 
-if (env === undefined) throw new Error("NODE_ENV not set!");
+if (env === undefined) throw new Error('NODE_ENV not set!');
 
-const container = document.getElementById("root");
-if (!container) throw new Error("no root element found!");
+const container = document.getElementById('root');
+if (!container) throw new Error('no root element found!');
 
 const apiKey = import.meta.env.VITE_ALCHEMY_ID as string;
 
@@ -41,14 +43,14 @@ const config = createConfig({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: "wagmi",
+        appName: 'wagmi',
       },
     }),
 
     new InjectedConnector({
       chains,
       options: {
-        name: "Injected",
+        name: 'Injected',
         shimDisconnect: true,
       },
     }),
@@ -60,17 +62,21 @@ const config = createConfig({
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <WagmiConfig config={config}>
-      <ToastProvider>
-        <ModalProvider>
-          <TransactionDisplayProvider>
-            <HashRouter>
-              <App />
-            </HashRouter>
-          </TransactionDisplayProvider>
-        </ModalProvider>
-      </ToastProvider>
+      <ConnectedUserProvider>
+        <SubgraphProvider>
+          <ToastProvider>
+            <ModalProvider>
+              <TransactionDisplayProvider>
+                <HashRouter>
+                  <App />
+                </HashRouter>
+              </TransactionDisplayProvider>
+            </ModalProvider>
+          </ToastProvider>
+        </SubgraphProvider>
+      </ConnectedUserProvider>
     </WagmiConfig>
-  </React.StrictMode>,
+  </StrictMode>,
 );

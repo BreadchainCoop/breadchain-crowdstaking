@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
-import { classNames } from '../../util';
 
 interface IProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface IProps {
 export function IconContainer({ children, size }: IProps) {
   return (
     <span
-      className={classNames(
+      className={clsx(
         `flex items-center justify-center `,
         'another-class text-neutral-300',
         size === '3' ? 'h-3 w-3' : '',

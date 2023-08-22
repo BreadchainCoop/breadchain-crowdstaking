@@ -33,7 +33,7 @@ export function PanelBalance({ children }: { children: ReactNode }) {
 
 export function PanelContainer({ children }: { children: ReactNode }) {
   return (
-    <div className="w-full bg-breadgray-100 px-6 py-4 text-gray-300 sm:px-8 sm:py-6">
+    <div className="w-full bg-breadgray-og-dark px-6 py-4 text-gray-300 sm:px-8 sm:py-6">
       {children}
     </div>
   );

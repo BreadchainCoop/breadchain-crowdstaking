@@ -1,9 +1,9 @@
-import { classNames } from '../../../util';
+import clsx from 'clsx';
 
 function DiscordIcon() {
   return (
     <svg
-      className={classNames('w-full fill-current')}
+      className={clsx('w-full fill-current')}
       viewBox="0 0 48 48"
       xmlns="http://www.w3.org/2000/svg"
     >

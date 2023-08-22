@@ -22,7 +22,7 @@ function ToPanel({ inputValue, balanceReadings, tokenType }: IProps) {
         </PanelBalance>
       </PanelHeader>
       <PanelContent>
-        <span className="w-0 flex-auto truncate overflow-ellipsis bg-breadgray-100 text-lg sm:text-2xl">
+        <span className="w-0 flex-auto truncate overflow-ellipsis bg-breadgray-og-dark text-lg sm:text-2xl">
           {inputValue || '00.00'}
         </span>
         <Icon type={tokenType} />

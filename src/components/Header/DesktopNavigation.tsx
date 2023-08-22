@@ -18,6 +18,12 @@ function DesktopNavigation() {
       <ExternalNavLink href="https://breadchain.mirror.xyz/">
         Blog
       </ExternalNavLink>
+      {/* <NavLink
+        isCurrentPage={location.pathname === '/dashboard'}
+        to="/dashboard"
+      >
+        Dashboard
+      </NavLink> */}
     </nav>
   );
 }
