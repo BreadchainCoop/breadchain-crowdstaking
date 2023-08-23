@@ -15,7 +15,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import App from './components/App';
 import './css/index.css';
-import SubgraphProvider from './hooks/graphProvider';
+// import SubgraphProvider from './hooks/graphProvider';
 import { ConnectedUserProvider } from './hooks/useConnectedUser';
 import { ModalProvider } from './hooks/useModal';
 import { ToastProvider } from './hooks/useToast';
@@ -71,17 +71,17 @@ root.render(
   <StrictMode>
     <WagmiConfig config={config}>
       <ConnectedUserProvider>
-        <SubgraphProvider>
-          <ToastProvider>
-            <ModalProvider>
-              <TransactionDisplayProvider>
-                <HashRouter>
-                  <App />
-                </HashRouter>
-              </TransactionDisplayProvider>
-            </ModalProvider>
-          </ToastProvider>
-        </SubgraphProvider>
+        {/* <SubgraphProvider> */}
+        <ToastProvider>
+          <ModalProvider>
+            <TransactionDisplayProvider>
+              <HashRouter>
+                <App />
+              </HashRouter>
+            </TransactionDisplayProvider>
+          </ModalProvider>
+        </ToastProvider>
+        {/* </SubgraphProvider> */}
       </ConnectedUserProvider>
     </WagmiConfig>
   </StrictMode>,
