@@ -9443,7 +9443,6 @@ __metadata:
     typescript: "npm:^5.1.6"
     viem: "npm:^1.5.4"
     vite: "npm:2.9.8"
-    vite-plugin-chunk-split: "npm:^0.4.7"
     vite-plugin-markdown: "npm:^2.1.0"
     vite-tsconfig-paths: "npm:^3.5.1"
     wagmi: "npm:^1.3.9"
@@ -12101,7 +12100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-module-lexer@npm:^1.0.3, es-module-lexer@npm:^1.2.1":
+"es-module-lexer@npm:^1.2.1":
   version: 1.3.0
   resolution: "es-module-lexer@npm:1.3.0"
   checksum: 2d9e1d6e04b7cecc4adcf5af4b54794c1f40cf8b79eb737cfca6e14d7214172eb9c608d62c4021d8957f340dc201290945618a203ebc945cae6b9a2ac2d94fb3
@@ -17507,7 +17506,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.26.1, magic-string@npm:^0.26.3":
+"magic-string@npm:^0.26.1":
   version: 0.26.7
   resolution: "magic-string@npm:0.26.7"
   dependencies:
@@ -24305,18 +24304,6 @@ __metadata:
     typescript:
       optional: true
   checksum: 4edede5ece43608b72096f217401409514f175be773a044f37bd05325b38e0312f039f9406d2ae413daf9c7ec83bc952384e57a1a4abdcf30dc51bb1749ddf4d
-  languageName: node
-  linkType: hard
-
-"vite-plugin-chunk-split@npm:^0.4.7":
-  version: 0.4.7
-  resolution: "vite-plugin-chunk-split@npm:0.4.7"
-  dependencies:
-    es-module-lexer: "npm:^1.0.3"
-    magic-string: "npm:^0.26.3"
-  peerDependencies:
-    vite: ^3.1.0
-  checksum: 0dd9d7522300f4769059363c908c247de006139125598d03beeb2748733f86335a680f581e846bdb2286b521de6780e1a8faf90aca2049f876ab8949e9999b08
   languageName: node
   linkType: hard
 
