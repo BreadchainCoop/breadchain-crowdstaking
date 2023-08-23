@@ -11,7 +11,7 @@ import WalletDisplay from './WalletDisplay';
 
 function Container({ children }: { children: ReactNode }) {
   return (
-    <header className="bg-breadgray-og-dark">
+    <header>
       <div className={clsx(WRAPPER_CLASSES, 'flex justify-between')}>
         {children}
       </div>

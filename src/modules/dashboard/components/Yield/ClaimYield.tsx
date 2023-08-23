@@ -1,17 +1,15 @@
 import { useEffect } from 'react';
 import { parseEther } from 'viem';
-// import { ethers } from 'ethers';
 import { useContractWrite } from 'wagmi';
 
 import BREADABI from '../../../../BreadPolygon.json';
 import Button from '../../../../components/Button';
-import ConnectWalletButton from '../../../../components/ConnectWalletButton';
+import ConnectWallet from '../../../../components/ConnectWallet';
 import { ChainConfiguration } from '../../../../config';
 import { useConnectedUser } from '../../../../hooks/useConnectedUser';
 import { useModal } from '../../../../hooks/useModal';
 import { useToast } from '../../../../hooks/useToast';
 import { useTransactionDisplay } from '../../../../hooks/useTransactionDisplay';
-// import PreparingTransaction from './PreparingTransaction';
 
 const { abi } = BREADABI;
 
@@ -64,7 +62,7 @@ function ClaimYieldButton({
       });
     }
     if (isSuccess && writeData) {
-      dispatchModal({ type: 'UNLOCK_MODAL' });
+      if (modalState) dispatchModal({ type: 'UNLOCK_MODAL' });
       dispatchTransactionDisplay({
         type: 'SET_PENDING',
         payload: {
@@ -95,7 +93,7 @@ export default function ClaimYield({ amount }: IProps) {
       ) : (
         <>
           <span>connect wallet to claim</span>
-          <ConnectWalletButton />
+          <ConnectWallet />
         </>
       )}
     </section>

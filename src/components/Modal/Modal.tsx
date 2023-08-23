@@ -7,6 +7,7 @@ import AddTokens from './AddTokens';
 import { CloseModalButton, Container, Heading, Inner, Message } from './ui';
 
 import { html as disclaimerHtml } from '../../markdown/disclaimer.md';
+import ConnectorsModal from './ConnectorsModal';
 
 type TProps = {
   type: TModalType;
@@ -23,6 +24,8 @@ function Modal({ type, title, status }: TProps) {
     modalDispatch({ type: 'CLEAR_MODAL' });
   };
   switch (type) {
+    case 'CONNECTORS':
+      return <ConnectorsModal handleCloseModal={handleCloseModal} />;
     case 'DISCLAIMER':
       return (
         <Container>
