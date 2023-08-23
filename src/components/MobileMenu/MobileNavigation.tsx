@@ -33,12 +33,7 @@ function MobileNavigation({ handleNavToggle }: IProps) {
       >
         FAQ
       </NavLink>
-      {/* <NavLink
-        isCurrentPage={location.pathname === '/dashboard'}
-        to="/dashboard"
-      >
-        Dashboard
-      </NavLink> */}
+      <Ns
       <ExternalNavLink href="https://breadchain.mirror.xyz/">
         Blog
       </ExternalNavLink>
