@@ -1,5 +1,5 @@
-import { ethers } from 'ethers';
 import { useEffect } from 'react';
+import { hexToBigInt } from 'viem';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import Button from '../../Button';
@@ -12,6 +12,9 @@ import {
   TTransactionDisplayState,
   useTransactionDisplay,
 } from '../../../hooks/useTransactionDisplay';
+
+const MAX_INT =
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
 function transactionIsPending(
   transactionDisplay: TTransactionDisplayState,
@@ -38,7 +41,7 @@ function ApproveContract({ chainConfig }: IProps) {
     address: DAI.address,
     abi: ERC20ABI,
     functionName: 'approve',
-    args: [BREAD.address, ethers.constants.MaxUint256],
+    args: [BREAD.address, hexToBigInt(MAX_INT)],
   });
 
   const { data, error, isSuccess, write } = useContractWrite(config);

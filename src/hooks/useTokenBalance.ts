@@ -1,4 +1,4 @@
-import { formatUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'viem';
 import { useContractRead } from 'wagmi';
 import abi from '../ERC20.json';
 
@@ -20,7 +20,7 @@ export function useTokenBalance(
     watch: true,
   });
 
-  const value = data ? formatUnits(data as bigint, 18).toString() : '0';
+  const value = data ? formatUnits(BigInt(data as string), 18).toString() : '0';
 
   return { value, status, error };
 }

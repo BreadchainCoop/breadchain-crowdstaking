@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
-import { formatUnits } from 'ethers/lib/utils';
 import { useEffect, useMemo } from 'react';
+import { formatUnits } from 'viem';
 
 interface IQueryDailySnapshot {
   timestamp: string;
@@ -71,14 +71,20 @@ export default function useBread() {
       tokens: {
         ...(apolloData.tokens as IToken[]),
       },
-      totalClaimedYield: formatUnits(apolloData.totalClaimedYield.amount),
+      totalClaimedYield: formatUnits(
+        BigInt(apolloData.totalClaimedYield.amount),
+        18,
+      ),
 
       tokenDailySnapshots: apolloData.tokenDailySnapshots
         .map((day: IQueryDailySnapshot) => {
           const date = new Date(
             parseInt(day.timestamp, 10) * 1000,
           ).toDateString();
-          const supply = parseInt(formatUnits(day.dailyTotalSupply), 10);
+          const supply = parseInt(
+            formatUnits(BigInt(day.dailyTotalSupply), 18),
+            10,
+          );
           return {
             date,
             supply,

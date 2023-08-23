@@ -1,4 +1,4 @@
-import { formatEther } from 'ethers/lib/utils';
+import { formatEther } from 'viem';
 import { useBalance } from 'wagmi';
 import Elipsis from '../Elipsis/Elipsis';
 
@@ -32,7 +32,7 @@ export function NativeBalance({
   if (data) {
     value = bigNumberFormat
       ? data.value.toString()
-      : formatter.format(parseFloat(formatEther(data.value.toString())));
+      : formatter.format(parseFloat(formatEther(data.value)));
   }
 
   switch (status) {
