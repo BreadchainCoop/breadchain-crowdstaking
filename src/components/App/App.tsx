@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useModal } from '../../hooks/useModal';
 import { useToast } from '../../hooks/useToast';
 import Bake from '../../routes/bake';
-// import DashBoard from '../../routes/dashboard';
+import DashBoard from '../../routes/dashboard';
 import Footer from '../Footer';
 import Header from '../Header';
 import Modal from '../Modal';
@@ -54,7 +54,7 @@ function App() {
               </Suspense>
             }
           />
-          {/* <Route path="/dashboard" element={<DashBoard />} /> */}
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
       </Main.Main>
 
