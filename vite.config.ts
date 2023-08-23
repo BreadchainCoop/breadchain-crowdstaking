@@ -22,14 +22,11 @@ export default defineConfig({
       ],
       output: {
         manualChunks(id: string) {
-          if (id.includes('wagmi')) {
+          if (id.includes('wagmi') || id.includes('viem')) {
             return 'wagmi';
           }
           if (id.includes('react') || id.includes('apollo')) {
             return 'react';
-          }
-          if (id.includes('viem')) {
-            return 'viem';
           }
           return null;
         },
