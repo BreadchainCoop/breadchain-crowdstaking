@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react';
 import BakeLayout from '../components/BakeLayout';
 
 import ConnectWallet from '../components/ConnectWallet';
+import Elipsis from '../components/Elipsis';
 import UnsupportedNetwork from '../components/UnsupportedNetwork/UnsupportedNetwork';
 import { useConnectedUser } from '../hooks/useConnectedUser';
 
@@ -30,7 +31,14 @@ export function Bake() {
 
   return (
     <BakeLayout>
-      <Suspense>
+      <Suspense
+        fallback={
+          <p className="pt-16">
+            loading
+            <Elipsis />
+          </p>
+        }
+      >
         <Swap chainConfig={user.config} accountAddress={user.address} />
       </Suspense>
     </BakeLayout>

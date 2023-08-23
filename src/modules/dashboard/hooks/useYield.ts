@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
-import { formatUnits } from 'ethers/lib/utils';
 import { useMemo } from 'react';
+import { formatUnits } from 'viem';
 
 export interface ITotalClaimedYield {
   totalClaimedYield: {
@@ -29,7 +29,7 @@ export default function useYield() {
     if (!apolloData) return undefined;
 
     return {
-      amount: formatUnits(apolloData.totalClaimedYield.amount),
+      amount: formatUnits(BigInt(apolloData.totalClaimedYield.amount), 18),
     };
   }, [apolloData]);
 
