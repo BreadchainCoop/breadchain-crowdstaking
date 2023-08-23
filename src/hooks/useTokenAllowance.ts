@@ -1,5 +1,4 @@
-import { BigNumber } from 'ethers';
-import { formatUnits } from 'ethers/lib/utils';
+import { formatUnits } from 'viem';
 import { useContractRead } from 'wagmi';
 import abi from '../ERC20.json';
 
@@ -25,7 +24,7 @@ export function useTokenAllowance(
     watch,
   });
 
-  const value = data ? formatUnits(data as BigNumber, 18) : undefined;
+  const value = data ? formatUnits(BigInt(data as string), 18) : undefined;
 
   return {
     value,
