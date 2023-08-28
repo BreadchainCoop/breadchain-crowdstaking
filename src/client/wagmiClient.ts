@@ -97,10 +97,13 @@ export const getClient = (mode: IViteMode) => {
           //     qrcode: true,
           //   },
           // }),
-          new SafeConnector({ chains,options: {
-            allowedDomains: [/app.safe.global$/],
-            debug: false,
-          }, }),
+          new SafeConnector({
+            chains,
+            options: {
+              allowedDomains: [/app.safe.global$/],
+              debug: false,
+            },
+          }),
         ],
         // provider: hardhatProvider,
         // webSocketProvider: hardhatWebSocketProvider,
