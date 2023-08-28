@@ -131,15 +131,12 @@ function SwapUI({ chainConfig, accountAddress }: IProps) {
         }
         tokenType={swapState.mode === 'BAKE' ? 'BREAD' : 'DAI'}
       />
-      <div className="w-full px-4 pt-8 pb-12 text-xs text-neutral-300">
+      <div className="w-full px-4 pb-12 pt-8 text-xs text-neutral-300">
         Matic Balance <NativeBalance address={accountAddress} />
       </div>
       {daiAllowanceStatus === 'loading' && <CheckingApproval />}
       {daiAllowanceStatus === 'success' &&
         (() => {
-          if (swapState.isContractApproved === null) {
-            return null;
-          }
           if (swapState.isContractApproved === true) {
             return (
               <BakeOrBurn
