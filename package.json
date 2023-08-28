@@ -21,7 +21,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
-    "@gnosis.pm/safe-apps-wagmi": "^1.2.0",
+    "@gnosis.pm/safe-apps-wagmi": "^2.1.0",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@rollup/plugin-inject": "^4.0.4",
     "@storybook/react": "^6.5.12",
