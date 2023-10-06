@@ -11,7 +11,7 @@ import config, { ChainConfiguration } from '../config';
 
 export type TConnectedUserState = null | {
   address: `0x${string}`;
-  config: ChainConfiguration;
+  config: ChainConfiguration | null;
   isActiveChainSupported: boolean;
 };
 
@@ -35,17 +35,9 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
 
   useEffect(() => {
     const configuration =
-      activeChain?.id && config[activeChain.id]
-        ? config[activeChain.id]
-        : undefined;
+      activeChain?.id && config[activeChain.id] ? config[activeChain.id] : null;
 
-    if (
-      activeConnector &&
-      activeChain &&
-      accountAddress &&
-      isConnected &&
-      configuration
-    ) {
+    if (activeConnector && activeChain && accountAddress && isConnected) {
       setUser({
         address: accountAddress,
         config: configuration,
