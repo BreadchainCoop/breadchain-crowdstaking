@@ -20,14 +20,12 @@ export function Bake() {
     );
   }
 
-  if (!user.isActiveChainSupported)
+  if (!user.config)
     return (
       <BakeLayout>
         <UnsupportedNetwork />
       </BakeLayout>
     );
-
-  if (!user.config) throw new Error(`Missing chain config!`);
 
   return (
     <BakeLayout>

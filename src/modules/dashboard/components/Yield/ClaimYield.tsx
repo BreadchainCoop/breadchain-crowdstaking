@@ -85,7 +85,7 @@ export default function ClaimYield({ amount }: IProps) {
 
   return (
     <section className="m-auto flex w-2/3 items-center justify-between p-6">
-      {user ? (
+      {user && user.config ? (
         <>
           <span>Claim Yield</span>
           <ClaimYieldButton amount={amount} config={user.config} />

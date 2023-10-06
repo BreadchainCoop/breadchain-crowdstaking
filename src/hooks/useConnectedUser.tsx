@@ -9,11 +9,18 @@ import {
 import { useAccount, useNetwork } from 'wagmi';
 import config, { ChainConfiguration } from '../config';
 
-export type TConnectedUserState = null | {
-  address: `0x${string}`;
-  config: ChainConfiguration;
-  isActiveChainSupported: boolean;
-};
+export type TConnectedUserState =
+  | null
+  | {
+      address: `0x${string}`;
+      config: ChainConfiguration | null;
+      isActiveChainSupported: boolean;
+    }
+  | {
+      address: `0x${string}`;
+      config: ChainConfiguration | null;
+      isActiveChainSupported: boolean;
+    };
 
 const ConnectedUserContext = createContext<{
   user: TConnectedUserState | null;
@@ -35,17 +42,9 @@ function ConnectedUserProvider({ children }: IConnectedUserProviderProps) {
 
   useEffect(() => {
     const configuration =
-      activeChain?.id && config[activeChain.id]
-        ? config[activeChain.id]
-        : undefined;
+      activeChain?.id && config[activeChain.id] ? config[activeChain.id] : null;
 
-    if (
-      activeConnector &&
-      activeChain &&
-      accountAddress &&
-      isConnected &&
-      configuration
-    ) {
+    if (activeConnector && activeChain && accountAddress && isConnected) {
       setUser({
         address: accountAddress,
         config: configuration,
