@@ -9,18 +9,11 @@ import {
 import { useAccount, useNetwork } from 'wagmi';
 import config, { ChainConfiguration } from '../config';
 
-export type TConnectedUserState =
-  | null
-  | {
-      address: `0x${string}`;
-      config: ChainConfiguration | null;
-      isActiveChainSupported: boolean;
-    }
-  | {
-      address: `0x${string}`;
-      config: ChainConfiguration | null;
-      isActiveChainSupported: boolean;
-    };
+export type TConnectedUserState = null | {
+  address: `0x${string}`;
+  config: ChainConfiguration | null;
+  isActiveChainSupported: boolean;
+};
 
 const ConnectedUserContext = createContext<{
   user: TConnectedUserState | null;
